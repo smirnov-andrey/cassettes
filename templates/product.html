@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Кассеты</title>
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal__wrapper">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Войти или создать профиль</h1>
+			<button class="authorization-google">Войти с помощью Google</button>
+			<p class="modal__replace">или</p>
+			<form action="" class="modal__form">
+				<input type="text" class="input-cust modal__input" placeholder="Логин">
+				<input type="password" class="input-cust modal__input" placeholder="Пароль">
+				<p class="modal__not-pass">Забыли пароль?</p>
+				<button type="submit" class="btn modal__btn btn_fill">Войти</button>
+			</form>
+			<div class="modal__wrapper-block">
+				<p class="modal__text">Еще нет аккаунта?</p>
+				<a href="#" class="modal__login">Зарегестрируйтесь.</a>
+			</div>
+		</div>
+    </div>
+
+    <!--  -->
+
+    <div class="modal" id="regModal">
+        <div class="modal__wrapper">
+            <img src="../static/img/close-icon.svg" alt="" class="modal__close">
+            <h1 class="modal__title">Регистрация</h1>
+            <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта.</p>
+            <button class="authorization-google">Войти с помощью Google</button>
+            <p class="modal__replace">или</p>
+            <form action="" class="modal__form">
+                <input type="text" class="input-cust modal__input" placeholder="Логин">
+                <button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
+            </form>
+            <div class="modal__wrapper-block">
+                <p class="modal__text">Уже есть аккаунт?</p>
+                <a href="#" class="modal__login">Войдите.</a>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <header class="header" id="header">
+        <div class="header__wrapper">
+            <div class="container">
+                <div class="header-top">
+                    <a href="#" class="logo">
+                        <img src="../static/img/logo.jpg" alt="TapeCollector">
+                    </a>
+                    <div class="header-top__search">
+                        <input type="text" placeholder="Поиск">
+                    </div>
+                    <div class="header-top__wrapper">
+                        <div class="header-top__change-lang dropdown">
+                            <button class="header-top__lang dropdown__select">English</button>
+                            <ul class="dropdown__options header-top__options">
+                                <li data-value="По бренду" class="active">English</li>
+                                <li data-value="По бренду">Русский</li>
+                                <li data-value="По бренду">...</li>
+                            </ul>
+                        </div>
+                        <div class="header-top__profile">
+                            <button type="button" class="btn btn_ghost header-top__btn-login btn-modal" data-modal="loginModal">Вход</button>
+                            <button type="button" class="btn btn_fill header-top__btn-registration btn-modal" data-modal="regModal">Регистрация</button>
+                        </div>
+                    </div>
+                    <button class="burger">
+                        <span></span>
+                    </button>
+                </div>
+    
+                <div class="header-brands">
+                    <ul class="header-brands__audio-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/compact-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/8-track.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/dcc.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/mini-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/microcassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/elcaset.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="header-brands__line"></span>
+                    <ul class="header-brands__video-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs-c.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/hi-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/digital-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/betamax.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/mini-dv.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>           
+        <nav class="header-menu">
+            <div class="container">
+                <div class="header-menu__wrapper">
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item">
+                            <a href="catalog.html">Каталог</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="brands.html">Бренды</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="technologies.html">Технологии</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="collectors.html">Коллекционеры</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="my-list-not-reg.html">Мои списки</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="#">Дополнительный каталог</a>
+                        </li>
+                    </ul>
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="help.html">Помощь</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="#">Мерч</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="support.html">Поддержка</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="product-section section_breadcrumb" id="product-section">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb__item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="#">Каталог</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="#">Компакт-кассеты</a>
+                </li>
+                <li class="breadcrumb__item">AGFA</li>
+            </ul>
+            <div class="page__head page__head_flex">
+                <h2 class="page__title">Ferro Color 90</h2>
+                <a href="#" class="page__head-link">Редактировать информацию</a>
+            </div>
+            <ul class="gallery-product">
+                <li class="gallery-product__item"><img src="../static/img/cassette-1.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-2.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-1.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-3.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-1.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-2.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-2.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-2.png"></li>
+                <li class="gallery-product__item"><img src="../static/img/cassette-2.png"></li>
+            </ul>
+            <form action="" class="product__form">
+                <div class="product__info">
+                    <div class="product__info-wrapper page__wrapper product__info-wrapper">
+                        <div class="page__left product__left">
+                            <div class="product__block product__specifications">
+                                <h3 class="product__subtitle">Характеристики</h3>
+                                <table class="table-info product__table-info">
+                                    <tr>
+                                        <td style="width: 125px;" class="table-info__name">Бренд</td>
+                                        <td class="table-info__value"><a href="#">AGFA</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Производитель</td>
+                                        <td class="table-info__value"><a href="#">AGFA</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Модель</td>
+                                        <td class="table-info__value"><a href="#">Ferro Color 90</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Серия</td>
+                                        <td class="table-info__value"><a href="#">Super High Fidelity</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Длина ленты</td>
+                                        <td class="table-info__value">
+                                            <ul class="table-info__replase">
+                                                <li>54</li>
+                                                <li>60</li>
+                                                <li class="bold">90</li>
+                                                <li>54</li>
+                                                <li>54</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Тип кассеты</td>
+                                        <td class="table-info__value">Тип I</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Год выпуска</td>
+                                        <td class="table-info__value"><a href="#">1978</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Страна</td>
+                                        <td class="table-info__value"><a href="#">Канада</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Рынок</td>
+                                        <td class="table-info__value"><a href="#">EU</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Штрих-код</td>
+                                        <td class="table-info__value"><img src="../static/img/barcode.png" alt=""></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Купить сейчас</td>
+                                        <td class="table-info__value"><a href="#">Поиск похожих предметов на eBay</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="product__block product__collection">
+                                <h3 class="product__subtitle">Коллекция</h3>
+                                <h4 class="product__collection-title">Состояние</h4>
+                                <table class="table-cust product__collection-table">
+                                    <tr>
+                                        <th>Poor</th>
+                                        <th>Good</th>
+                                        <th>Very Good</th>
+                                        <th>Excellent</th>
+                                        <th>Near mint</th>
+                                        <th>Mint</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input class="product__collection-radio" type="radio" name="condition" id="condition-1" disabled>
+                                            <label for="condition-1">—</label>
+                                        </td>
+                                        <td>
+                                            <input class="product__collection-radio" type="radio" name="condition" id="condition-2" disabled>
+                                            <label for="condition-2">—</label>
+                                        </td>
+                                        <td>
+                                            <input class="product__collection-radio" type="radio" name="condition" id="condition-3" disabled>
+                                            <label for="condition-3">—</label>
+                                        </td>
+                                        <td>
+                                            <input class="product__collection-radio" type="radio" name="condition" id="condition-4">
+                                            <label for="condition-4">$10</label>
+                                        </td>
+                                        <td>
+                                            <input class="product__collection-radio" type="radio" name="condition" id="condition-5" disabled>
+                                            <label for="condition-5">—</label>
+                                        </td>
+                                        <td>
+                                            <input class="product__collection-radio" type="radio" name="condition" id="condition-6">
+                                            <label for="condition-6">$12</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="product__collection-save">
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="save-collection" id="save-collection-1">
+                                        <label for="save-collection-1">В мою коллекцию</label>
+                                    </div>
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="save-collection" id="save-collection-2">
+                                        <label for="save-collection-2">В список желаний</label>
+                                    </div>
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="save-collection" id="save-collection-3">
+                                        <label for="save-collection-3">Обменять</label>
+                                    </div>
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="save-collection" id="save-collection-4">
+                                        <label for="save-collection-4">Продать</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn_fill product__collection-btn">Добавить</button>
+                            </div>
+                            <div class="product__block product__frequencies">
+                                <h3 class="product__subtitle">Frequency Response</h3>
+                                <img class="product__frequencies-image" src="../static/img/frequency.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="page__right product__right">
+                            <h4 class="page__subtitle">Сейчас на eBay</h4>
+                            <ul class="now-ebay product__now-ebay">
+                                <li class="now-ebay__item">
+                                    <a href="#" class="product-small">
+                                        <div class="product-small__image-wrapper">
+                                            <img src="../static/img/cassette-5.jpg" alt="" class="product-small__img">
+                                        </div>
+                                        <h2 class="product-small__name">AGFA MS 400, 1973</h2>
+                                        <p class="product-small__price">789 ₽</p>
+                                    </a>
+                                </li>
+                                <li class="now-ebay__item">
+                                    <a href="#" class="product-small">
+                                        <div class="product-small__image-wrapper">
+                                            <img src="../static/img/cassette-5.jpg" alt="" class="product-small__img">
+                                        </div>
+                                        <h2 class="product-small__name">AGFA MS 400, 1973</h2>
+                                        <p class="product-small__price">789 ₽</p>
+                                    </a>
+                                </li>
+                                <li class="now-ebay__item">
+                                    <a href="#" class="product-small">
+                                        <div class="product-small__image-wrapper">
+                                            <img src="../static/img/cassette-5.jpg" alt="" class="product-small__img">
+                                        </div>
+                                        <h2 class="product-small__name">AGFA MS 400, 1973</h2>
+                                        <p class="product-small__price">789 ₽</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product__variants">
+                        <h3 class="product__subtitle">Варианты</h3>
+                        <div class="product__variants-wrapper">
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-1" name="variant">
+                                <label for="variant-1">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="../static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-2" name="variant">
+                                <label for="variant-2">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="../static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-3" name="variant">
+                                <label for="variant-3">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="../static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-4" name="variant">
+                                <label for="variant-4">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="../static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product__variants">
+                        <h3 class="product__subtitle">Варианты выпуска</h3>
+                        <div class="product__variants-wrapper product__variants-wrapper_not-jcsb">
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release" name="variant-release">
+                                <label for="variant-release-1">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="../static/img/cassette-11.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release-2" name="variant-release">
+                                <label for="variant-release-2">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="../static/img/cassette-11.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release-3" name="variant-release">
+                                <label for="variant-release-3">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="../static/img/cassette-11.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release-4" name="variant-release">
+                                <label for="variant-release-4">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="../static/img/cassette-12.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="product__comments-add">
+                <h2 class="product__comments-title">Комментарии</h2>
+                <p class="product__comments-text">Вы можете помочь улучшить наш каталог, добавив ваш комментарий.</p>
+                <form action="" class="product__comments-form">
+                    <textarea class="textarea-cust" name="comments-add" id="comments-add" placeholder="Оставьте комментарий"></textarea>
+                    <button type="submit" class="product__comments-btn btn btn_fill">Оставить комментарий</button>
+                </form>
+            </div>
+
+            <ul class="product__comments">
+                <li class="product__comments-item">
+                    <div class="comment">
+                        <div class="user ">
+                            <img src="../static/img/avatar.jpg" alt="" class="user__avatar">
+                            <div class="user__wrapper">
+                                <h2 class="user__name">Guillermo Baeza</h2>
+                                <p class="user__nick">[guibami]</p>
+                            </div>
+                        </div>
+                        <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением ленты. Идеально подходит для цифровых источников.
+                        </p>
+                    </div>
+                </li>
+                <li class="product__comments-item">
+                    <div class="comment">
+                        <div class="user ">
+                            <img src="../static/img/avatar.jpg" alt="" class="user__avatar">
+                            <div class="user__wrapper">
+                                <h2 class="user__name">Guillermo Baeza</h2>
+                                <p class="user__nick">[guibami]</p>
+                            </div>
+                        </div>
+                        <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением ленты. Идеально подходит для цифровых источников.
+                        </p>
+                    </div>
+                </li>
+                <li class="product__comments-item">
+                    <div class="comment">
+                        <div class="user ">
+                            <img src="../static/img/avatar.jpg" alt="" class="user__avatar">
+                            <div class="user__wrapper">
+                                <h2 class="user__name">Guillermo Baeza</h2>
+                                <p class="user__nick">[guibami]</p>
+                            </div>
+                        </div>
+                        <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением ленты. Идеально подходит для цифровых источников.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-top">
+                <a href="#" class="logo logo_footer">
+                    <img src="../static/img/logo.jpg" alt="TapeCollector">
+                </a>
+                <ul class="footer-top__menu">
+                    <li class="footer-top__menu-item">
+                        <a href="#">О сайте</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Поддержка</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Условия обслуживания</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-bottom__credits">Copyright © Tape Collector 2022</p>
+                <a href="#" class="footer-bottom__politics">Политика Конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+<script src="js/add.js"></script> 
+    <script src="../static/js/drop-and-drag.js"></script>
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/burger.js"></script>
+    <script src="../static/js/dropdown.js"></script>
+</body>
+</html>

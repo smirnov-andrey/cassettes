@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../static/css/style.css">
+	<title>Document</title>
+</head>
+<body>
+	<section class="lox">
+		<div class="modal-wrapper">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Войти или создать профиль</h1>
+			<button class="authorization-google">Войти с помощью Google</button>
+			<p class="modal__replace">или</p>
+			<form action="" class="modal__form">
+				<input type="text" class="input-cust modal__input" placeholder="Логин">
+				<input type="password" class="input-cust modal__input" placeholder="Пароль">
+				<p class="modal__not-pass">Забыли пароль?</p>
+				<button type="submit" class="btn modal__btn btn_fill">Войти</button>
+			</form>
+			<div class="modal__wrapper">
+				<p class="modal__text">Еще нет аккаунта?</p>
+				<a href="#" class="modal__login">Зарегестрируйтесь.</a>
+			</div>
+		</div>
+	</section>
+
+	<div class="modal">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Регистрация</h1>
+			<p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта.</p>
+			<button class="authorization-google">Войти с помощью Google</button>
+			<p class="modal__replace">или</p>
+			<form action="" class="modal__form">
+				<input type="text" class="input-cust modal__input" placeholder="Логин">
+				<button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
+			</form>
+			<div class="modal__wrapper">
+				<p class="modal__text">Уже есть аккаунт?</p>
+				<a href="#" class="modal__login">Войдите.</a>
+			</div>
+	</div>
+
+	<div class="modal">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Проверьте вашу почту</h1>
+			<p class="modal__text ">Мы выслали инструкцию по активации вашего аккаунта на вашу электронную почту.</p>
+				<button type="submit" class="btn modal__btn btn_fill">Ок</button>
+		</div>
+<script src="js/add.js"></script> 
+    <script src="../static/js/drop-and-drag.js"></script>
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/burger.js"></script>
+    <script src="../static/js/dropdown.js"></script>
+</body>
+</html>

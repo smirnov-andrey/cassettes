@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Кассеты</title>
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal__wrapper">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Войти или создать профиль</h1>
+			<button class="authorization-google">Войти с помощью Google</button>
+			<p class="modal__replace">или</p>
+			<form action="" class="modal__form">
+				<input type="text" class="input-cust modal__input" placeholder="Логин">
+				<input type="password" class="input-cust modal__input" placeholder="Пароль">
+				<p class="modal__not-pass">Забыли пароль?</p>
+				<button type="submit" class="btn modal__btn btn_fill">Войти</button>
+			</form>
+			<div class="modal__wrapper-block">
+				<p class="modal__text">Еще нет аккаунта?</p>
+				<a href="#" class="modal__login">Зарегестрируйтесь.</a>
+			</div>
+		</div>
+    </div>
+
+    <!--  -->
+
+    <div class="modal" id="regModal">
+        <div class="modal__wrapper">
+            <img src="../static/img/close-icon.svg" alt="" class="modal__close">
+            <h1 class="modal__title">Регистрация</h1>
+            <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта.</p>
+            <button class="authorization-google">Войти с помощью Google</button>
+            <p class="modal__replace">или</p>
+            <form action="" class="modal__form">
+                <input type="text" class="input-cust modal__input" placeholder="Логин">
+                <button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
+            </form>
+            <div class="modal__wrapper-block">
+                <p class="modal__text">Уже есть аккаунт?</p>
+                <a href="#" class="modal__login">Войдите.</a>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <header class="header" id="header">
+        <div class="header__wrapper">
+            <div class="container">
+                <div class="header-top">
+                    <a href="#" class="logo">
+                        <img src="../static/img/logo.jpg" alt="TapeCollector">
+                    </a>
+                    <div class="header-top__search">
+                        <input type="text" placeholder="Поиск">
+                    </div>
+                    <div class="header-top__wrapper">
+                        <div class="header-top__change-lang dropdown">
+                            <button class="header-top__lang dropdown__select">English</button>
+                            <ul class="dropdown__options header-top__options">
+                                <li data-value="По бренду" class="active">English</li>
+                                <li data-value="По бренду">Русский</li>
+                                <li data-value="По бренду">...</li>
+                            </ul>
+                        </div>
+                        <div class="header-top__profile">
+                            <button type="button" class="btn btn_ghost header-top__btn-login btn-modal" data-modal="loginModal">Вход</button>
+                            <button type="button" class="btn btn_fill header-top__btn-registration btn-modal" data-modal="regModal">Регистрация</button>
+                        </div>
+                    </div>
+                    <button class="burger">
+                        <span></span>
+                    </button>
+                </div>
+    
+                <div class="header-brands">
+                    <ul class="header-brands__audio-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/compact-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/8-track.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/dcc.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/mini-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/microcassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/elcaset.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="header-brands__line"></span>
+                    <ul class="header-brands__video-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs-c.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/hi-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/digital-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/betamax.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/mini-dv.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>           
+        <nav class="header-menu">
+            <div class="container">
+                <div class="header-menu__wrapper">
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item">
+                            <a href="catalog.html">Каталог</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="brands.html">Бренды</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="technologies.html">Технологии</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="collectors.html">Коллекционеры</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="my-list-not-reg.html">Мои списки</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="#">Дополнительный каталог</a>
+                        </li>
+                    </ul>
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="help.html">Помощь</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="#">Мерч</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="support.html">Поддержка</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="catalog catalog_page" id="catalog">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb__item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb__item">Каталог</li>
+            </ul>
+            <h2 class="page__title catalog__title">Каталог</h2>
+            <div class="categories">
+                <ul class="categories__list">
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-1.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">500 Компакт кассет</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-2.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">122 Трак-8</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-3.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">2000 Катушек</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-4.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">125 Миникассеты</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-5.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">125 Микрокассеты</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-6.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">4567 DCC</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-7.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">5006 Elcaset</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <span class="categories__line"></span>
+                <ul class="categories__list">
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-8.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">500 VHS</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-9.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">122 Video8/Hi8</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-10.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">2000 Hi video</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-11.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">125 Betamax</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-12.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">125 VHS-C</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-13.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">4567 miniDV</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="categories__item">
+                        <a href="" class="categories__link">
+                            <img src="../static/img/categories/categories-14.png" alt="" class="categories__img">
+                            <div class="categories__wrapper">
+                             <h1 class="categories__title">5006 Кинопленка</h1>
+                             <p class="categories__ads-count">30 Объявлений</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>                       
+        </div>
+    </section>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-top">
+                <a href="#" class="logo logo_footer">
+                    <img src="../static/img/logo.jpg" alt="TapeCollector">
+                </a>
+                <ul class="footer-top__menu">
+                    <li class="footer-top__menu-item">
+                        <a href="#">О сайте</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Поддержка</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Условия обслуживания</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-bottom__credits">Copyright © Tape Collector 2022</p>
+                <a href="#" class="footer-bottom__politics">Политика Конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+<script src="js/add.js"></script> 
+    <script src="../static/js/drop-and-drag.js"></script>
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/burger.js"></script>
+    <script src="../static/js/dropdown.js"></script>
+</body>
+</html>
+
+
+<div class="comment-last">
+    
+</div>

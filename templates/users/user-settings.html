@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="settings" id="settings">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container">
+                <h1 class="page__title settings__title">Настройки личного кабинета</h1>
+                <div class="settings__wrapeer">
+                    <div class="setting__left-block">
+                        <div class="settings__block">
+                            <h2 class="settings__title-block">Персональная информация</h2>
+                            <p class="settings__text-bold">Фото</p>
+                            {% if form.image %}
+                                <img src="{{ form.image.value.url }}" name="image" alt="" class="settings__user-avatar">
+                                <a href="#" class="link_underline settings__link-delete">Удалить фото</a>
+                                <input type="checkbox" name="image-clear" id="image-clear_id">
+                            {% endif %}
+                            <input type="file" class="invisible" name="image" id="dowload-img" accept="image/*">
+                            <label for="dowload-img" class="btn btn_ghost settings__select-img">Выбрать фото</label>
+
+                        </div>
+                        <div class="settings__block">
+                            <div class="settings__block-edit">
+                                <a href="{% url 'users:password_change' %}" class="link_underline settings__link-edit">Изменить
+                                    пароль</a>
+                            </div>
+                            <table class="table__inputs">
+                                <tr>
+                                    <td class="table__inputs-text settings__text-bold">
+                                        Email
+                                    </td>
+                                    <td class="table__inputs-value">
+                                        <input type="text" name="email" class="input-cust input-cust_fz14"
+                                               value="{{ form.email.value }}" placeholder="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table__inputs-text settings__text-bold">
+                                        Страна *
+                                    </td>
+                                    <td class="table__inputs-value dropdown">
+                                        {{ form.country }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="table__inputs-text settings__text-bold">
+                                        Язык
+                                    </td>
+                                    <td class="table__inputs-value dropdown">
+                                        {{ form.language }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table__inputs-text settings__text-bold">
+                                        День рождения
+                                    </td>
+                                    <td class="table__inputs-value">
+                                        <input type="text" name="born_date" class="input-cust input-cust_fz14"
+                                               value="{{ form.born_date.value|date:"Y-m-d" }}"
+                                               placeholder="{{ form.born_date.help_text }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="table__inputs-text settings__text-bold">
+                                        Личный вебсайт
+                                    </td>
+                                    <td class="table__inputs-value settings__inputs-value">
+                                        <input type="text" name="website" class="input-cust input-cust_fz14"
+                                               value="{{ form.website.value }}">
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="settings__textarea">
+                                <p class="settings__text-bold settings__title">О себе</p>
+                                <textarea name="bio" class="textarea-cust">{{ form.bio.value }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting__right-block">
+                        <div class="settings__block">
+                            <h2 class="settings__title-block">Персональная информация</h2>
+                            <p class="settings__text">Премиум подписка дает возможность пользоваться несколькими
+                                полезными
+                                дополнительными функциями. Мы даем возможность получить все преимущества Премиум
+                                подписки
+                                бесплатно в течение 14 дней.</p>
+                            <button class="btn btn_ghost">Оформить подписку</button>
+                        </div>
+                        <div class="settings__block">
+                            <h2 class="settings__title-block">Конфиденциальность</h2>
+                            <div class="settings__wrapper-checkbox">
+                                <div class="checkbox-cust">
+                                    <input class="checkbox-cust__input" type="checkbox" name="privacy" id="privacy-1">
+                                    <label for="save-collection-4">Не показывать настоящее имя</label>
+                                </div>
+                                <div class="checkbox-cust">
+                                    <input class="checkbox-cust__input" type="checkbox" name="privacy" id="privacy-2">
+                                    <label for="save-collection-4">Скрыть аккаунт из поиска</label>
+                                </div>
+                                <div class="checkbox-cust">
+                                    <input class="checkbox-cust__input" type="checkbox" name="privacy" id="privacy-3">
+                                    <label for="save-collection-4">Скрыть возраст</label>
+                                </div>
+                            </div>
+                            <a href="#" class="settings__del-user">Удалить аккаунт</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn_fill setting__btn">Сохранить изменения</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

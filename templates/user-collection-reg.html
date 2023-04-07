@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Кассеты</title>
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal__wrapper">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Войти или создать профиль</h1>
+			<button class="authorization-google">Войти с помощью Google</button>
+			<p class="modal__replace">или</p>
+			<form action="" class="modal__form">
+				<input type="text" class="input-cust modal__input" placeholder="Логин">
+				<input type="password" class="input-cust modal__input" placeholder="Пароль">
+				<p class="modal__not-pass">Забыли пароль?</p>
+				<button type="submit" class="btn modal__btn btn_fill">Войти</button>
+			</form>
+			<div class="modal__wrapper-block">
+				<p class="modal__text">Еще нет аккаунта?</p>
+				<a href="#" class="modal__login">Зарегестрируйтесь.</a>
+			</div>
+		</div>
+    </div>
+
+    <!--  -->
+
+    <div class="modal" id="regModal">
+        <div class="modal__wrapper">
+            <img src="../static/img/close-icon.svg" alt="" class="modal__close">
+            <h1 class="modal__title">Регистрация</h1>
+            <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта.</p>
+            <button class="authorization-google">Войти с помощью Google</button>
+            <p class="modal__replace">или</p>
+            <form action="" class="modal__form">
+                <input type="text" class="input-cust modal__input" placeholder="Логин">
+                <button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
+            </form>
+            <div class="modal__wrapper-block">
+                <p class="modal__text">Уже есть аккаунт?</p>
+                <a href="#" class="modal__login">Войдите.</a>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <header class="header" id="header">
+        <div class="header__wrapper">
+            <div class="container">
+                <div class="header-top">
+                    <a href="#" class="logo">
+                        <img src="../static/img/logo.jpg" alt="TapeCollector">
+                    </a>
+                    <div class="header-top__search">
+                        <input type="text" placeholder="Поиск">
+                    </div>
+                    <div class="header-top__wrapper">
+                        <div class="header-top__change-lang dropdown">
+                            <button class="header-top__lang dropdown__select">English</button>
+                            <ul class="dropdown__options header-top__options">
+                                <li data-value="По бренду" class="active">English</li>
+                                <li data-value="По бренду">Русский</li>
+                                <li data-value="По бренду">...</li>
+                            </ul>
+                        </div>
+                        <div class="header-top__profile">
+                            <button type="button" class="btn btn_ghost header-top__btn-login btn-modal" data-modal="loginModal">Вход</button>
+                            <button type="button" class="btn btn_fill header-top__btn-registration btn-modal" data-modal="regModal">Регистрация</button>
+                        </div>
+                    </div>
+                    <button class="burger">
+                        <span></span>
+                    </button>
+                </div>
+    
+                <div class="header-brands">
+                    <ul class="header-brands__audio-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/compact-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/8-track.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/dcc.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/mini-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/microcassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/elcaset.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="header-brands__line"></span>
+                    <ul class="header-brands__video-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs-c.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/hi-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/digital-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/betamax.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/mini-dv.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>           
+        <nav class="header-menu">
+            <div class="container">
+                <div class="header-menu__wrapper">
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item">
+                            <a href="catalog.html">Каталог</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="brands.html">Бренды</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="technologies.html">Технологии</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="collectors.html">Коллекционеры</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="my-list-not-reg.html">Мои списки</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="#">Дополнительный каталог</a>
+                        </li>
+                    </ul>
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="help.html">Помощь</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="#">Мерч</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="support.html">Поддержка</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="collector-user section_breadcrumb" id="collector-user">
+        <div class="container">
+            <div class="collector-user__wrapper">
+                <div class="collector-user__list">
+                    <h4 class="collector-user__list-title">Мои списки</h4>
+                    <a href="#" class="collector-user__buy-object">Купить предменты из списка желаний</a>
+                    <a href="#" class="collector-user__print">Распечатать коллекцию</a>
+                    <ul class="tabs__list">
+                        <li class="tabs__item active">
+                            <a href="#" class="tabs__link">
+                                <img src="../static/img/collection.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Коллекция</h4>
+                                <p class="tabs__count">1 200</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../static/img/magic-wand-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Список желаний</h4>
+                                <p class="tabs__count">23</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../static/img/exchange-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Обмен</h4>
+                                <p class="tabs__count">89</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../static/img/shopping-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Продажа</h4>
+                                <p class="tabs__count">11</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+               <div class="collector-user__collection">
+                    <div class="page__head">
+                        <h2 class="page__title collector-user__title">Коллекция Guillermo</h2>
+                    </div>
+                    <div class="position collection__position">
+                        <div class="position__wrapper">
+                            <div class="position__search">
+                                <input type="text" placeholder="Поиск">
+                                <button type="submit" class="btn btn_fill">Найти</button>
+                            </div>
+                            <div class="position__sorting">
+                                <p class="position__sort-text">Сортировать по:</p>
+                                <div class="position__sort-drop dropdown">
+                                    <button type="button" class="dropdown__select position__sort-select">По бренду</button>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="active">По бренду</li>
+                                        <li data-value="По бренду">По количеству кассет в каталоге</li>
+                                        <li data-value="По бренду">По количеству кассет в коллекции</li>
+                                        <li data-value="По бренду">По стране</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <script src="js/dropdown.js"></script> -->
+                        <ul class="sort-by-card">
+                            <li class="sort-by-card__item">
+                                <a href="#"> Категория</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">Бренд</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">Год</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">Страна</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">Рынок</a>
+                            </li>
+                        </ul>
+                        <ul class="sort-by-word">
+                            <li class="sort-by-word__item">
+                                <a href="#">A</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">B</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">C</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">D</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">E</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">F</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">G</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">H</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">I</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">J</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">K</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">L</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">M</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">N</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">O</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">P</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">Q</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">R</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">S</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">T</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">U</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">V</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">W</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">X</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">Y</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">Z</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">123</a>
+                            </li>
+                        </ul>
+                        <table class="table-cust">
+                            <tr>
+                                <th style="width: 5%;"></th>
+                                <th style="width: 10%;">Производитель</th>
+                                <th>Модель</th>
+                                <th> Тип ленты</th>
+                                <th>Серия</th>
+                                <th>Длительность</th>
+                                <th style="width: 6%;">Год</th>
+                                <th>Страна-производитель</th>
+                                <th style="width: 15%;">Рынок</th>
+                                <th>Информация</th>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 400</td>
+                                <td>Тип I</td>
+                                <td>Super High Fidelity</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info correct">Требуется уточнение</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 500</td>
+                                <td>Тип I</td>
+                                <td>Super High Fidelity</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info not-info">Требуется информация</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 600</td>
+                                <td>Тип I</td>
+                                <td>Another Series</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info data">Полные данные</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 400</td>
+                                <td>Тип I</td>
+                                <td>Super High Fidelity</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info correct">Требуется уточнение</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 500</td>
+                                <td>Тип I</td>
+                                <td>Super High Fidelity</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info not-info">Требуется информация</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 600</td>
+                                <td>Тип I</td>
+                                <td>Another Series</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info data">Полные данные</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>
+                                <td class="table-cust__medium">AGFA</td>
+                                <td>MS 500</td>
+                                <td>Тип I</td>
+                                <td>Super High Fidelity</td>
+                                <td>С - 90</td>
+                                <td>1973</td>
+                                <td>Австралия</td>
+                                <td>Новый Южный Уэльс</td>
+                                <td>
+                                    <p class="info not-info">Требуется информация</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-top">
+                <a href="#" class="logo logo_footer">
+                    <img src="../static/img/logo.jpg" alt="TapeCollector">
+                </a>
+                <ul class="footer-top__menu">
+                    <li class="footer-top__menu-item">
+                        <a href="#">О сайте</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Поддержка</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Условия обслуживания</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-bottom__credits">Copyright © Tape Collector 2022</p>
+                <a href="#" class="footer-bottom__politics">Политика Конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../static/js/dropdown.js"></script>
+<script src="js/add.js"></script> 
+    <script src="../static/js/drop-and-drag.js"></script>
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/burger.js"></script>
+    <script src="../static/js/dropdown.js"></script>
+</body>
+</html>

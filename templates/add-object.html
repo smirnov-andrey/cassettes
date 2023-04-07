@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Кассеты</title>
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal__wrapper">
+			<img src="../static/img/close-icon.svg" alt="" class="modal__close">
+			<h1 class="modal__title">Войти или создать профиль</h1>
+			<button class="authorization-google">Войти с помощью Google</button>
+			<p class="modal__replace">или</p>
+			<form action="" class="modal__form">
+				<input type="text" class="input-cust modal__input" placeholder="Логин">
+				<input type="password" class="input-cust modal__input" placeholder="Пароль">
+				<p class="modal__not-pass">Забыли пароль?</p>
+				<button type="submit" class="btn modal__btn btn_fill">Войти</button>
+			</form>
+			<div class="modal__wrapper-block">
+				<p class="modal__text">Еще нет аккаунта?</p>
+				<a href="#" class="modal__login">Зарегестрируйтесь.</a>
+			</div>
+		</div>
+    </div>
+
+    <!--  -->
+
+    <div class="modal" id="regModal">
+        <div class="modal__wrapper">
+            <img src="../static/img/close-icon.svg" alt="" class="modal__close">
+            <h1 class="modal__title">Регистрация</h1>
+            <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта.</p>
+            <button class="authorization-google">Войти с помощью Google</button>
+            <p class="modal__replace">или</p>
+            <form action="" class="modal__form">
+                <input type="text" class="input-cust modal__input" placeholder="Логин">
+                <button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
+            </form>
+            <div class="modal__wrapper-block">
+                <p class="modal__text">Уже есть аккаунт?</p>
+                <a href="#" class="modal__login">Войдите.</a>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+    <header class="header" id="header">
+        <div class="header__wrapper">
+            <div class="container">
+                <div class="header-top">
+                    <a href="#" class="logo">
+                        <img src="../static/img/logo.jpg" alt="TapeCollector">
+                    </a>
+                    <div class="header-top__search">
+                        <input type="text" placeholder="Поиск">
+                    </div>
+                    <div class="header-top__wrapper">
+                        <div class="header-top__change-lang dropdown">
+                            <button class="header-top__lang dropdown__select">English</button>
+                            <ul class="dropdown__options header-top__options">
+                                <li data-value="По бренду" class="active">English</li>
+                                <li data-value="По бренду">Русский</li>
+                                <li data-value="По бренду">...</li>
+                            </ul>
+                        </div>
+                        <div class="header-top__profile">
+                            <button type="button" class="btn btn_ghost header-top__btn-login btn-modal" data-modal="loginModal">Вход</button>
+                            <button type="button" class="btn btn_fill header-top__btn-registration btn-modal" data-modal="regModal">Регистрация</button>
+                        </div>
+                    </div>
+                    <button class="burger">
+                        <span></span>
+                    </button>
+                </div>
+    
+                <div class="header-brands">
+                    <ul class="header-brands__audio-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/compact-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/8-track.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/dcc.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/mini-cassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/microcassette.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Audio-cassette/elcaset.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                    <span class="header-brands__line"></span>
+                    <ul class="header-brands__video-cassette">
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/vhs-c.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/hi-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/digital-8.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/betamax.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/mini-dv.png" alt="">
+                            </a>
+                        </li>
+                        <li class="header-brands__item">
+                            <a href="#" class="header-brands__link">
+                                <img src="../static/img/Video-cassette/reel.png" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>           
+        <nav class="header-menu">
+            <div class="container">
+                <div class="header-menu__wrapper">
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item">
+                            <a href="catalog.html">Каталог</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="brands.html">Бренды</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="technologies.html">Технологии</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="collectors.html">Коллекционеры</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="my-list-not-reg.html">Мои списки</a>
+                        </li>
+                        <li class="header-menu__item">
+                            <a href="#">Дополнительный каталог</a>
+                        </li>
+                    </ul>
+                    <ul class="header-menu__list">
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="help.html">Помощь</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="#">Мерч</a>
+                        </li>
+                        <li class="header-menu__item header-menu__item_left">
+                            <a href="support.html">Поддержка</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+   <section class="settings" id="settings">
+       <div class="container">
+            <h1 class="page__title settings__title">Добавить предмет</h1>
+            <div class="settings__wrapeer">
+                <div class="setting__left-block">
+                    <div class="settings__block">
+                        <h2 class="settings__title-block">Характеристики</h2>
+                        <table class="table__inputs">
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Бренд *
+                                </td>
+                                <td class="table__inputs-value">
+                                    <input type="text" class="input-cust" placeholder="Название бренда">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Производитель
+                                </td>
+                                <td class="table__inputs-value ">
+                                    <input type="text" class="input-cust" placeholder="Производитель">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Модель
+                                </td>
+                                <td class="table__inputs-value dropdown">
+                                    <input type="text" class="input-cust" placeholder="Модель">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Серия
+                                </td>
+                                <td class="table__inputs-value">
+                                    <input type="text" class="input-cust" placeholder="Серия">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Длина ленты *
+                                </td>
+                                <td class="table__inputs-value dropdown">
+                                    <div class="dropdown__select dropdown__select_long">Не указано</div>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="">...</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Тип кассеты *
+                                </td>
+                                <td class="table__inputs-value dropdown">
+                                    <div class="dropdown__select dropdown__select_long">Не указано</div>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="">...</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Год выпуска
+                                </td>
+                                <td class="table__inputs-value dropdown">
+                                    <div class="dropdown__select dropdown__select_long">Не указано</div>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="">...</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Страна
+                                </td>
+                                <td class="table__inputs-value dropdown">
+                                    <div class="dropdown__select dropdown__select_long">Не указано</div>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="">...</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text-bold">
+                                    Рынок
+                                </td>
+                                <td class="table__inputs-value dropdown">
+                                    <div class="dropdown__select dropdown__select_long">Не указано</div>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="">...</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="settings__wrapper">
+                            <p class="settings__text-bold">Дополнительные параметры</p>
+                            <div class="settings__wrapper-checkbox_objects">
+                                <div class="checkbox-cust settings__checkbox">
+                                    <input class="checkbox-cust__input" type="checkbox" name="parametrs" id="parametrs-1">
+                                    <label for="parametrs-1">Катушка</label>
+                                </div>
+                                <div class="checkbox-cust settings__checkbox">
+                                    <input class="checkbox-cust__input" type="checkbox" name="parametrs" id="parametrs-2">
+                                    <label for="parametrs-2">Слим кейс</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings__block">
+                        <div class="settings__textarea">
+                            <p class="settings__title-block">Комментарий</p>
+                            <textarea class="textarea-cust" placeholder="Комментарий"></textarea>
+                        </div>
+                    </div>
+                    <div class="settings__block">
+                        <p class="settings__title-block">Коллекция</p>
+                        <div class="settings__collection-wrapper">
+                            <div class="settings__collection">
+                                <p class="settings__text-bold settings__collection-title">Состояние</p>
+                                <div class="dropdown">
+                                    <div class="dropdown__select dropdown__select_long">Не указано</div>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="">...</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="settings__collection">
+                                <p class="settings__text-bold settings__collection-title">Цена</p>
+                                <input type="text"class="input-cust input-cust_fz14" placeholder="Цена">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting__right-block">
+                    <div class="settings__block">
+                        <p class="settings__title-block">Загрузить фото</p>
+                        <div class="add-photo__wrapper">
+                            <div class="add-photo">
+                            <p class="add-photo__text">Передняя сторона упаковки</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-1">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-1" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Задняя сторона упаковки</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-2">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-2" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Торец упаковки</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-3">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-3" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Передняя сторона коробки</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-4">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-4" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Задняя сторона коробки</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-5">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-5" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Описание 1</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-6">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-6" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Описание 2</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-7">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-7" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Предмет (Сторона А)</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-8">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-8" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Предмет (Сторона Б)</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-9">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-9" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Общий вид (Коробка)</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-10">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-10" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Общий вид (Предмет)</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-11">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-11" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        <div class="add-photo">
+                            <p class="add-photo__text">Общий вид</p>
+                            <input type="file" class="invisible add-photo__inputChange" id="add-photo-12">
+                            <img src="" alt="" class="add-photo-image">
+                            <label class="add-photo__input add-photo__input_plus" for="add-photo-12" style="background: url('../static/img/photo-prev.jpg') no-repeat center center / contain;">
+                                
+                            </label>
+                             <span class="add-photo-delete">
+                                <img src="../static/img/delete-photo.svg" alt="">
+                            </span>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="settings__block">
+                        <p class="settings__title-block">Дополнительные данные</p>
+                        <div class="settings__dropanddrop">
+                            <p class="settings__text-bold settings__collection-title">Frequency Response</p>
+                            <div id="dropContainer" class="dropContainer">
+                                <div class="dropContainer__wrapper">
+                                    <label for="fileInput-1" class="btn btn_ghost dropContainer__btn">Выберите фото</label>
+                                    <span>Или перетащите сюда</span>
+                                </div>
+                                <div class="dropContainer__image-wrapper">
+                                    <img class="preview" src="" alt="">
+                                    <span class="img-delete">
+                                        <img src="../static/img/delete-photo.svg" alt="">
+                                    </span>
+                                </div>
+                                <input type="file" id="fileInput-1" class="fileInput invisible" />
+                            </div>
+                        </div>
+                        <div class="settings__dropanddrop">
+                            <p class="settings__text-bold settings__collection-title">Добавить штрихкод</p>
+                            <div id="dropContainer" class="dropContainer">
+                                <div class="dropContainer__wrapper">
+                                    <label for="fileInput-2" class="btn btn_ghost dropContainer__btn">Выберите фото</label>
+                                    <span>Или перетащите сюда</span>
+                                </div>
+                                <div class="dropContainer__image-wrapper">
+                                    <img class="preview" src="" alt="">
+                                    <span class="img-delete">
+                                        <img src="../static/img/delete-photo.svg" alt="">
+                                    </span>
+                                </div>
+                                <input type="file" id="fileInput-2" class="fileInput invisible" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn_fill setting__btn">Сохранить изменения</button>
+       </div>
+   </section>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-top">
+                <a href="#" class="logo logo_footer">
+                    <img src="../static/img/logo.jpg" alt="TapeCollector">
+                </a>
+                <ul class="footer-top__menu">
+                    <li class="footer-top__menu-item">
+                        <a href="#">О сайте</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Поддержка</a>
+                    </li>
+                    <li class="footer-top__menu-item">
+                        <a href="#">Условия обслуживания</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-bottom__credits">Copyright © Tape Collector 2022</p>
+                <a href="#" class="footer-bottom__politics">Политика Конфиденциальности</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../static/js/add-photo.js"></script>
+    <script src="../static/js/drop-and-drag.js"></script>
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/burger.js"></script>
+    <script src="../static/js/dropdown.js"></script>
+</body>
+</html>
