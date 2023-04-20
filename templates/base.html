@@ -16,7 +16,7 @@
         <h1 class="modal__title">Войти или создать профиль</h1>
         <a href="/accounts/google/login/" class="authorization-google">Войти с помощью Google</a>
         <p class="modal__replace">или</p>
-        <form action="{{ login_url }}" class="modal__form" method="post">
+        <form action="{% url 'users:login' %}" class="modal__form" method="post">
             {% csrf_token %}
             <input type="text" name="username" class="input-cust modal__input" placeholder="Email">
             <input type="password" name="password" class="input-cust modal__input" placeholder="Пароль">
@@ -238,5 +238,6 @@
 <script src="{% static 'js/modal.js' %} "></script>
 <script src="{% static 'js/burger.js' %}"></script>
 <script src="{% static 'js/dropdown.js' %}"></script>
+
 </body>
 </html>
