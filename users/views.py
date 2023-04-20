@@ -14,6 +14,13 @@ from django.urls import reverse_lazy, reverse
 # Импортируем класс формы, чтобы сослаться на неё во view-классе
 from .forms import CreationForm, ProfileForm
 
+from allauth.account.views import SignupView, LoginView, PasswordResetView
+
+
+class GoogleSignInView(SignupView):
+    template_name = 'users/google-signup.html'
+
+
 User = get_user_model()
 
 
