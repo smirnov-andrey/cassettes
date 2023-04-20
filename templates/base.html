@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load static socialaccount %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -12,38 +12,43 @@
 <!-- Modal -->
 <div class="modal" id="loginModal">
     <div class="modal__wrapper">
-        <img src="{% static '' %}/static/img/close-icon.svg" alt="" class="modal__close">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
         <h1 class="modal__title">Войти или создать профиль</h1>
-        <button class="authorization-google">Войти с помощью Google</button>
+        <a href="/accounts/google/login/" class="authorization-google">Войти с помощью Google</a>
         <p class="modal__replace">или</p>
-        <form action="" class="modal__form">
-            <input type="text" class="input-cust modal__input" placeholder="Логин">
-            <input type="password" class="input-cust modal__input" placeholder="Пароль">
+        <form action="{{ login_url }}" class="modal__form" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" class="input-cust modal__input" placeholder="Email">
+            <input type="password" name="password" class="input-cust modal__input" placeholder="Пароль">
             <p class="modal__not-pass">Забыли пароль?</p>
             <button type="submit" class="btn modal__btn btn_fill">Войти</button>
         </form>
         <div class="modal__wrapper-block">
             <p class="modal__text">Еще нет аккаунта?</p>
-            <a href="#" class="modal__login">Зарегестрируйтесь.</a>
+            <a href="#" class="modal__login header-top__btn-registration btn-modal" data-modal="regModal">Зарегистрируйтесь.</a>
         </div>
     </div>
 </div>
 <!--  -->
 <div class="modal" id="regModal">
     <div class="modal__wrapper">
-        <img src="{% static '' %}/static/img/close-icon.svg" alt="" class="modal__close">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
         <h1 class="modal__title">Регистрация</h1>
         <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее
             ссылку для создания нового аккаунта.</p>
-        <button class="authorization-google">Войти с помощью Google</button>
+        <a href="{% provider_login_url 'google' %}" class="authorization-google">Войти с помощью Google</a>
         <p class="modal__replace">или</p>
-        <form action="" class="modal__form">
-            <input type="text" class="input-cust modal__input" placeholder="Логин">
+        <form class="modal__form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            <input type="text" name="email" class="input-cust modal__input" placeholder="Email">
+            <input type="text" name="username" class="input-cust modal__input" placeholder="Username">
+            <input type="password" name="password1" class="input-cust modal__input" placeholder="Password">
+            <input type="password" name="password2" class="input-cust modal__input" placeholder="Password repeat">
             <button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
         </form>
         <div class="modal__wrapper-block">
             <p class="modal__text">Уже есть аккаунт?</p>
-            <a href="#" class="modal__login">Войдите.</a>
+            <a href="#" class="modal__login header-top__btn-registration btn-modal" data-modal="loginModal">Войдите</a>
         </div>
     </div>
 </div>
@@ -63,20 +68,19 @@
                         <button class="header-top__lang dropdown__select">English</button>
                         <ul class="dropdown__options header-top__options">
                             <li data-value="По бренду" class="active">English</li>
-                            <li data-value="По бренду">Русский</li>
-                            <li data-value="По бренду">...</li>
+                            <li data-value="По бренду">Russian</li>
                         </ul>
                     </div>
                     <div class="header-top__profile">
                         {% if request.user.is_authenticated %}
-                            <a href="{% url 'users:profile' %}">{{ request.user.username }}</a>
+                            <a href="{% url 'users:profile' %}">{{ request.user.username }}</a> |
+                            <a href="{% url 'users:logout' %}">Logout</a>
                         {% else %}
                             <button type="button" class="btn btn_ghost header-top__btn-login btn-modal"
-                                data-modal="loginModal">Вход
-                        </button>
-                        <button type="button" class="btn btn_fill header-top__btn-registration btn-modal"
-                                data-modal="regModal">Регистрация
-                        </button>
+                                    data-modal="loginModal">Вход
+                            </button>
+                            <a class="btn btn_fill header-top__btn-registration btn-modal" href="{% url 'users:signup' %}">Регистрация</a>
+
                         {% endif %}
                     </div>
                 </div>
@@ -89,32 +93,32 @@
                 <ul class="header-brands__audio-cassette">
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Audio-cassette/compact-cassette.png' %}" alt="">
+                            <img src="{% static 'img/Audio-cassette/compact-cassette.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Audio-cassette/8-track.png' %}" alt="">
+                            <img src="{% static 'img/Audio-cassette/8-track.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Audio-cassette/reel.png' %}" alt="">
+                            <img src="{% static 'img/Audio-cassette/reel.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Audio-cassette/dcc.png' %}" alt="">
+                            <img src="{% static 'img/Audio-cassette/dcc.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Audio-cassette/mini-cassette.png' %}" alt="">
+                            <img src="{% static 'img/Audio-cassette/mini-cassette.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Audio-cassette/microcassette.png' %}" alt="">
+                            <img src="{% static 'img/Audio-cassette/microcassette.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
@@ -127,37 +131,37 @@
                 <ul class="header-brands__video-cassette">
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/vhs.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/vhs.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/vhs-c.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/vhs-c.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/hi-8.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/hi-8.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/digital-8.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/digital-8.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/betamax.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/betamax.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/mini-dv.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/mini-dv.png' %}" alt="">
                         </a>
                     </li>
                     <li class="header-brands__item">
                         <a href="#" class="header-brands__link">
-                            <img src="{% static '/img/Video-cassette/reel.png' %}" alt="">
+                            <img src="{% static 'img/Video-cassette/reel.png' %}" alt="">
                         </a>
                     </li>
                 </ul>
@@ -209,7 +213,7 @@
     <div class="container">
         <div class="footer-top">
             <a href="#" class="logo logo_footer">
-                <img src="{% static 'img/logo.jpg'%}" alt="TapeCollector">
+                <img src="{% static 'img/logo.jpg' %}" alt="TapeCollector">
             </a>
             <ul class="footer-top__menu">
                 <li class="footer-top__menu-item">
@@ -229,10 +233,10 @@
         </div>
     </div>
 </footer>
-<script src="{% static 'static/js/add-photo.js' %}"></script>
-<script src="{% static 'static/js/drop-and-drag.js' %}"></script>
-<script src="{% static 'static/js/modal.js' %} "></script>
-<script src="{% static 'static/js/burger.js' %}"></script>
-<script src="{% static 'static/js/dropdown.js' %}"></script>
+<script src="{% static 'js/add-photo.js' %}"></script>
+<script src="{% static 'js/drop-and-drag.js' %}"></script>
+<script src="{% static 'js/modal.js' %} "></script>
+<script src="{% static 'js/burger.js' %}"></script>
+<script src="{% static 'js/dropdown.js' %}"></script>
 </body>
 </html>

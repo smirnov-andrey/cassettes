@@ -459,7 +459,7 @@ section{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: ;
+    margin-bottom:10px;
 }
 
 .dropContainer__btn{
@@ -1944,6 +1944,7 @@ section{
 }
 
 .collector-user__premium {
+    margin: 0px 10px;
     width: 250px;
     padding: 17px 15px 22px;
     border: 1px solid #F2EBE0;

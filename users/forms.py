@@ -8,13 +8,24 @@ User = get_user_model()
 #  создадим собственный класс для формы регистрации
 #  сделаем его наследником предустановленного класса UserCreationForm
 class CreationForm(UserCreationForm):
+    username = forms.CharField(label='search',
+                        widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    email = forms.CharField(label='search',
+                               widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+    password1 = forms.CharField(label='search',
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    password2 = forms.CharField(label='search',
+                                 widget=forms.PasswordInput(attrs={'placeholder': 'Password repeat'}))
     class Meta(UserCreationForm.Meta):
         # укажем модель, с которой связана создаваемая форма
         model = User
         # укажем, какие поля должны быть видны в форме и в каком порядке
-        fields = ('first_name', 'last_name', 'username', 'email')
+        fields = ('username', 'email')
 
-
+    def __init__(self, *args, **kwargs):
+        super(CreationForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'input-cust modal__input'
 class ProfileForm(forms.ModelForm):
 
     class Meta:

@@ -23,7 +23,8 @@ urlpatterns = [
     path('password_change/', PasswordChangeView.as_view(template_name='users/edit-password.html'),
          name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(template_name='users/edit-password-done.html'),
-         name='password_change'),
+         name='password_change_done'),
     path('profile/', Profile.as_view(), name='profile'),
     path('profile-update/', ProfileUpdate.as_view(), name='profile-update'),
 ]
+

@@ -1,9 +1,37 @@
 {% extends "base.html" %}
 {% block title %}Зарегистрироваться{% endblock %}
 {% block content %}
-  <form method="post" action="{% url 'users:signup' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Зарегистрироваться">
-  </form>
+    <section class="my-list" id="my-list">
+        <div class="container">
+            <div class="page__content-center">
+                <div class="card-body">
+                    <div>
+                        <h1 class="modal__title">Signup</h1>
+                        <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы
+                            отправим на нее
+                            ссылку для создания нового аккаунта.</p>
+                        <form method="post" action="{% url 'users:signup' %}">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                {{ field }}
+                                {% if form.errors %}
+                                    {% for error in field.errors %}
+                                        <div class="alert alert-danger">
+                                            {{ error|escape }}
+                                        </div>
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                        <div class="alert alert-danger">
+                                            {{ error|escape }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            <input type="submit" class="btn header-top__btn-registration btn-modal" value="Зарегистрироваться">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %} 

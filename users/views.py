@@ -1,5 +1,8 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 
 # Импортируем CreateView, чтобы создать ему наследника
 from django.views.generic import CreateView, DetailView, UpdateView
@@ -17,10 +20,22 @@ User = get_user_model()
 class SignUp(CreateView):
     form_class = CreationForm
     # После успешной регистрации перенаправляем пользователя на главную.
-    success_url = reverse_lazy('posts:index')
+    success_url = reverse_lazy('users:profile')
     template_name = 'users/signup.html'
 
+    def form_valid(self, form):
+        # save the new user first
+        form.save()
+        # get the username and password
+        username = self.request.POST['username']
+        password = self.request.POST['password1']
+        # authenticate user then login
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return HttpResponseRedirect(self.get_success_url)
 
+
+@method_decorator(login_required, name='dispatch')
 class Profile(DetailView):
     model = User
     template_name = 'users/user-profile.html'
@@ -30,6 +45,7 @@ class Profile(DetailView):
         return user
 
 
+@method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
     model = User
     template_name = 'users/user-settings.html'

@@ -21,6 +21,7 @@ from kassets import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('auth/', include('users.urls')),
     # Если какой-то URL не обнаружится в приложении users —
     # Django пойдёт искать его в django.contrib.auth

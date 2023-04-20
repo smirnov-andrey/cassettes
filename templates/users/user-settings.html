@@ -10,7 +10,7 @@
                         <div class="settings__block">
                             <h2 class="settings__title-block">Персональная информация</h2>
                             <p class="settings__text-bold">Фото</p>
-                            {% if form.image %}
+                            {% if form.image.value %}
                                 <img src="{{ form.image.value.url }}" name="image" alt="" class="settings__user-avatar">
                                 <a href="#" class="link_underline settings__link-delete">Удалить фото</a>
                                 <input type="checkbox" name="image-clear" id="image-clear_id">

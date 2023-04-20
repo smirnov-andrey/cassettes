@@ -1,73 +1,46 @@
 {% extends "base.html" %}
 {% block title %}Войти{% endblock %}
+{% load static %}
 {% block content %}
-{% load user_filters %}
-  <div class="row justify-content-center">
-    <div class="col-md-8 p-5">
-      <div class="card">
-        <div class="card-header">
-          Войти на сайт
-        </div>
-        <div class="card-body">
-          {% if form.errors %}
-              {% for field in form %}
-                {% for error in field.errors %}            
-                  <div class="alert alert-danger">
-                    {{ error|escape }}
-                  </div>
-                {% endfor %}
-              {% endfor %}
-              {% for error in form.non_field_errors %}
-                <div class="alert alert-danger">
-                  {{ error|escape }}
-                </div>
-              {% endfor %}
-          {% endif %}
+    {% load user_filters %}
+    <section class="my-list" id="my-list">
+        <div class="container">
+            <div class="page__content-center">
+                <div class="card-body">
 
-          <form method="post"
-            {% if action_url %}
-              action="{% url action_url %}"
-            {% endif %}
-          >
-          {% csrf_token %}
-
-          {% for field in form %}
-            <div class="form-group row my-3"
-              {% if field.field.required %} 
-                aria-required="true"
-              {% else %}
-                aria-required="false"
-              {% endif %}
-            >
-              <label for="{{ field.id_for_label }}">
-                {{ field.label }}
-                  {% if field.field.required %}
-                    <span class="required text-danger">*</span>
-                  {% endif %}
-              </label>
-              <div>
-              {{ field|addclass:'form-control' }}
-                {% if field.help_text %}
-                  <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
-                    {{ field.help_text|safe }}
-                  </small>
-                {% endif %}
-              </div>
+                    <div class="">
+                        <img src="{% static '/static/img/close-icon.svg' %}" alt="" class="modal__close">
+                        <h1 class="modal__title">Войти или создать профиль</h1>
+                        <a href="/accounts/google/login/" class="authorization-google">Войти с помощью Google</a>
+                        <p class="modal__replace">или</p>
+                        <form action="{% url 'login' %}" class="modal__form" method="post">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <div class="alert alert-danger">
+                                            {{ error|escape }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ error|escape }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="text" name="username" class="input-cust modal__input" placeholder="Email">
+                            <input type="password" name="password" class="input-cust modal__input" placeholder="Пароль">
+                            <p><a href="{% url 'users:password_reset' %}" class="modal__not-pass">Забыли пароль?</a></p>
+                            <button type="submit" class="btn modal__btn btn_fill">Войти</button>
+                        </form>
+                        <div class="modal__wrapper-block">
+                            <p class="modal__text">Еще нет аккаунта?</p>
+                            <a href="{% url 'users:signup' %}" class="modal__login header-top__btn-registration btn-modal" >Зарегистрируйтесь.</a>
+                        </div>
+                    </div>
+                </div> <!-- card body -->
             </div>
-          {% endfor %}
-          <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary">
-              Войти
-            </button>
-            <!-- Тест на внимательность. Без переопределения шаблона этого адреса
-            не существует. Нужно что-то делать, иначе все упадет -->
-            <a href="{% url 'users:password_reset_form' %}" class="btn btn-link">
-              Забыли пароль?
-            </a>
-          </div>
-          </form>
-        </div> <!-- card body -->
-      </div> <!-- card -->
-    </div> <!-- col -->
-</div> <!-- row -->
+        </div>
+    </section>
 {% endblock %}
