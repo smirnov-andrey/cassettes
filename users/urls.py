@@ -3,12 +3,11 @@ from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, 
     PasswordChangeDoneView
 from django.urls import path
 from . import views
-from .views import Profile, ProfileUpdate, GoogleSignInView
+from .views import Profile, ProfileUpdate
 
 app_name = 'users'
 
 urlpatterns = [
-    path('accounts/google/login/', GoogleSignInView.as_view(), name='google_account_sigin'),
     path('signup/', views.SignUp.as_view(), name='signup'),
     path(
         'logout/',

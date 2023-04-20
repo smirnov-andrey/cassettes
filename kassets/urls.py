@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 from kassets import settings
+from users.views import GoogleSignInView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/google/login/', GoogleSignInView.as_view(), name='google_account_sigin'),
     path('accounts/', include('allauth.urls')),
     path('auth/', include('users.urls')),
     # Если какой-то URL не обнаружится в приложении users —
