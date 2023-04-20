@@ -23,8 +23,6 @@ class SignUp(CreateView):
     success_url = reverse_lazy('users:profile')
     template_name = 'users/signup.html'
 
-    def get_success_url(self):
-        return reverse('users:profile')
 
     def form_valid(self, form):
         # save the new user first
@@ -35,7 +33,7 @@ class SignUp(CreateView):
         # authenticate user then login
         user = authenticate(username=username, password=password)
         login(self.request, user)
-        return HttpResponseRedirect(self.get_success_url)
+        return HttpResponseRedirect(self.success_url)
 
 
 @method_decorator(login_required, name='dispatch')
