@@ -9,7 +9,7 @@ from django.views.generic import CreateView, DetailView, UpdateView
 
 # Функция reverse_lazy позволяет получить URL по параметрам функции path()
 # Берём, тоже пригодится
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 # Импортируем класс формы, чтобы сослаться на неё во view-классе
 from .forms import CreationForm, ProfileForm
@@ -22,6 +22,9 @@ class SignUp(CreateView):
     # После успешной регистрации перенаправляем пользователя на главную.
     success_url = reverse_lazy('users:profile')
     template_name = 'users/signup.html'
+
+    def get_success_url(self):
+        return reverse('users:profile')
 
     def form_valid(self, form):
         # save the new user first
