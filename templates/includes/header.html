@@ -39,7 +39,7 @@
                 <ul class="header-brands__audio-cassette">
                     {% for category in category_list %}
                     <li class="header-brands__item">
-                        <a href="#" class="header-brands__link">
+                        <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="header-brands__link">
                             <img src="{{ category.logo.url }}" alt="{{ category }}">
                         </a>
                     </li>
