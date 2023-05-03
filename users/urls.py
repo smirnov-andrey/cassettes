@@ -26,5 +26,7 @@ urlpatterns = [
          name='password_change_done'),
     path('profile/', Profile.as_view(), name='profile'),
     path('profile-update/', ProfileUpdate.as_view(), name='profile-update'),
+    path('collectors/', views.Collectors.as_view(), name='collectors'),
+    path('collector/<int:id>/', views.Collector.as_view(), name='collector'),
 ]
 

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="collector-user section_breadcrumb" id="collector-user">
+        <div class="container">
+            <div class="collector-user__wrapper">
+                <div class="collector-user__list">
+                    <h4 class="collector-user__list-title">Списки {{ object.first_name }}</h4>
+                    <ul class="tabs__list">
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../../static/img/collection.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Коллекция</h4>
+                                <p class="tabs__count">0</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../../static/img/magic-wand-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Список желаний</h4>
+                                <p class="tabs__count">0</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../../static/img/exchange-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Обмен</h4>
+                                <p class="tabs__count">0</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="#" class="tabs__link">
+                                <img src="../../static/img/shopping-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">Продажа</h4>
+                                <p class="tabs__count">0</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collector-user__info-wrapper">
+                    {% if object.image %}
+                        <img src="{{ object.image.url }}" alt="{{ object }}" class="collector-user__avatar">
+                    {% else %}
+                        <img src="{% static 'img/avatar.jpg' %}" alt="{{ object }}" class="collector-user__avatar">
+                    {% endif %}
+                    <div class="collector-user__info">
+                        <div class="collector-user__name">
+                            <h3 class="collector-user__fullname premium">{{ object.first_name }} {{ object.last_name }}</h3>
+                            <p class="collector-user__nick">[{{ object.username }}]</p>
+                        </div>
+                        <table class="table-info collector-user__table-info">
+                            <tr>
+                                <td style="width: 90px;" class="table-info__name collector-user__table-name">Рейтинг</td>
+                                <td class="table-info__value collector-user__table-value reyting">0</td>
+                            </tr>
+                            <tr>
+                                <td class="table-info__name collector-user__table-name">Страна</td>
+                                <td class="table-info__value collector-user__table-value">{{ object.country }}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-info__name collector-user__table-name">Рынок</td>
+                                <td class="table-info__value collector-user__table-value ">Локальный</td>
+                            </tr>
+                            <tr>
+                                <td class="table-info__name collector-user__table-name">Язык</td>
+                                <td class="table-info__value collector-user__table-value">{{ object.language }}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-info__name collector-user__table-name">День рождения</td>
+                                <td class="table-info__value collector-user__table-value">{{ object.born_date }}</td>
+                            </tr>
+                        </table>
+                        <div class="collector-user__about">
+                            <h4 class="collector-user__about-title">О пользователе</h4>
+                            <p class="collector-user__about-text">{{ object.bio }}</p>
+                        </div>
+                        <div class="collector-user__note">
+                            <div class="collector-user__note-title">Добавить заметку о пользователе</div>
+                            <textarea class="textarea-cust collector-user__textarea"></textarea>
+                            <button class="btn btn_fill">Добавить</button>
+                        </div>
+                        <a class="collector-user__complain">Пожаловаться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

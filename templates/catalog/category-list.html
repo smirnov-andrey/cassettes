@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="catalog catalog_page" id="catalog">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb__item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb__item">Каталог</li>
+            </ul>
+            <h2 class="page__title catalog__title">Каталог</h2>
+            <div class="categories">
+                <ul class="categories__list">
+                    {% for category in category_list %}
+                        <li class="categories__item">
+                            <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
+                                <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                                <div class="categories__wrapper">
+                                    <h1 class="categories__title">{{ category }}</h1>
+                                    <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock %}

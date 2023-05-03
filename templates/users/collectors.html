@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="collectors section_breadcrumb" id="collectors">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb__item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb__item">Коллекционеры</li>
+            </ul>
+            <div class="page__head">
+                <h2 class="page__title collectors__title">Коллекционеры</h2>
+            </div>
+            <div class="position collectors__position">
+                <div class="position__wrapper">
+                    <div class="position__search">
+                        <input type="text" placeholder="Введите имя">
+                        <button type="submit" class="btn btn_fill">Найти</button>
+                    </div>
+                    <div class="position__sorting">
+                        <p class="position__sort-text">Сортировать по:</p>
+                        <div class="position__sort-drop dropdown">
+                            <button type="button" class="dropdown__select position__sort-select">По бренду</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="sort-by-card">
+                    <li class="sort-by-card__item">
+                        <a href="#">Рынок</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Страна</a>
+                    </li>
+                </ul>
+                <ul class="sort-by-word">
+                    <li class="sort-by-word__item">
+                        <a href="#">A</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">B</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">C</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">D</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">E</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">F</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">G</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">H</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">I</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">J</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">K</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">L</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">M</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">N</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">O</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">P</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">Q</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">R</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">S</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">T</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">U</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">V</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">W</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">X</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">Y</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">Z</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">123</a>
+                    </li>
+                </ul>
+                <table class="table-cust">
+                    <tr>
+                        <th style="width: 22%;">Пользователь</th>
+                        <th>Страна</th>
+                        <th>Рынок</th>
+                        <th>Рейтинг</th>
+                        <th>Коллекция</th>
+                        <th>Желания</th>
+                        <th>Обмен</th>
+                        <th>Продажа</th>
+                    </tr>
+                    {% for collector in collector_list %}
+                        <tr>
+                            <td class="table-cust__medium">
+                                <div class="user">
+                                    {% if collector.image %}
+                                        <img src="{{ collector.image.url }}" alt="{{ collector.username }}"
+                                             class="user__avatar">
+                                    {% else %}
+
+                                    {% endif %}
+                                    <div class="user__wrapper">
+                                        <h2 class="user__name"><a
+                                                href="{% url 'users:collector' id=collector.id %}">{{ collector.first_name }} {{ collector.last_name }}</a>
+                                        </h2>
+                                        <p class="user__nick">[{{ collector.username }}]</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ collector.country }}</td>
+                            <td>Локальный</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

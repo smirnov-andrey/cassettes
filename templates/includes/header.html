@@ -1,0 +1,88 @@
+{% load static %}
+<header class="header" id="header">
+    <div class="header__wrapper">
+        <div class="container">
+            <div class="header-top">
+                <a href="/" class="logo">
+                    <img src="{% static 'img/logo.jpg' %}" alt="TapeCollector">
+                </a>
+                <div class="header-top__search">
+                    <input type="text" placeholder="Поиск">
+                </div>
+                <div class="header-top__wrapper">
+                    <div class="header-top__change-lang dropdown">
+                        <button class="header-top__lang dropdown__select">English</button>
+                        <ul class="dropdown__options header-top__options">
+                            <li data-value="По бренду" class="active">English</li>
+                            <li data-value="По бренду">Russian</li>
+                        </ul>
+                    </div>
+                    <div class="header-top__profile">
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'users:profile' %}">{{ request.user.username }}</a> |
+                            <a href="{% url 'users:logout' %}">Logout</a>
+                        {% else %}
+                            <button type="button" class="btn btn_ghost header-top__btn-login btn-modal"
+                                    data-modal="loginModal">Вход
+                            </button>
+                            <a class="btn btn_fill header-top__btn-registration btn-modal" href="{% url 'users:signup' %}">Регистрация</a>
+
+                        {% endif %}
+                    </div>
+                </div>
+                <button class="burger">
+                    <span></span>
+                </button>
+            </div>
+
+            <div class="header-brands">
+                <ul class="header-brands__audio-cassette">
+                    {% for category in category_list %}
+                    <li class="header-brands__item">
+                        <a href="#" class="header-brands__link">
+                            <img src="{{ category.logo.url }}" alt="{{ category }}">
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nav class="header-menu">
+        <div class="container">
+            <div class="header-menu__wrapper">
+                <ul class="header-menu__list">
+                    <li class="header-menu__item">
+                        <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
+                    </li>
+                    <li class="header-menu__item">
+                        <a href="{% url 'catalog:brand-list' %}">Бренды</a>
+                    </li>
+                    <li class="header-menu__item">
+                        <a href="{% url 'catalog:technologies' %}">Технологии</a>
+                    </li>
+                    <li class="header-menu__item">
+                        <a href="{% url 'users:collectors' %}">Коллекционеры</a>
+                    </li>
+                    <li class="header-menu__item">
+                        <a href="{% url 'users:profile' %}">Мои списки</a>
+                    </li>
+                    <li class="header-menu__item">
+                        <a href="#">Дополнительный каталог</a>
+                    </li>
+                </ul>
+                <ul class="header-menu__list">
+                    <li class="header-menu__item header-menu__item_left">
+                        <a href="help.html">Помощь</a>
+                    </li>
+                    <li class="header-menu__item header-menu__item_left">
+                        <a href="#">Мерч</a>
+                    </li>
+                    <li class="header-menu__item header-menu__item_left">
+                        <a href="support.html">Поддержка</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

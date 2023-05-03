@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 
 # Импортируем CreateView, чтобы создать ему наследника
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
 # Функция reverse_lazy позволяет получить URL по параметрам функции path()
 # Берём, тоже пригодится
@@ -63,3 +63,18 @@ class ProfileUpdate(UpdateView):
     def get_object(self, queryset=None):
         user = self.request.user
         return user
+
+
+class Collectors(ListView):
+    """Список коллекционеров"""
+    model = User
+    template_name = 'users/collectors.html'
+    context_object_name = 'collector_list'
+
+
+class Collector(DetailView):
+    model = User
+    template_name = 'users/collector.html'
+
+    def get_object(self, queryset=None):
+        return User.objects.get(id=self.kwargs['id'])

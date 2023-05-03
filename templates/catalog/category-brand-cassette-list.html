@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="brands-product section_breadcrumb" id="brands-product">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb__item">
+                    <a href="/">Главная</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:catalog-detail' slug=category.slug %}">{{ category }}</a>
+                </li>
+                <li class="breadcrumb__item">{{ brand }}</li>
+            </ul>
+            <div class="page__head">
+                <h2 class="page__title categories-page__title">{{ brand }}</h2>
+                <p class="page__descriptions">{{ brand.description }}</p>
+            </div>
+            <div class="position categories__position">
+                <div class="position__wrapper">
+                    <div class="position__search">
+                        <input type="text" placeholder="Поиск">
+                        <button type="submit" class="btn btn_fill">Найти</button>
+                    </div>
+                    <div class="position__sorting">
+                        <p class="position__sort-text">Сортировать по:</p>
+                        <div class="position__sort-drop dropdown">
+                            <button type="button" class="dropdown__select position__sort-select">По бренду</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="sort-by-card">
+                    <li class="sort-by-card__item">
+                        <a href="#">Тип ленты</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Серия</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Длительность</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Год</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Страна</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Рынок</a>
+                    </li>
+                    <li class="sort-by-card__item">
+                        <a href="#">Информация</a>
+                    </li>
+                </ul>
+                <ul class="sort-by-word">
+                    <li class="sort-by-word__item">
+                        <a href="#">A</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">B</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">C</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">D</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">E</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">F</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">G</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">H</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">I</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">J</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">K</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">L</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">M</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">N</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">O</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">P</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">Q</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">R</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">S</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">T</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">U</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">V</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">W</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">X</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">Y</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">Z</a>
+                    </li>
+                    <li class="sort-by-word__item">
+                        <a href="#">123</a>
+                    </li>
+                </ul>
+                <div class="table-overflow">
+                    <table class="table-cust">
+                        <tr>
+                            <th style="width: 10%;"></th>
+                            <th style="width: 10%;">Бренд</th>
+                            <th>Модель</th>
+                            <th>Тип ленты</th>
+                            <th>Серия</th>
+                            <th>Длительность</th>
+                            <th style="width: 6%;">Год</th>
+                            <th>Страна-производитель</th>
+                            <th style="width: 15%;">Рынок</th>
+                            <th>Информация</th>
+                        </tr>
+                        {% for cassette in cassette_list %}
+                            <tr>
+                                <td>
+                                    {% if cassette.image %}
+                                        <img src="{{ cassette.image.url }}" alt="{{ cassette }}" class="product-img">
+                                    {% else %}
+                                        <img src="{% static 'img/cassette-4.jpg' %}" alt="{{ cassette }}"
+                                             class="product-img">
+                                    {% endif %}
+                                </td>
+                                <td class="table-cust__medium">{{ brand }}</td>
+                                <td>{{ cassette.model }}</td>
+                                <td>{{ cassette.type }}</td>
+                                <td>{{ cassette.series }}</td>
+                                <td>{{ cassette.tape_length }}</td>
+                                <td>{{ cassette.year_release }}</td>
+                                <td>{{ brand.country }}</td>
+                                <td>Locale</td>
+                                <td>
+                                    <p class="info correct">Требуется уточнение</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

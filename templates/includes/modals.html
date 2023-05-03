@@ -1,0 +1,45 @@
+{% load static socialaccount %}
+<!-- Modal -->
+<div class="modal" id="loginModal">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">Войти или создать профиль</h1>
+        <a href="/accounts/google/login/" class="authorization-google">Войти с помощью Google</a>
+        <p class="modal__replace">или</p>
+        <form action="{% url 'users:login' %}" class="modal__form" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" class="input-cust modal__input" placeholder="Email">
+            <input type="password" name="password" class="input-cust modal__input" placeholder="Пароль">
+            <p class="modal__not-pass">Забыли пароль?</p>
+            <button type="submit" class="btn modal__btn btn_fill">Войти</button>
+        </form>
+        <div class="modal__wrapper-block">
+            <p class="modal__text">Еще нет аккаунта?</p>
+            <a href="#" class="modal__login header-top__btn-registration btn-modal" data-modal="regModal">Зарегистрируйтесь.</a>
+        </div>
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="regModal">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">Регистрация</h1>
+        <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее
+            ссылку для создания нового аккаунта.</p>
+        <a href="{% provider_login_url 'google' %}" class="authorization-google">Войти с помощью Google</a>
+        <p class="modal__replace">или</p>
+        <form class="modal__form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            <input type="text" name="email" class="input-cust modal__input" placeholder="Email">
+            <input type="text" name="username" class="input-cust modal__input" placeholder="Username">
+            <input type="password" name="password1" class="input-cust modal__input" placeholder="Password">
+            <input type="password" name="password2" class="input-cust modal__input" placeholder="Password repeat">
+            <button type="submit" class="btn modal__btn btn_fill">Подтвердить</button>
+        </form>
+        <div class="modal__wrapper-block">
+            <p class="modal__text">Уже есть аккаунт?</p>
+            <a href="#" class="modal__login header-top__btn-registration btn-modal" data-modal="loginModal">Войдите</a>
+        </div>
+    </div>
+</div>
+<!--  -->
