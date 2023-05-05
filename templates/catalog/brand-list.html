@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 {% block content %}
     <section class="brands section_breadcrumb" id="brands">
         <div class="container">
@@ -126,8 +127,8 @@
                         </ul>
                         <div class="table-overflow">
                             <table class="table-cust">
-                                <tr>
-                                    <th style="width: 22%;">Бренд</th>
+                                <tr><th style="width: 22%;">Лого</th>
+                                    <th>Бренд</th>
                                     <th>Кол-во кассет<br>в каталоге</th>
                                     <th>Год</th>
                                     <th>Кол-во кассет<br>в коллекции</th>
@@ -135,6 +136,14 @@
                                 </tr>
                                 {% for brand in brand_list %}
                                     <tr>
+                                        {% if brand.image %}
+                                            <td>{% thumbnail brand.image "100x100" crop="center" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                            {% endthumbnail %}
+                                            </td>
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
                                         <td class="table-cust__medium"><a
                                                 href="{% url 'catalog:brand-detail' slug=brand.slug %}">{{ brand }}</a>
                                         </td>
