@@ -156,10 +156,12 @@
                             <tr>
                                 <td>
                                     {% if cassette.image %}
+                                        <a href="{% url 'catalog:cassette' id=cassette.id %}"></a>
                                         <img src="{{ cassette.image.url }}" alt="{{ cassette }}" class="product-img">
                                     {% else %}
-                                        <img src="{% static 'img/cassette-4.jpg' %}" alt="{{ cassette }}"
-                                             class="product-img">
+                                        <a href="{% url 'catalog:cassette' id=cassette.id %}">
+                                            <img src="{% static 'img/cassette-4.jpg' %}" alt="{{ cassette }}"
+                                                 class="product-img"></a>
                                     {% endif %}
                                 </td>
                                 <td class="table-cust__medium">{{ brand }}</td>

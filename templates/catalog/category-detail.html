@@ -132,7 +132,8 @@
                         <div class="table-overflow">
                             <table class="table-cust">
                                 <tr>
-                                    <th style="width: 22%;">Бренд</th>
+                                    <th style="width: 22%;">Лого</th>
+                                    <th>Бренд</th>
                                     <th>Кол-во кассет<br>в каталоге</th>
                                     <th>Год</th>
                                     <th>Кол-во кассет<br>в коллекции</th>
@@ -140,6 +141,11 @@
                                 </tr>
                                 {% for brand in brand_list %}
                                     <tr>
+                                        {% if brand.image %}
+                                            <td><img src="{{ brand.image.url }}" alt="{{ brand }}"></td>
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
                                         <td class="table-cust__medium"><a
                                                 href="{% url 'catalog:catalog-brand-cassette-list' slug=object.slug brand_slug=brand.slug %}">{{ brand }}</a>
                                         </td>

@@ -64,3 +64,12 @@ class TechnologyListView(ListView):
     model = CassetteTechnology
     template_name = 'catalog/technologies.html'
     context_object_name = 'technology_list'
+
+
+class CassetteDetailView(DetailView):
+    """Кассета"""
+    model = Cassette
+    template_name = 'catalog/cassette.html'
+
+    def get_object(self, queryset=None):
+        return Cassette.objects.get(id=self.kwargs['id'])

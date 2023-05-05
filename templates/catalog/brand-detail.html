@@ -149,28 +149,32 @@
                             <th style="width: 15%;">Рынок</th>
                             <th>Информация</th>
                         </tr>
-                    {% for cassette in brand.cassettes.all %}
-                        <tr>
-                            <td>
-                                {% if cassette.image %}
-                                    <img src="{{ cassette.image.url }}" alt="{{ cassette }}" class="product-img">
-                                {% else %}
-                                    <img src="{% static 'img/cassette-4.jpg' %}" alt="{{ cassette }}" class="product-img">
-                                {% endif %}
-                            </td>
-                            <td class="table-cust__medium">{{ brand }}</td>
-                            <td>{{ cassette.model }}</td>
-                            <td>{{ cassette.type }}</td>
-                            <td>{{ cassette.series }}</td>
-                            <td>{{ cassette.tape_length }}</td>
-                            <td>{{ cassette.year_release }}</td>
-                            <td>{{ brand.country }}</td>
-                            <td>Locale</td>
-                            <td>
-                                <p class="info correct">Требуется уточнение</p>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                        {% for cassette in brand.cassettes.all %}
+                            <tr>
+                                <td>
+                                    {% if cassette.image %}
+                                        <a href="{% url 'catalog:cassette' id=cassette.id %}">
+                                            <img src="{{ cassette.image.url }}" alt="{{ cassette }}"
+                                                 class="product-img"></a>
+                                    {% else %}
+                                        <a href="{% url 'catalog:cassette' id=cassette.id %}">
+                                            <img src="{% static 'img/cassette-4.jpg' %}" alt="{{ cassette }}"
+                                                 class="product-img"></a>
+                                    {% endif %}
+                                </td>
+                                <td class="table-cust__medium">{{ brand }}</td>
+                                <td>{{ cassette.model }}</td>
+                                <td>{{ cassette.type }}</td>
+                                <td>{{ cassette.series }}</td>
+                                <td>{{ cassette.tape_length }}</td>
+                                <td>{{ cassette.year_release }}</td>
+                                <td>{{ brand.country }}</td>
+                                <td>Locale</td>
+                                <td>
+                                    <p class="info correct">Требуется уточнение</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
 
                     </table>
                 </div>

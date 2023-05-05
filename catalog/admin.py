@@ -12,8 +12,13 @@ class CassetteFrequencyResponseInline(admin.TabularInline):
     extra = 3
 
 
+class CassettePriceInline(admin.TabularInline):
+    model = CassettePrice
+    extra = 3
+
+
 class CassetteAdmin(admin.ModelAdmin):
-    inlines = [CassetteImageInline, CassetteFrequencyResponseInline]
+    inlines = [CassetteImageInline, CassetteFrequencyResponseInline, CassettePriceInline]
 
 
 admin.site.register(CassetteBrand)

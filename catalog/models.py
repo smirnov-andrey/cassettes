@@ -89,6 +89,20 @@ CASSETTECONDITION = (
 )
 
 
+class CassettePrice(models.Model):
+    """Различные варианты цены в зависимости от состояния"""
+    price = models.IntegerField(verbose_name='price')
+    condition = models.CharField(max_length=100, choices=CASSETTECONDITION, verbose_name='condition')
+    cassette = models.ForeignKey('Cassette', on_delete=models.CASCADE, related_name='prices', verbose_name='cassette')
+
+    class Meta:
+        verbose_name = 'Add cassette price'
+        verbose_name_plural = 'Cassettes prices'
+
+    def __str__(self):
+        return f'{self.cassette} - {self.price}'
+
+
 class Cassette(models.Model):
     """Модель кассеты"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User')
@@ -106,7 +120,6 @@ class Cassette(models.Model):
     collection = models.ForeignKey(CassetteCollection, on_delete=models.CASCADE, verbose_name='Collection')
     tape_length = models.ForeignKey(CassetteTapeLength, on_delete=models.CASCADE, verbose_name='Tape Length')
     year_release = models.IntegerField(verbose_name='Year Release')
-    condition = models.CharField(max_length=50, blank=True, choices=CASSETTECONDITION, verbose_name='Condition')
 
     class Meta:
         verbose_name = 'Add cassettes'
@@ -144,3 +157,5 @@ class CassetteFrequencyResponse(models.Model):
     class Meta:
         verbose_name = 'Add frequency response for cassette'
         verbose_name_plural = 'Cassette frequency responses'
+
+
