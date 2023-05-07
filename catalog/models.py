@@ -111,19 +111,19 @@ class CassettePrice(models.Model):
 class Cassette(models.Model):
     """Модель кассеты"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User')
-    coil = models.BooleanField(verbose_name='Coil', blank=True)
-    slim_case = models.BooleanField(verbose_name='Slim case', blank=True)
-    comment = models.TextField(verbose_name='Comments', blank=True,)
+    coil = models.BooleanField(verbose_name='Coil', null=True, blank=True)
+    slim_case = models.BooleanField(verbose_name='Slim case', null=True, blank=True)
+    comment = models.TextField(verbose_name='Comments', null=True, blank=True,)
     category = models.ForeignKey(CassetteCategory, default=1, related_name='cassettes', on_delete=models.CASCADE, verbose_name='Category')
     brand = models.ForeignKey(CassetteBrand, on_delete=models.CASCADE, related_name='cassettes', verbose_name='Brand')
     type = models.ForeignKey(CassetteType, on_delete=models.CASCADE, verbose_name='Type')
-    model = models.ForeignKey(CassetteModel, blank=True,on_delete=models.CASCADE, verbose_name='Model')
-    technology = models.ForeignKey(CassetteTechnology, blank=True, on_delete=models.CASCADE, verbose_name='Technology')
-    manufacturer = models.ForeignKey(CassetteManufacturer, blank=True, on_delete=models.CASCADE, verbose_name='Manufacturer')
-    series = models.ForeignKey(CassetteSeries, blank=True, on_delete=models.CASCADE, verbose_name='Series')
-    collection = models.ForeignKey(CassetteCollection, blank=True, on_delete=models.CASCADE, verbose_name='Collection')
-    tape_length = models.ForeignKey(CassetteTapeLength, blank=True, on_delete=models.CASCADE, verbose_name='Tape Length')
-    year_release = models.IntegerField(blank=True, verbose_name='Year Release')
+    model = models.ForeignKey(CassetteModel, null=True, blank=True,on_delete=models.CASCADE, verbose_name='Model')
+    technology = models.ForeignKey(CassetteTechnology, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Technology')
+    manufacturer = models.ForeignKey(CassetteManufacturer, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Manufacturer')
+    series = models.ForeignKey(CassetteSeries, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Series')
+    collection = models.ForeignKey(CassetteCollection, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Collection')
+    tape_length = models.ForeignKey(CassetteTapeLength, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Tape Length')
+    year_release = models.IntegerField(null=True, blank=True, verbose_name='Year Release')
 
     class Meta:
         verbose_name = 'Add cassettes'
