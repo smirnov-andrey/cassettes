@@ -10,6 +10,12 @@
                     <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
                 </li>
                 <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:catalog-detail' slug=object.category.slug %}">{{ object.category }}</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:brand-detail' slug=object.brand.slug %}">{{ object.brand }}</a>
+                </li>
+                <li class="breadcrumb__item">
                     <a href="#">{{ object.model }}</a>
                 </li>
             </ul>
@@ -89,21 +95,66 @@
                                 <h3 class="product__subtitle">Коллекция</h3>
                                 <h4 class="product__collection-title">Состояние</h4>
                                 <table class="table-cust product__collection-table">
-                                    <tr>
-                                        {% for condition in object.prices.all %}
-                                            <th>{{ condition.condition }}</th>
-                                        {% endfor %}
-                                    </tr>
-                                    <tr>
-                                        {% for condition in object.prices.all %}
+                                    {% if object.prices.all %}
+                                        <tr>
+                                            {% for condition in object.prices.all %}
+                                                <th>{{ condition.condition }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            {% for condition in object.prices.all %}
+                                                <td>
+                                                    <input class="product__collection-radio" type="radio"
+                                                           name="condition"
+                                                           id="condition-6">
+                                                    <label for="condition-6">${{ condition.price }}</label>
+                                                </td>
+                                            {% endfor %}
+
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <th>Poor</th>
+                                            <th>Good</th>
+                                            <th>Very Good</th>
+                                            <th>Excellent</th>
+                                            <th>Near mint</th>
+                                            <th>Mint</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-1" disabled="">
+                                                <label for="condition-1">-</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-2" disabled="">
+                                                <label for="condition-2">-</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-3" disabled="">
+                                                <label for="condition-3">-</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-4">
+                                                <label for="condition-4">-</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-5" disabled="">
+                                                <label for="condition-5">-</label>
+                                            </td>
                                             <td>
                                                 <input class="product__collection-radio" type="radio" name="condition"
                                                        id="condition-6">
-                                                <label for="condition-6">${{ condition.price }}</label>
+                                                <label for="condition-6">-</label>
                                             </td>
-                                        {% endfor %}
+                                        </tr>
+                                    {% endif %}
 
-                                    </tr>
                                 </table>
                                 <div class="product__collection-save">
                                     <div class="product__collection-wrapper-checkbox checkbox-cust">

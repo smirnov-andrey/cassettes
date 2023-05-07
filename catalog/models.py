@@ -81,11 +81,16 @@ class CassetteTapeLength(models.Model):
 
 
 CASSETTECONDITION = (
-    ('mint', 'Mint'),
-    ('excellent', 'Excellent'),
-    ('very_good', 'Very good'),
+    ('poor', 'Poor'),
     ('good', 'Good'),
-    ('poor', 'Poor')
+    ('very_good', 'Very good'),
+    ('excellent', 'Excellent'),
+    ('nearmint', 'Near mint'),
+    ('mint', 'Mint'),
+
+
+
+
 )
 
 
@@ -106,27 +111,27 @@ class CassettePrice(models.Model):
 class Cassette(models.Model):
     """Модель кассеты"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User')
-    coil = models.BooleanField(verbose_name='Coil')
-    slim_case = models.BooleanField(verbose_name='Slim case')
-    price = models.CharField(verbose_name='Price', max_length=100)
-    comment = models.TextField(verbose_name='Comments')
+    coil = models.BooleanField(verbose_name='Coil', blank=True)
+    slim_case = models.BooleanField(verbose_name='Slim case', blank=True)
+    price = models.CharField(verbose_name='Price', blank=True, max_length=100)
+    comment = models.TextField(verbose_name='Comments', blank=True,)
     category = models.ForeignKey(CassetteCategory, default=1, related_name='cassettes', on_delete=models.CASCADE, verbose_name='Category')
-    brand = models.ForeignKey(CassetteBrand, on_delete=models.CASCADE, related_name='cassettes', verbose_name='Brand')
+    brand = models.ForeignKey(CassetteBrand, blank=True, on_delete=models.CASCADE, related_name='cassettes', verbose_name='Brand')
     type = models.ForeignKey(CassetteType, on_delete=models.CASCADE, verbose_name='Type')
-    model = models.ForeignKey(CassetteModel, on_delete=models.CASCADE, verbose_name='Model')
-    technology = models.ForeignKey(CassetteTechnology, on_delete=models.CASCADE, verbose_name='Technology')
+    model = models.ForeignKey(CassetteModel, blank=True,on_delete=models.CASCADE, verbose_name='Model')
+    technology = models.ForeignKey(CassetteTechnology, blank=True, on_delete=models.CASCADE, verbose_name='Technology')
     manufacturer = models.ForeignKey(CassetteManufacturer, on_delete=models.CASCADE, verbose_name='Manufacturer')
-    series = models.ForeignKey(CassetteSeries, on_delete=models.CASCADE, verbose_name='Series')
-    collection = models.ForeignKey(CassetteCollection, on_delete=models.CASCADE, verbose_name='Collection')
-    tape_length = models.ForeignKey(CassetteTapeLength, on_delete=models.CASCADE, verbose_name='Tape Length')
-    year_release = models.IntegerField(verbose_name='Year Release')
+    series = models.ForeignKey(CassetteSeries, blank=True, on_delete=models.CASCADE, verbose_name='Series')
+    collection = models.ForeignKey(CassetteCollection, blank=True, on_delete=models.CASCADE, verbose_name='Collection')
+    tape_length = models.ForeignKey(CassetteTapeLength, blank=True, on_delete=models.CASCADE, verbose_name='Tape Length')
+    year_release = models.IntegerField(blank=True, verbose_name='Year Release')
 
     class Meta:
         verbose_name = 'Add cassettes'
         verbose_name_plural = 'Cassettes'
 
     def __str__(self):
-        return f'{self.brand} + {self.model} + {self.type} + {self.series}'
+        return f'{self.model} - {self.user}'
 
 
 class CassettesImage(models.Model):
@@ -159,3 +164,25 @@ class CassetteFrequencyResponse(models.Model):
         verbose_name_plural = 'Cassette frequency responses'
 
 
+class CassetteSeller(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Seller')
+    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
+
+    class Meta:
+        verbose_name = 'Cassette sellers'
+        verbose_name_plural = 'Cassette seller'
+
+    def __str__(self):
+        return f'{self.cassette} + {self.user}'
+
+
+class CassetteChanger(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Changer')
+    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
+
+    class Meta:
+        verbose_name = 'Cassette changers'
+        verbose_name_plural = 'Cassette changer'
+
+    def __str__(self):
+        return f'{self.cassette} + {self.user}'

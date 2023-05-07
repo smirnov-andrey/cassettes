@@ -67,7 +67,7 @@
             <ul class="products">
                 {% for cassette in cassette_list %}
                 <li class="product">
-                    <a href="#" class="product__link">
+                    <a href="{% url 'catalog:cassette' id=cassette.id %}" class="product__link">
                         <img src="{{ cassette.cassettesimage_set.first.image.url }}" alt="{{ cassette }}" class="product__img">
                         <p class="product__categories">{{ cassette.category }}</p>
                         <p class="product__name">{{ cassette.brand }} - {{ cassette.series }}, {{ cassette.brand.country }} ({{ cassette.year_release }}) </p>

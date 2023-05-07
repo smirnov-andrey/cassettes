@@ -33,6 +33,8 @@ admin.site.register(CassetteTechnology)
 admin.site.register(CassetteModel)
 admin.site.register(Cassette, CassetteAdmin)
 admin.site.register(CassetteCategory)
+admin.site.register(CassetteSeller)
+admin.site.register(CassetteChanger)
 
 
 
