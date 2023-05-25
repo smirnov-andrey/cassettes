@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <section class="settings" id="settings">
+        <div class="container">
+            <h1 class="page__title settings__title">Редактировать предмет</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="settings__wrapeer">
+                    <div class="setting__left-block">
+                        <div class="settings__block">
+                            <h2 class="settings__title-block">Характеристики</h2>
+                            {% crispy form %}
+                        </div>
+                        <div class="settings__block">
+                            <p class="settings__title-block">Коллекция</p>
+                            <div class="settings__collection-wrapper">
+                                {% for form in cassettepriceformset %}
+                                    {% crispy form %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting__right-block">
+                        <div class="settings__block">
+                            <p class="settings__title-block">Загрузить фото</p>
+                            <div class="add-photo__wrapper">
+
+                                {{ cassetteimageformset.management_form|crispy }}
+                                {% for form in cassetteimageformset %}
+                                    {% crispy form %}
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                        <div class="settings__block">
+                            <p class="settings__title-block">Дополнительные данные</p>
+                            <div class="settings__dropanddrop">
+                                {{ cassettebarcodeformset.management_form|crispy }}
+                                {% for form in cassettebarcodeformset %}
+                                    {% crispy form %}
+                                {% endfor %}
+                            </div>
+                            <div class="settings__dropanddrop">
+                                {{ cassetteresponceformset.management_form|crispy }}
+                                {% for form in cassetteresponceformset %}
+                                    {% crispy form %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Save" class="btn btn_fill setting__btn">
+                <button class="btn btn_fill setting__btn">Сохранить изменения</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

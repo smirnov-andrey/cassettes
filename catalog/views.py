@@ -1,7 +1,9 @@
 from django.db.models import Min, Max
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
+from catalog.forms import CassetteCreateForm, CassetteBarcodeFormSet, \
+    CassetteFrequencyResponseFormSet, CassetteImageFormSet, CassettePriceFormSet
 from catalog.models import CassetteCategory, CassetteBrand, Cassette, CassetteTechnology
 
 
@@ -73,3 +75,37 @@ class CassetteDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return Cassette.objects.get(id=self.kwargs['id'])
+
+
+class CassetteCreateView(CreateView):
+    """Добавление кассеты"""
+    model = Cassette
+    form_class = CassetteCreateForm
+    template_name = 'catalog/add-cassette.html'
+
+
+class CassetteUpdateView(UpdateView):
+    """Редактирование кассеты"""
+    model = Cassette
+    form_class = CassetteCreateForm
+    template_name = 'catalog/update-cassette.html'
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        data = super(CassetteUpdateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['cassetteimageformset'] = CassetteImageFormSet(self.request.POST)
+            data['cassettebarcodeformset'] = CassetteBarcodeFormSet(self.request.POST)
+            data['cassetteresponceformset'] = CassetteFrequencyResponseFormSet(self.request.POST)
+            data['cassettepriceformset'] = CassettePriceFormSet(self.request.POST)
+        else:
+            data['cassetteimageformset'] = CassetteImageFormSet()
+            data['cassettebarcodeformset'] = CassetteBarcodeFormSet()
+            data['cassetteresponceformset'] = CassetteFrequencyResponseFormSet()
+            data['cassettepriceformset'] = CassettePriceFormSet()
+        return data
+
+    def get_object(self, queryset=None):
+        return Cassette.objects.get(id=self.kwargs['id'])
+
+

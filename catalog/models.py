@@ -164,6 +164,7 @@ class CassetteFrequencyResponse(models.Model):
 
 
 class CassetteSeller(models.Model):
+    """Продавец кассет"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Seller')
     cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
 
@@ -176,6 +177,7 @@ class CassetteSeller(models.Model):
 
 
 class CassetteChanger(models.Model):
+    """Меняла"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Changer')
     cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
 

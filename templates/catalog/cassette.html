@@ -21,7 +21,7 @@
             </ul>
             <div class="page__head page__head_flex">
                 <h2 class="page__title">{{ object.model }}</h2>
-                <a href="#" class="page__head-link">Редактировать информацию</a>
+                <a href="{% url 'catalog:cassette_update' id=object.id %}" class="page__head-link">Редактировать информацию</a>
             </div>
             <ul class="gallery-product">
                 {% for image in object.cassettesimage_set.all %}

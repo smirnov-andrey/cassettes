@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import CassetteCategoryDetailView, CassetteCategoryListView, CassetteBrandListView, CassetteBrandDetail, \
-    CassetteCatalogBrandDetailView, TechnologyListView, CassetteDetailView
+    CassetteCatalogBrandDetailView, TechnologyListView, CassetteDetailView, CassetteCreateView, CassetteUpdateView
 
 app_name = 'catalog'
 
@@ -11,5 +11,7 @@ urlpatterns = [
     path('brands/', CassetteBrandListView.as_view(), name='brand-list'),
     path('brands/<slug>/', CassetteBrandDetail.as_view(), name='brand-detail'),
     path('technology/', TechnologyListView.as_view(), name='technologies'),
-    path('cassetes/<int:id>/', CassetteDetailView.as_view(), name='cassette'),
+    path('cassettes/<int:id>/', CassetteDetailView.as_view(), name='cassette'),
+    path('cassettes/add/', CassetteCreateView.as_view(), name='cassette_create'),
+    path('cassettes/update/<int:id>', CassetteUpdateView.as_view(), name='cassette_update'),
 ]
