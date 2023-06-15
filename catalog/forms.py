@@ -1,125 +1,140 @@
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, HTML, Div, Field
 from django import forms
-from catalog.models import Cassette, CassettesImage, CassetteBarcode, CassetteFrequencyResponse, CassettePrice, \
-    CASSETTECONDITION
-from django.forms.models import BaseInlineFormSet, inlineformset_factory
+from django.core import validators
+
+from catalog.models import Cassette, CassettesImage, CassettePrice
+from django.forms.models import inlineformset_factory
 
 
 class CassetteCreateForm(forms.ModelForm):
     """Основная форма на странице апдейта кассеты"""
     class Meta:
         model = Cassette
-        fields = '__all__'
-        exclude = ['user']
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['price'] = forms.ModelChoiceField(queryset=CassettePrice.objects.filter(cassette=self.instance))
-        self.fields['condition'] = forms.ChoiceField(choices=CASSETTECONDITION)
-        self.helper = FormHelper(self)
-        self.helper.label_class = 'table__inputs-text settings__text-bold'
-        self.helper.field_class = 'table__inputs-value'
-        self.helper.layout = Layout(
-            Div(
-                Div(
-                    'brand',
-                    'manufacturer',
-                    'model',
-                    'series',
-                    'tape_length',
-                    'type',
-                    'year_release',
-                    css_class='table__inputs',
-                ),
-                Div(
-                    HTML("""<p class="settings__title-block">Комментарий</p>"""),
-                    'comment',
-                    css_class='settings__textarea'
-                ),
-                Div(
-                    Div(
-                        HTML("""<p class="settings__title-block">Дополнительные параметры</p>"""),
-                        Div(
-                            'slim_case',
-                            'coil',
-                            css_class='checkbox-cust settings__checkbox',
-
-                        ),
-
-                    ),
-                    css_class='settings__wrapper-checkbox_objects',
-                ),
-            ),
-        )
-
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'input-cust'
+        fields = [
+            'brand',
+            'manufacturer',
+            'model',
+            'series',
+            'tape_length',
+            'type',
+            'year_release',
+            'coil',
+            'slim_case',
+            'comment'
+        ]
+        labels = {
+            'brand': 'Бренд',
+            'manufacturer': 'Производитель',
+            'model': 'Модель',
+            'series': 'Серия',
+            'tape_length': 'Длина ленты',
+            'type': 'Тип кассеты',
+            'year_release': 'Год выпуска',
+            'coil': 'Катушка',
+            'slim_case': 'Слим кейс',
+            'comment': 'Комментарий',
+        }
+        widgets = {
+            'brand': forms.Select(attrs={'class': 'input-cust'}),
+            'manufacturer': forms.Select(attrs={'class': 'input-cust'}),
+            'model': forms.Select(attrs={'class': 'input-cust'}),
+            'series': forms.Select(attrs={'class': 'input-cust'}),
+            'tape_length': forms.Select(attrs={'class': 'input-cust'}),
+            'type': forms.Select(attrs={'class': 'input-cust'}),
+            'year_release': forms. NumberInput(attrs={'class': 'input-cust'}),
+            'coil': forms.CheckboxInput(attrs={
+                'class': 'checkbox-cust__input',
+                'name': 'parametrs',
+                'id': 'parametrs-1'
+            }),
+            'slim_case': forms.CheckboxInput(attrs={
+                'class': 'checkbox-cust__input',
+                'name': 'parametrs',
+                'id': 'parametrs-2'
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'textarea-cust',
+                'placeholder': 'Комментарий',
+                'rows': '5',
+            }),
+        }
 
 
 class CassetteImageForm(forms.ModelForm):
     """Форма добавления изображений"""
     class Meta:
         model = CassettesImage
-        fields = '__all__'
-        exclude = ('cassette',)
+        fields = [
+            'package_front_side',
+            'package_back_side',
+            'package_end_side',
+            'box_front_side',
+            'box_back_side',
+            'description_one',
+            'description_two',
+            'item_side_a',
+            'item_side_b',
+            'box_general_view',
+            'item_general_view',
+            'general_view',
+        ]
+        labels = {
+            'package_front_side': 'Передняя сторона упаковки',
+            'package_back_side': 'Задняя сторона упаковки',
+            'package_end_side': 'Торец упаковки',
+            'box_front_side': 'Передняя сторона коробки',
+            'box_back_side': 'Задняя сторона коробки',
+            'description_one': 'Описание 1',
+            'description_two': 'Описание 2',
+            'item_side_a': 'Предмет (Сторона А)',
+            'item_side_b': 'Предмет (Сторона Б)',
+            'box_general_view': 'Общий вид (Коробка)',
+            'item_general_view': 'Общий вид (Предмет)',
+            'general_view': 'Общий вид',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'invisible add-photo__inputChange'
 
 
-class CassetteBarcodeForm(forms.ModelForm):
-    """Форма добавления штрихкода"""
+class CassetteImageAddonsForm(forms.ModelForm):
+    """Форма добавления изображений"""
     class Meta:
-        model = CassetteBarcode
-        fields = '__all__'
-        exclude = ('cassette',)
+        model = CassettesImage
+        fields = [
+            'frequency_response',
+            'barcode'
+        ]
+        labels = {
+            'frequency_response': 'Frequency Response',
+            'barcode': 'Добавить штрихкод'
+        }
 
-
-class CassetteFrequencyResponseForm(forms.ModelForm):
-    """Форма добавления частотной характеристики кассеты"""
-    class Meta:
-        model = CassetteFrequencyResponse
-        fields = '__all__'
-        exclude = ('cassette',)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'fileInput invisible'
 
 
 class CassettePriceForm(forms.ModelForm):
     """Форма добавления цены"""
+    price = forms.IntegerField(label='Цена',
+                               validators=[validators.MinValueValidator(limit_value=1)],
+                               widget=forms.NumberInput(attrs={'class': 'input-cust'}),
+                               )
+
     class Meta:
         model = CassettePrice
-        fields = ['price', 'condition']
+        fields = ['condition', 'price']
+        widgets = {
+            'condition': forms.Select(attrs={'class': 'input-cust'}),
+            'price': forms.NumberInput(attrs={'class': 'input-cust'})
+        }
+        validators = {
+            'price': [validators.MinValueValidator(limit_value=1)]
+        }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.label_class = 'table__inputs-text settings__text-bold'
-        self.helper.field_class = 'table__inputs-value'
-        self.helper.layout = Layout(
-            Div(
-                Div(
-                    Div(
-                        'price',
-                        'condition',
-                    ),
-                ),
-                css_class='settings__wrapper-checkbox_objects',
-            ),
-        )
-
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'input-cust'
-
-
-CassetteImageFormSet = inlineformset_factory(
-    Cassette, CassettesImage, form=CassetteImageForm,
-    extra=12, can_delete=True, can_delete_extra=True
-)
-CassetteBarcodeFormSet = inlineformset_factory(
-    Cassette, CassetteBarcode, form=CassetteBarcodeForm,
-    extra=1, can_delete=True, can_delete_extra=True
-)
-CassetteFrequencyResponseFormSet = inlineformset_factory(
-    Cassette, CassetteFrequencyResponse, form=CassetteFrequencyResponseForm,
-    extra=1, can_delete=True, can_delete_extra=True
-)
 
 CassettePriceFormSet = inlineformset_factory(
     Cassette, CassettePrice, form=CassettePriceForm,

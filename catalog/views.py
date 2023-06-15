@@ -1,10 +1,10 @@
-from django.db.models import Min, Max
-from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
-from catalog.forms import CassetteCreateForm, CassetteBarcodeFormSet, \
-    CassetteFrequencyResponseFormSet, CassetteImageFormSet, CassettePriceFormSet
-from catalog.models import CassetteCategory, CassetteBrand, Cassette, CassetteTechnology
+from catalog.forms import (CassetteCreateForm,CassetteImageForm,
+                           CassetteImageAddonsForm, CassettePriceFormSet)
+from catalog.models import (CassetteCategory, CassetteBrand,
+                            Cassette, CassetteTechnology, CassettesImage, )
 
 
 class CassetteCategoryListView(ListView):
@@ -89,23 +89,40 @@ class CassetteUpdateView(UpdateView):
     model = Cassette
     form_class = CassetteCreateForm
     template_name = 'catalog/update-cassette.html'
-    success_url = '/'
+    # success_url = '/'
+
+    def get_success_url(self):
+        return reverse('catalog:cassette', kwargs={'id': self.object.pk})
 
     def get_context_data(self, **kwargs):
-        data = super(CassetteUpdateView, self).get_context_data(**kwargs)
+        print(self.object)
+        image_instance, _ = CassettesImage.objects.get_or_create(cassette=self.object)
+        context = super(CassetteUpdateView, self).get_context_data(**kwargs)
         if self.request.POST:
-            data['cassetteimageformset'] = CassetteImageFormSet(self.request.POST)
-            data['cassettebarcodeformset'] = CassetteBarcodeFormSet(self.request.POST)
-            data['cassetteresponceformset'] = CassetteFrequencyResponseFormSet(self.request.POST)
-            data['cassettepriceformset'] = CassettePriceFormSet(self.request.POST)
+            context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES, instance=image_instance)
+            context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES, instance=image_instance)
+            context['cassette_price_formset'] = CassettePriceFormSet(self.request.POST, instance=self.object)
         else:
-            data['cassetteimageformset'] = CassetteImageFormSet()
-            data['cassettebarcodeformset'] = CassetteBarcodeFormSet()
-            data['cassetteresponceformset'] = CassetteFrequencyResponseFormSet()
-            data['cassettepriceformset'] = CassettePriceFormSet()
-        return data
+            context['cassette_image_form'] = CassetteImageForm(instance=image_instance)
+            context['cassette_image_addons_form'] = CassetteImageAddonsForm(instance=image_instance)
+            context['cassette_price_formset'] = CassettePriceFormSet(instance=self.object)
+        return context
 
-    def get_object(self, queryset=None):
+    def get_object(self):
         return Cassette.objects.get(id=self.kwargs['id'])
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        cassette_price_formset = context['cassette_price_formset']
+        cassette_image_form = context['cassette_image_form']
+        cassette_image_addons_form = context['cassette_image_addons_form']
+        if cassette_price_formset.is_valid() and cassette_image_form.is_valid() and cassette_image_addons_form.is_valid():
+            cassette_price_formset.save()
+            cassette_image_form.save()
+            cassette_image_addons_form.save()
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+        return super().form_valid(form)
 
 

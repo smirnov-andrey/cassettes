@@ -1,58 +1,180 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
+{% crispy form form.helper %}
 {% block content %}
-    <section class="settings" id="settings">
-        <div class="container">
-            <h1 class="page__title settings__title">Редактировать предмет</h1>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="settings__wrapeer">
-                    <div class="setting__left-block">
-                        <div class="settings__block">
-                            <h2 class="settings__title-block">Характеристики</h2>
-                            {% crispy form %}
-                        </div>
-                        <div class="settings__block">
-                            <p class="settings__title-block">Коллекция</p>
-                            <div class="settings__collection-wrapper">
-                                {% for form in cassettepriceformset %}
-                                    {% crispy form %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="setting__right-block">
-                        <div class="settings__block">
-                            <p class="settings__title-block">Загрузить фото</p>
-                            <div class="add-photo__wrapper">
-
-                                {{ cassetteimageformset.management_form|crispy }}
-                                {% for form in cassetteimageformset %}
-                                    {% crispy form %}
-                                {% endfor %}
-
-                            </div>
-                        </div>
-                        <div class="settings__block">
-                            <p class="settings__title-block">Дополнительные данные</p>
-                            <div class="settings__dropanddrop">
-                                {{ cassettebarcodeformset.management_form|crispy }}
-                                {% for form in cassettebarcodeformset %}
-                                    {% crispy form %}
-                                {% endfor %}
-                            </div>
-                            <div class="settings__dropanddrop">
-                                {{ cassetteresponceformset.management_form|crispy }}
-                                {% for form in cassetteresponceformset %}
-                                    {% crispy form %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
+  <section class="settings" id="settings">
+    <div class="container">
+      <h1 class="page__title settings__title">Редактировать предмет</h1>
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.managment_form }}
+        {{ form.non_form_errors }}
+        <div class="settings__wrapeer">
+          <div class="setting__left-block">
+            <div class="settings__block">
+              <h2 class="settings__title-block">Характеристики</h2>
+              <table class="table__inputs">
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">{{ form.brand.label }}{% if form.brand.field.required  %}*{% endif %}</td>
+                  <td class="table__inputs-value">{{ form.brand }}{{ form.brand.errors }}</td>
+                </tr>
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">{{ form.manufacturer.label }}{% if form.manufacturer.field.required  %}*{% endif %}</td>
+                  <td class="table__inputs-value ">{{ form.manufacturer }}{{ form.manufacturer.errors }}</td>
+                </tr>
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">
+                    {{ form.model.label }}
+                    {% if form.model.field.required  %}*{% endif %}
+                  </td>
+                  <td class="table__inputs-value dropdown">
+                    {{ form.model }}
+                    {{ form.model.errors }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">
+                    {{ form.series.label }}
+                    {% if form.series.field.required  %}*{% endif %}
+                  </td>
+                  <td class="table__inputs-value">
+                    {{ form.series }}
+                    {{ form.series.errors }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">
+                    {{ form.tape_length.label }}
+                    {% if form.tape_length.field.required  %}*{% endif %}
+                  </td>
+                  <td class="table__inputs-value dropdown">
+                    {{ form.tape_length }}
+                    {{ form.tape_length.errors }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">
+                    {{ form.type.label }}
+                    {% if form.type.field.required  %}*{% endif %}
+                  </td>
+                  <td class="table__inputs-value dropdown">
+                    {{ form.type }}
+                    {{ form.type.errors }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="table__inputs-text settings__text-bold">
+                    {{ form.year_release.label }}
+                    {% if form.year_release.field.required  %}*{% endif %}
+                  </td>
+                  <td class="table__inputs-value dropdown">
+                    {{ form.year_release }}
+                    {{ form.year_release.errors }}
+                  </td>
+                </tr>
+              </table>
+              <div class="settings__wrapper">
+                <p class="settings__text-bold">Дополнительные параметры</p>
+                <div class="settings__wrapper-checkbox_objects">
+                  <div class="checkbox-cust settings__checkbox">
+                    {{ form.coil }}
+                    <label for="parametrs-1">{{ form.coil.label }}</label>
+                  </div>
+                  <div class="checkbox-cust settings__checkbox">
+                    {{ form.slim_case }}
+                    <label for="parametrs-2">{{ form.slim_case.label }}</label>
+                  </div>
                 </div>
-                <input type="submit" value="Save" class="btn btn_fill setting__btn">
-                <button class="btn btn_fill setting__btn">Сохранить изменения</button>
-            </form>
+              </div>
+            </div>
+            <div class="settings__block">
+              <div class="settings__textarea">
+                <p class="settings__title-block">{{ form.comment.label }}</p>
+                {{ form.comment }}
+              </div>
+            </div>
+            <div class="settings__block">
+              <p class="settings__title-block">Коллекция</p>
+              {{ cassette_price_formset.management_form }}
+              {{ cassette_price_formset.non_form_errors }}
+              {% for price_form in cassette_price_formset %}
+                {{ price_form.id }}
+                <div class="settings__collection-wrapper">
+                  <div class="settings__collection">
+                    <p class="settings__text-bold settings__collection-title">Состояние</p>
+                    {{ price_form.condition }}
+                  </div>
+                  <div class="settings__collection">
+                    <p class="settings__text-bold settings__collection-title">Цена</p>
+                    {{ price_form.price }}
+                  </div>
+                </div>
+                {{ price_form.errors }}
+                {% for hidden_field in price_form.hidden_fields %}
+                  {{ hidden_field }}
+                {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="setting__right-block">
+            <div class="settings__block">
+              <p class="settings__title-block">Загрузить фото</p>
+              <div class="add-photo__wrapper">
+                {{ cassette_image_form.non_form_errors }}
+                {% for field in cassette_image_form %}
+                  <div class="add-photo">
+                    <p class="add-photo__text">{{ field.label }}</p>
+                    {% if not field.value %}{{ field }}{% endif %}
+                    {{ field.errors }}
+                    <img src="" alt="img" class="add-photo-image">
+                    {% if field.value %}
+                      <label class="add-photo__input" for="{{ field.id_for_label }}" style="background: url({{ field.value.url }}) no-repeat center center / contain;"></label>
+                    {% else%}
+                      <label class="add-photo__input add-photo__input_plus" for="{{ field.id_for_label }}" style="background: url({% static 'img/photo-prev.jpg' %}) no-repeat center center / contain;"></label>
+                    {% endif %}
+                    <span class="add-photo-delete">
+                      <img src="{% static 'img/delete-photo.svg' %}" alt="">
+                    </span>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="settings__block">
+                <p class="settings__title-block">Дополнительные данные</p>
+                {{ cassette_image_addons_form.non_form_errors }}
+                {% for field in cassette_image_addons_form %}
+                  <div class="settings__dropanddrop">
+                    <p class="settings__text-bold settings__collection-title">{{ field.label }}</p>
+                    <div id="dropContainer_Frequency" class="dropContainer">
+                      <div class="dropContainer__wrapper">
+                        <label for="{{ field.id_for_label }}" class="btn btn_ghost dropContainer__btn">Выберите фото</label>
+                        <span>Или перетащите сюда</span>
+                      </div>
+                      {% if field.value %}
+                        <div>
+                          <img src="{{ field.value.url }}" width=200 alt="">
+                        </div>
+                      {% else %}
+                        <div class="dropContainer__image-wrapper">
+                          <img class="preview" src="" alt="">
+                          <span class="img-delete"><img src="{% static 'img/delete-photo.svg' %}" alt=""></span>
+                        </div>
+                      {% endif %}
+                      {% if not field.value %}{{ field }}{% endif %}
+                      {{ field.errors }}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
+        <div class="footer-buttons">
+          <button type="submit" value="Update" class="btn btn_fill setting__btn">Сохранить изменения</button>
+          <button type="button" onclick="location.href='{{ cassette.get_absolute_url }}'" class="btn btn_ghost setting__btn">Отменить изменения</button>
+        </div>
+
+      </form>
+    </div>
+  </section>
 {% endblock %}

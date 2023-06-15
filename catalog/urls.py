@@ -13,5 +13,6 @@ urlpatterns = [
     path('technology/', TechnologyListView.as_view(), name='technologies'),
     path('cassettes/<int:id>/', CassetteDetailView.as_view(), name='cassette'),
     path('cassettes/add/', CassetteCreateView.as_view(), name='cassette_create'),
-    path('cassettes/update/<int:id>', CassetteUpdateView.as_view(), name='cassette_update'),
+    path('cassettes/<int:id>/update/', CassetteUpdateView.as_view(),
+         name='cassette_update'),
 ]

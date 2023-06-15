@@ -1,5 +1,6 @@
 from django.db import models
-from django.db.models import Min, Max, Avg
+from django.db.models import Min, Max
+from django.urls import reverse
 
 from users.models import Country, User
 from pytils.translit import slugify
@@ -87,10 +88,6 @@ CASSETTECONDITION = (
     ('excellent', 'Excellent'),
     ('nearmint', 'Near mint'),
     ('mint', 'Mint'),
-
-
-
-
 )
 
 
@@ -129,38 +126,35 @@ class Cassette(models.Model):
         verbose_name = 'Add cassettes'
         verbose_name_plural = 'Cassettes'
 
+
+    def get_absolute_url(self):
+        return reverse('catalog:cassette', kwargs={'id': self.pk})
+
     def __str__(self):
         return f'{self.model} - {self.user}'
 
 
 class CassettesImage(models.Model):
     """Модель изображений кассеты"""
-    image = models.ImageField(upload_to='cassettes', verbose_name='Image')
-    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
+    package_front_side = models.ImageField(upload_to='cassettes', verbose_name='Front side of the package', null=True, blank=True)
+    package_back_side = models.ImageField(upload_to='cassettes', verbose_name='Back side of the package', null=True, blank=True)
+    package_end_side = models.ImageField(upload_to='cassettes', verbose_name='End side', null=True, blank=True)
+    box_front_side = models.ImageField(upload_to='cassettes', verbose_name='Front side of the box', null=True, blank=True)
+    box_back_side = models.ImageField(upload_to='cassettes', verbose_name='Back side of the box', null=True, blank=True)
+    description_one = models.ImageField(upload_to='cassettes', verbose_name='Description 1', null=True, blank=True)
+    description_two = models.ImageField(upload_to='cassettes', verbose_name='Description 2', null=True, blank=True)
+    item_side_a = models.ImageField(upload_to='cassettes', verbose_name='Item (Side A)', null=True, blank=True)
+    item_side_b = models.ImageField(upload_to='cassettes', verbose_name='Item (Side B)', null=True, blank=True)
+    box_general_view = models.ImageField(upload_to='cassettes', verbose_name='General view (Box)', null=True, blank=True)
+    item_general_view = models.ImageField(upload_to='cassettes', verbose_name='General view (Item)', null=True, blank=True)
+    general_view = models.ImageField(upload_to='cassettes', verbose_name='General view', null=True, blank=True)
+    barcode = models.ImageField(upload_to='cassettes', verbose_name='General view', null=True, blank=True)
+    frequency_response = models.ImageField(upload_to='cassettes', verbose_name='General view', null=True, blank=True)
+    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Add image for cassette'
         verbose_name_plural = 'Cassette images'
-
-
-class CassetteBarcode(models.Model):
-    """Модель штрихкода кассеты"""
-    file = models.FileField(upload_to='barcode')
-    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
-
-    class Meta:
-        verbose_name = 'Add barcode for cassette'
-        verbose_name_plural = 'Cassette barcodes'
-
-
-class CassetteFrequencyResponse(models.Model):
-    """Модель частотной характеристики кассеты"""
-    file = models.FileField(upload_to='frequeryresponse')
-    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette')
-
-    class Meta:
-        verbose_name = 'Add frequency response for cassette'
-        verbose_name_plural = 'Cassette frequency responses'
 
 
 class CassetteSeller(models.Model):
