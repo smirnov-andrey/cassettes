@@ -97,8 +97,6 @@ WSGI_APPLICATION = 'kassets.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-print('---------------------------------------\n\n\n')
-print(os.getenv('DB_HOST', default='db'))
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),

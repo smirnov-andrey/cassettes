@@ -95,26 +95,101 @@
               </div>
             </div>
             <div class="settings__block">
-              <p class="settings__title-block">Коллекция</p>
-              {{ cassette_price_formset.management_form }}
-              {{ cassette_price_formset.non_form_errors }}
-              {% for price_form in cassette_price_formset %}
-                {{ price_form.id }}
-                <div class="settings__collection-wrapper">
-                  <div class="settings__collection">
-                    <p class="settings__text-bold settings__collection-title">Состояние</p>
-                    {{ price_form.condition }}
+              <h2 class="settings__title-block">Коллекция</h2>
+              {{ cassette_price_form.non_form_errors }}
+              <table class="table__inputs">
+                <tr>
+                  <div class="settings__collection-wrapper">
+                  <td class="table__inputs-text settings__text-bold">
+                    Состояние
+{#                    <div class="settings__collection">#}
+{#                      <p class="settings__text-bold settings__collection-title">Состояние</p>#}
+{#                    </div>#}
+                  </td>
+                  <td class="table__inputs-value settings__text-bold">
+                    Цена
+{#                     <div class="settings__collection">#}
+{#                      <p class="settings__text-bold settings__collection-title">Цена</p>#}
+{#                    </div>#}
+                  </td>
                   </div>
-                  <div class="settings__collection">
-                    <p class="settings__text-bold settings__collection-title">Цена</p>
-                    {{ price_form.price }}
-                  </div>
-                </div>
-                {{ price_form.errors }}
-                {% for hidden_field in price_form.hidden_fields %}
-                  {{ hidden_field }}
+                </tr>
+                {% for field in cassette_price_form %}
+                  <tr>
+                    <td class="table__inputs-text settings__text-bold">
+                      {{ field.label}}
+                    </td>
+                    <td class="table__inputs-value">
+                      {{ field }}
+                      {{ form.series.errors }}
+                    </td>
+                  </tr>
+
                 {% endfor %}
-              {% endfor %}
+              </table>
+
+
+
+{#            <table class="table__inputs">#}
+{#                <tr>#}
+{#                  <div class="settings__collection-wrapper">#}
+{#                  <td>#}
+{#                    <div class="settings__collection">#}
+{#                      <p class="settings__text-bold settings__collection-title">Состояние</p>#}
+{#                    </div>#}
+{#                  </td>#}
+{#                  <td>#}
+{#                     <div class="settings__collection">#}
+{#                      <p class="settings__text-bold settings__collection-title">Цена</p>#}
+{#                    </div>#}
+{#                  </td>#}
+{#                  </div>#}
+{#                </tr>#}
+{#            <tr>#}
+{#                {% for field in cassette_price_form %}#}
+{##}
+{##}
+{#                    <td class="table__inputs-text settings__text-bold">#}
+{#                      {{ field.label}}#}
+{#                    </td>#}
+{#               {% endfor %}#}
+{#             </tr>#}
+{#            <tr>#}
+{#                {% for field in cassette_price_form %}#}
+{#                    <td class="table__inputs-value">#}
+{#                      {{ field }}#}
+{#                      {{ form.series.errors }}#}
+{#                    </td>#}
+{#                    {% endfor %}#}
+{#             </tr>#}
+{##}
+{##}
+{#              </table>#}
+
+
+{#              <div class="settings__collection-wrapper">#}
+{#                <div class="settings__collection">#}
+{#                  <p class="settings__text-bold settings__collection-title">Состояние</p>#}
+{#                </div>#}
+{#                <div class="settings__collection">#}
+{#                  <p class="settings__text-bold settings__collection-title">Цена</p>#}
+{#                </div>#}
+{#              </div>#}
+{#              {% for field in cassette_price_form %}#}
+{#                {{ price_form.id }}#}
+{#                <div class="settings__collection-wrapper">#}
+{#                  <div class="settings__collection">#}
+{#                    {{ field.label}}#}
+{#                  </div>#}
+{#                  <div class="settings__collection">#}
+{#                    {{ field }}#}
+{#                  </div>#}
+{#                </div>#}
+                {#                {{ price_form.errors }}#}
+                {#                {% for hidden_field in price_form.hidden_fields %}#}
+                {#                  {{ hidden_field }}#}
+                {#                {% endfor %}#}
+{#              {% endfor %}#}
             </div>
           </div>
           <div class="setting__right-block">

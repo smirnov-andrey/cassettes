@@ -2,9 +2,10 @@ from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 
 from catalog.forms import (CassetteCreateForm,CassetteImageForm,
-                           CassetteImageAddonsForm, CassettePriceFormSet)
+                           CassetteImageAddonsForm, CassettePriceForm)
 from catalog.models import (CassetteCategory, CassetteBrand,
-                            Cassette, CassetteTechnology, CassettesImage, )
+                            Cassette, CassetteTechnology, CassettesImage,
+                            CassettePrice)
 
 
 class CassetteCategoryListView(ListView):
@@ -97,15 +98,16 @@ class CassetteUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         print(self.object)
         image_instance, _ = CassettesImage.objects.get_or_create(cassette=self.object)
+        price_instance, _ = CassettePrice.objects.get_or_create(cassette=self.object)
         context = super(CassetteUpdateView, self).get_context_data(**kwargs)
         if self.request.POST:
             context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES, instance=image_instance)
             context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES, instance=image_instance)
-            context['cassette_price_formset'] = CassettePriceFormSet(self.request.POST, instance=self.object)
+            context['cassette_price_form'] = CassettePriceForm(self.request.POST, instance=price_instance)
         else:
             context['cassette_image_form'] = CassetteImageForm(instance=image_instance)
             context['cassette_image_addons_form'] = CassetteImageAddonsForm(instance=image_instance)
-            context['cassette_price_formset'] = CassettePriceFormSet(instance=self.object)
+            context['cassette_price_form'] = CassettePriceForm(instance=price_instance)
         return context
 
     def get_object(self):
@@ -113,11 +115,11 @@ class CassetteUpdateView(UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        cassette_price_formset = context['cassette_price_formset']
+        cassette_price_form = context['cassette_price_form']
         cassette_image_form = context['cassette_image_form']
         cassette_image_addons_form = context['cassette_image_addons_form']
-        if cassette_price_formset.is_valid() and cassette_image_form.is_valid() and cassette_image_addons_form.is_valid():
-            cassette_price_formset.save()
+        if cassette_price_form.is_valid() and cassette_image_form.is_valid() and cassette_image_addons_form.is_valid():
+            cassette_price_form.save()
             cassette_image_form.save()
             cassette_image_addons_form.save()
         else:

@@ -81,20 +81,14 @@ class CassetteTapeLength(models.Model):
         return f'{self.tape_length}'
 
 
-CASSETTECONDITION = (
-    ('poor', 'Poor'),
-    ('good', 'Good'),
-    ('very_good', 'Very good'),
-    ('excellent', 'Excellent'),
-    ('nearmint', 'Near mint'),
-    ('mint', 'Mint'),
-)
-
-
 class CassettePrice(models.Model):
     """Различные варианты цены в зависимости от состояния"""
-    price = models.IntegerField(verbose_name='price')
-    condition = models.CharField(max_length=100, choices=CASSETTECONDITION, verbose_name='condition')
+    poor = models.IntegerField(null=True, blank=True, verbose_name='Poor price')
+    good = models.IntegerField(null=True, blank=True, verbose_name='Good price')
+    very_good = models.IntegerField(null=True, blank=True, verbose_name='Very good price')
+    excellent = models.IntegerField(null=True, blank=True, verbose_name='Excellent price')
+    near_mint = models.IntegerField(null=True, blank=True, verbose_name='Near mint price')
+    mint = models.IntegerField(null=True, blank=True, verbose_name='Mint price')
     cassette = models.ForeignKey('Cassette', on_delete=models.CASCADE, related_name='prices', verbose_name='cassette')
 
     class Meta:
@@ -102,7 +96,7 @@ class CassettePrice(models.Model):
         verbose_name_plural = 'Cassettes prices'
 
     def __str__(self):
-        return f'{self.cassette} - {self.price}'
+        return f'{self.cassette} prices'
 
 
 class Cassette(models.Model):

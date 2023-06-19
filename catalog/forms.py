@@ -119,24 +119,55 @@ class CassetteImageAddonsForm(forms.ModelForm):
 
 class CassettePriceForm(forms.ModelForm):
     """Форма добавления цены"""
-    price = forms.IntegerField(label='Цена',
-                               validators=[validators.MinValueValidator(limit_value=1)],
-                               widget=forms.NumberInput(attrs={'class': 'input-cust'}),
-                               )
 
     class Meta:
         model = CassettePrice
-        fields = ['condition', 'price']
+        fields = [
+            'poor',
+            'good',
+            'very_good',
+            'excellent',
+            'near_mint',
+            'mint',
+        ]
+        labels = {
+            'poor': 'Poor',
+            'good': 'Good',
+            'very_good': 'Very good',
+            'excellent': 'Excellent',
+            'near_mint': 'Near mint',
+            'mint': 'Mint',
+        }
+        validators = {
+            'poor': [validators.MinValueValidator(limit_value=1)],
+            'good': [validators.MinValueValidator(limit_value=1)],
+            'very_good': [validators.MinValueValidator(limit_value=1)],
+            'excellent': [validators.MinValueValidator(limit_value=1)],
+            'near_mint': [validators.MinValueValidator(limit_value=1)],
+            'mint': [validators.MinValueValidator(limit_value=1)]
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'input-cust input-cust_fz14'
+
+    # price = forms.IntegerField(label='Цена',
+    #                            validators=[validators.MinValueValidator(limit_value=1)],
+    #                            widget=forms.NumberInput(attrs={'class': 'input-cust'}),
+    #                            )
+
+    # class Meta:
+    #     model = CassettePrice
+    #     fields = ['condition', 'price']
         widgets = {
             'condition': forms.Select(attrs={'class': 'input-cust'}),
             'price': forms.NumberInput(attrs={'class': 'input-cust'})
         }
-        validators = {
-            'price': [validators.MinValueValidator(limit_value=1)]
-        }
 
 
-CassettePriceFormSet = inlineformset_factory(
-    Cassette, CassettePrice, form=CassettePriceForm,
-    extra=1, can_delete=True, can_delete_extra=True
-)
+#
+# CassettePriceFormSet = inlineformset_factory(
+#     Cassette, CassettePrice, form=CassettePriceForm,
+#     extra=1, can_delete=True, can_delete_extra=True
+# )
