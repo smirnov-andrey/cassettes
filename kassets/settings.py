@@ -182,7 +182,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 3
+SITE_ID = 2
 
 # Additional configuration settings
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
