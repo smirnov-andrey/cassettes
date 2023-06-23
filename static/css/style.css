@@ -2206,6 +2206,18 @@ footer{
     border-bottom: 1px solid rgba(41, 35, 27, 0.4);
 }
 
+.footer-buttons div {
+    margin: 0px 10px;
+}
+
+.footer-buttons {
+    align-items: center;
+    display: inline-flex;
+    position: relative;
+    left: 30%;
+    padding: 10px;
+}
+
 .table__inputs-text{
     width: 120px;
 }
