@@ -115,38 +115,38 @@
                     <th>Mint</th>
                   </tr>
                   {% for price in object.prices.all %}
-                  <tr>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-1" {% if not price.poor %}disabled{% endif %}>
-                      <label for="condition-1">{% if price.poor %}{{ price.poor }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-2" {% if not price.good %}disabled{% endif %}>
-                      <label for="condition-2">{% if price.good %}{{ price.good }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-3" {% if not price.very_good %}disabled{% endif %}>
-                      <label for="condition-3">{% if price.very_good %}{{ price.very_good }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-4" {% if not price.excellent %}disabled{% endif %}>
-                      <label for="condition-4">{% if price.excellent %}{{ price.excellent }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-5" {% if not price.near_mint %}disabled{% endif %}>
-                      <label for="condition-5">{% if price.near_mint %}{{ price.near_mint }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-6" {% if not price.mint %}disabled{% endif %}>
-                      <label for="condition-6">{% if price.mint %}{{ price.mint }}{% else %}-{% endif %}</label>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        <input class="product__collection-radio" type="radio" name="condition"
+                               id="condition-1" {% if not price.poor %}disabled{% endif %}>
+                        <label for="condition-1">{% if price.poor %}{{ price.poor }}{% else %}-{% endif %}</label>
+                      </td>
+                      <td>
+                        <input class="product__collection-radio" type="radio" name="condition"
+                               id="condition-2" {% if not price.good %}disabled{% endif %}>
+                        <label for="condition-2">{% if price.good %}{{ price.good }}{% else %}-{% endif %}</label>
+                      </td>
+                      <td>
+                        <input class="product__collection-radio" type="radio" name="condition"
+                               id="condition-3" {% if not price.very_good %}disabled{% endif %}>
+                        <label for="condition-3">{% if price.very_good %}{{ price.very_good }}{% else %}-{% endif %}</label>
+                      </td>
+                      <td>
+                        <input class="product__collection-radio" type="radio" name="condition"
+                               id="condition-4" {% if not price.excellent %}disabled{% endif %}>
+                        <label for="condition-4">{% if price.excellent %}{{ price.excellent }}{% else %}-{% endif %}</label>
+                      </td>
+                      <td>
+                        <input class="product__collection-radio" type="radio" name="condition"
+                               id="condition-5" {% if not price.near_mint %}disabled{% endif %}>
+                        <label for="condition-5">{% if price.near_mint %}{{ price.near_mint }}{% else %}-{% endif %}</label>
+                      </td>
+                      <td>
+                        <input class="product__collection-radio" type="radio" name="condition"
+                               id="condition-6" {% if not price.mint %}disabled{% endif %}>
+                        <label for="condition-6">{% if price.mint %}{{ price.mint }}{% else %}-{% endif %}</label>
+                      </td>
+                    </tr>
                   {% endfor %}
 
                 </table>
@@ -339,66 +339,47 @@
       <div class="product__comments-add">
         <h2 class="product__comments-title">Комментарии</h2>
         <p class="product__comments-text">Вы можете помочь улучшить наш каталог, добавив ваш комментарий.</p>
-        <form action="" class="product__comments-form">
-                    <textarea class="textarea-cust" name="comments-add" id="comments-add"
-                              placeholder="Оставьте комментарий"></textarea>
-          <button type="submit" class="product__comments-btn btn btn_fill">Оставить комментарий</button>
+        <form action="" method="POST" class="product__comments-form">
+          {% csrf_token %}
+          {{ form.non_form_errors }}
+          {{ form }}
+          <button type="submit" value="Submit" class="product__comments-btn btn btn_fill">Оставить комментарий</button>
         </form>
       </div>
 
-      <!--     <ul class="product__comments">
-               <li class="product__comments-item">
-                   <div class="comment">
-                       <div class="user ">
-                           <img src="/static/img/avatar.jpg" alt="" class="user__avatar">
-                           <div class="user__wrapper">
-                               <h2 class="user__name">Guillermo Baeza</h2>
-                               <p class="user__nick">[guibami]</p>
-                           </div>
-                       </div>
-                       <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе
-                           отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное
-                           воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на
-                           более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением
-                           ленты. Идеально подходит для цифровых источников.
-                       </p>
-                   </div>
-               </li>
-               <li class="product__comments-item">
-                   <div class="comment">
-                       <div class="user ">
-                           <img src="/static/img/avatar.jpg" alt="" class="user__avatar">
-                           <div class="user__wrapper">
-                               <h2 class="user__name">Guillermo Baeza</h2>
-                               <p class="user__nick">[guibami]</p>
-                           </div>
-                       </div>
-                       <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе
-                           отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное
-                           воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на
-                           более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением
-                           ленты. Идеально подходит для цифровых источников.
-                       </p>
-                   </div>
-               </li>
-               <li class="product__comments-item">
-                   <div class="comment">
-                       <div class="user ">
-                           <img src="../../static/img/avatar.jpg" alt="" class="user__avatar">
-                           <div class="user__wrapper">
-                               <h2 class="user__name">Guillermo Baeza</h2>
-                               <p class="user__nick">[guibami]</p>
-                           </div>
-                       </div>
-                       <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе
-                           отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное
-                           воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на
-                           более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением
-                           ленты. Идеально подходит для цифровых источников.
-                       </p>
-                   </div>
-               </li>
-           </ul> -->
+      <ul class="product__comments">
+        {% for comment in cassette.comments.all %}
+          <li class="product__comments-item">
+            <div class="comment">
+              <div class="user ">
+                <img src="{{ comment.user.image.url }}" alt="" class="user__avatar">
+                <div class="user__wrapper">
+                  <h2 class="user__name">{{ comment.user.first_name }} {{ comment.user.last_name }}</h2>
+                  <p class="user__nick">{{ comment.user.username }}</p>
+                </div>
+              </div>
+              <p class="comment__text">{{ comment.comment }}</p>
+            </div>
+          </li>
+        {% endfor %}
+        {#               <li class="product__comments-item">#}
+        {#                   <div class="comment">#}
+        {#                       <div class="user ">#}
+        {#                           <img src="../../static/img/avatar.jpg" alt="" class="user__avatar">#}
+        {#                           <div class="user__wrapper">#}
+        {#                               <h2 class="user__name">Guillermo Baeza</h2>#}
+        {#                               <p class="user__nick">[guibami]</p>#}
+        {#                           </div>#}
+        {#                       </div>#}
+        {#                       <p class="comment__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе#}
+        {#                           отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное#}
+        {#                           воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на#}
+        {#                           более высоких уровнях безискажений. Для воспроизведения с мощными басами и низкимшипением#}
+        {#                           ленты. Идеально подходит для цифровых источников.#}
+        {#                       </p>#}
+        {#                   </div>#}
+        {#               </li>#}
+      </ul>
     </div>
   </section>
 {% endblock %}

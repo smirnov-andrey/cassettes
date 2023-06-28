@@ -1,8 +1,8 @@
 from django import forms
 from django.core import validators
 
-from catalog.models import Cassette, CassettesImage, CassettePrice
-from django.forms.models import inlineformset_factory
+from catalog.models import (Cassette, CassettesImage, CassettePrice,
+                            CassetteComment)
 
 
 class CassetteCreateForm(forms.ModelForm):
@@ -160,10 +160,10 @@ class CassettePriceForm(forms.ModelForm):
     # class Meta:
     #     model = CassettePrice
     #     fields = ['condition', 'price']
-        widgets = {
-            'condition': forms.Select(attrs={'class': 'input-cust'}),
-            'price': forms.NumberInput(attrs={'class': 'input-cust'})
-        }
+    #     widgets = {
+    #         'condition': forms.Select(attrs={'class': 'input-cust'}),
+    #         'price': forms.NumberInput(attrs={'class': 'input-cust'})
+    #     }
 
 
 #
@@ -171,3 +171,18 @@ class CassettePriceForm(forms.ModelForm):
 #     Cassette, CassettePrice, form=CassettePriceForm,
 #     extra=1, can_delete=True, can_delete_extra=True
 # )
+
+
+class CassetteCommentForm(forms.ModelForm):
+    """Форма добавления коммментария"""
+
+    class Meta:
+        model = CassetteComment
+        fields = ['user', 'cassette','comment', ]
+        labels = {'comment': '', }
+        validators = {'comment': [validators.MinLengthValidator(limit_value=1,  message='Оставьте комментарий')], }
+        widgets = {
+            'user': forms.HiddenInput(),
+            'cassette': forms.HiddenInput(),
+            'comment': forms.Textarea(attrs={'class': 'textarea-cust', 'name': 'comments-add', 'id': 'comments-add', 'placeholder': 'Оставьте комментарий', 'rows': '5'}),
+        }
