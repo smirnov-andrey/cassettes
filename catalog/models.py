@@ -175,3 +175,20 @@ class CassetteChanger(models.Model):
 
     def __str__(self):
         return f'{self.cassette} + {self.user}'
+
+
+class CassetteComment(models.Model):
+    """Комментарии пользотвателей к касете"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='comments')
+    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette', related_name='comments')
+    comment = models.TextField(verbose_name='Comments')
+    created = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Date of comment created')
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Date of comment updated')
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'Cassette comment'
+        verbose_name_plural = 'Cassette comments'
+
+    def __str__(self):
+        return f'{self.cassette} + {self.user}'

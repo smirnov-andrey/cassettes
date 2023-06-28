@@ -1,11 +1,13 @@
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
+from django.views.generic.edit import FormMixin
 
 from catalog.forms import (CassetteCreateForm,CassetteImageForm,
-                           CassetteImageAddonsForm, CassettePriceForm)
+                           CassetteImageAddonsForm, CassettePriceForm,
+                           CassetteCommentForm)
 from catalog.models import (CassetteCategory, CassetteBrand,
                             Cassette, CassetteTechnology, CassettesImage,
-                            CassettePrice)
+                            CassettePrice, CassetteComment)
 
 
 class CassetteCategoryListView(ListView):
@@ -69,13 +71,39 @@ class TechnologyListView(ListView):
     context_object_name = 'technology_list'
 
 
-class CassetteDetailView(DetailView):
+class CassetteDetailView(DetailView, FormMixin):
     """Кассета"""
     model = Cassette
     template_name = 'catalog/cassette.html'
+    form_class = CassetteCommentForm
+
+    def get_success_url(self):
+        return reverse('catalog:cassette', kwargs={'id': self.object.id})
 
     def get_object(self, queryset=None):
         return Cassette.objects.get(id=self.kwargs['id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(CassetteDetailView, self).get_context_data(**kwargs)
+        context['form'] = CassetteCommentForm(
+            initial={
+                'user': self.request.user,
+                'cassette': self.object
+            }
+        )
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super(CassetteDetailView, self).form_valid(form)
 
 
 class CassetteCreateView(CreateView):
@@ -96,7 +124,6 @@ class CassetteUpdateView(UpdateView):
         return reverse('catalog:cassette', kwargs={'id': self.object.pk})
 
     def get_context_data(self, **kwargs):
-        print(self.object)
         image_instance, _ = CassettesImage.objects.get_or_create(cassette=self.object)
         price_instance, _ = CassettePrice.objects.get_or_create(cassette=self.object)
         context = super(CassetteUpdateView, self).get_context_data(**kwargs)
