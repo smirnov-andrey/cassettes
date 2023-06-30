@@ -1,111 +1,112 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
-    <section class="catalog" id="catalog">
-        <div class="container">
-            <div class="catalog__wrapper">
-                <div class="catalog-info">
-                    <div class="catalog-info__item">
-                        <h3 class="catalog-info__title">Каталог мировых монет и банкнот</h3>
-                            <p class="catalog-info__text">Узнайте о монетах и бумажных деньгах с помощью совместного
-                                каталога, охватывающего все страны и все периоды.<br>Определите монеты и банкноты с
-                                помощью расширенных фильтров поиска.Каталог создается сообществом и добровольцами</p>
-                    </div>
-                    <div class="catalog-info__item">
-                        <h3 class="catalog-info__title">Управляйте своей коллекцией</h3>
-                            <p class="catalog-info__text">Узнайте о монетах и бумажных деньгах с помощью совместного
-                                каталога, охватывающего все страны и все периоды.<br>Определите монеты и банкноты с
-                                помощью расширенных фильтров поиска.Каталог создается сообществом и добровольцами</p>
-                    </div>
-                </div>
-                <div class="catalog-users">
-                    <div class="catalog-users__item">
-                        <h4 class="catalog-isers__title">Коллекционеры</h4>
-                            <ul class="catalog-users__list">
-                                {% for collector in collector_list %}
-                                <li class="catalog-users__item">
-                                    <a href="#">{{ collector.first_name }} {{ collector.last_name }}<span>[{{ collector.username }}]</span></a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                    </div>
-                    <div class="catalog-users__item">
-                        <h4 class="catalog-isers__title">Редакторы</h3>
-                            <ul class="catalog-users__list">
-                            </ul>
-                    </div>
-                    <div class="catalog-users__item">
-                        <h4 class="catalog-isers__title">Обменники</h3>
-                            <ul class="catalog-users__list">
-                            </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="categories">
-                <ul class="categories__list">
-                    {% for category in category_list %}
-                    <li class="categories__item">
-                        <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
-                            <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
-                            <div class="categories__wrapper">
-                                <h1 class="categories__title">{{ category }}</h1>
-                                <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
-                            </div>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+  <section class="catalog" id="catalog">
+    <div class="container">
+      <div class="catalog__wrapper">
+        <div class="catalog-info">
+          <div class="catalog-info__item">
+            <h3 class="catalog-info__title">Каталог мировых монет и банкнот</h3>
+            <p class="catalog-info__text">Узнайте о монетах и бумажных деньгах с помощью совместного
+              каталога, охватывающего все страны и все периоды.<br>Определите монеты и банкноты с
+              помощью расширенных фильтров поиска.Каталог создается сообществом и добровольцами</p>
+          </div>
+          <div class="catalog-info__item">
+            <h3 class="catalog-info__title">Управляйте своей коллекцией</h3>
+            <p class="catalog-info__text">Узнайте о монетах и бумажных деньгах с помощью совместного
+              каталога, охватывающего все страны и все периоды.<br>Определите монеты и банкноты с
+              помощью расширенных фильтров поиска.Каталог создается сообществом и добровольцами</p>
+          </div>
         </div>
-    </section>
-
-    <section class="last-update" id="last-update">
-        <div class="container">
-            <h2 class="section__title last-update__title">Последние обновления</h2>
-            <ul class="products">
-                {% for cassette in cassette_list %}
-                <li class="product">
-                    <a href="{% url 'catalog:cassette' id=cassette.id %}" class="product__link">
-                        <img src="{{ cassette.cassettesimage_set.first.image.url }}" alt="{{ cassette }}" class="product__img">
-                        <p class="product__categories">{{ cassette.category }}</p>
-                        <p class="product__name">{{ cassette.brand }} - {{ cassette.series }}, {{ cassette.brand.country }} ({{ cassette.year_release }}) </p>
-                    </a>
+        <div class="catalog-users">
+          <div class="catalog-users__item">
+            <h4 class="catalog-isers__title">Коллекционеры</h4>
+            <ul class="catalog-users__list">
+              {% for collector in collector_list %}
+                <li class="catalog-users__item">
+                  <a href="#">{{ collector.first_name }} {{ collector.last_name }}<span>[{{ collector.username }}]</span></a>
                 </li>
-                {% endfor %}
+              {% endfor %}
             </ul>
+          </div>
+          <div class="catalog-users__item">
+            <h4 class="catalog-isers__title">Редакторы</h3>
+              <ul class="catalog-users__list">
+              </ul>
+          </div>
+          <div class="catalog-users__item">
+            <h4 class="catalog-isers__title">Обменники</h3>
+              <ul class="catalog-users__list">
+              </ul>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <section class="comment-last">
-        <div class="container">
-            <h2 class="section__title comment-last__title">Последние комментарии</h2>
-            <ul class="comment-last__list">
-              <!--  <li class="comment-last__item">
-                    <img src="../../static/img/cassette-4.jpg" alt="" class="comment-last__img">
-                    <div class="comment-last__wrapper">
-                        <a href="#" class="comment-last__product">
-                            AGFA - MS 400, Австралия (1973)
-                        </a>
-                        <p class="comment-last__text">Непористые частицы NP-железа TDK Acoustic Responseсочетают в себе
-                            отличную плавкость и низкий уровень шума. Эта формулировка обеспечивает точное и динамичное
-                            воспроизведение всех цифровых источников. Высококачественная супер-железная лента. Запись на
-                            более высоких уровнях без искажений... <a href="#"
-                                                                      class="comment-last__more more">подробнее</a></p>
-                    </div>
-                    <div class="comment-last__author">
-                        <p class="comment-last__from">Комментарий от</p>
-                        <div class="user ">
-                            <img src="../../static/img/avatar.jpg" alt="" class="user__avatar">
-                            <div class="user__wrapper">
-                                <h2 class="user__name">Guillermo Baeza</h2>
-                                <p class="user__nick">[guibami]</p>
-                            </div>
-                        </div>
-                    </div>
-                </li> -->
-            </ul>
-        </div>
-    </section>
+      <div class="categories">
+        <ul class="categories__list">
+          {% for category in category_list %}
+            <li class="categories__item">
+              <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
+                <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                <div class="categories__wrapper">
+                  <h1 class="categories__title">{{ category }}</h1>
+                  <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                </div>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="last-update" id="last-update">
+    <div class="container">
+      <h2 class="section__title last-update__title">Последние обновления</h2>
+      <ul class="products">
+        {% for cassette in cassette_list %}
+          <li class="product">
+            <a href="{% url 'catalog:cassette' id=cassette.id %}" class="product__link">
+              <img src="{{ cassette.cassettesimage_set.first.package_front_side.url }}" alt="{{ cassette }}" class="product__img">
+              <p class="product__categories">{{ cassette.category }}</p>
+              <p class="product__name">{{ cassette.brand }} - {{ cassette.series }}, {{ cassette.brand.country }} ({{ cassette.year_release }}) </p>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="comment-last">
+    <div class="container">
+      <h2 class="section__title comment-last__title">Последние комментарии</h2>
+      <ul class="comment-last__list">
+        {% for comment in comment_list %}
+          <li class="comment-last__item">
+            {% if comment.cassette.cassettesimage_set.first.package_front_side %}
+              <img src="{{ comment.cassette.cassettesimage_set.first.package_front_side.url }}" alt="" class="comment-last__img">
+            {% endif %}
+            <div class="comment-last__wrapper">
+              <a href="{% url 'catalog:cassette' id=comment.cassette.id %}" class="comment-last__product">
+                {{ comment.cassette.brand }} - {{ comment.cassette.series }}, {{ comment.cassette.brand.country }} ({{ comment.cassette.year_release }})
+              </a>
+              <p class="comment-last__text">{{ comment.comment|truncatechars:255 }}
+                <a href="{% url 'catalog:cassette' id=comment.cassette.id %}" class="comment-last__more more"> подробнее</a></p>
+            </div>
+            <div class="comment-last__author">
+              <p class="comment-last__from">Комментарий от</p>
+              <div class="user ">
+                <img src="{% if comment.user.image %}{{ comment.user.image.url }}{% else %}{% static 'img/avatar.jpg' %}{% endif %}" alt="" class="user__avatar">
+                <div class="user__wrapper">
+                  <h2 class="user__name">{{ comment.user.first_name }} {{ comment.user.last_name }}</h2>
+                  <p class="user__nick">[{{ comment.user.username }}]</p>
+                </div>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
 {% endblock %}
