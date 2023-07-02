@@ -152,26 +152,6 @@ class CassettePriceForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'input-cust input-cust_fz14'
 
-    # price = forms.IntegerField(label='Цена',
-    #                            validators=[validators.MinValueValidator(limit_value=1)],
-    #                            widget=forms.NumberInput(attrs={'class': 'input-cust'}),
-    #                            )
-
-    # class Meta:
-    #     model = CassettePrice
-    #     fields = ['condition', 'price']
-    #     widgets = {
-    #         'condition': forms.Select(attrs={'class': 'input-cust'}),
-    #         'price': forms.NumberInput(attrs={'class': 'input-cust'})
-    #     }
-
-
-#
-# CassettePriceFormSet = inlineformset_factory(
-#     Cassette, CassettePrice, form=CassettePriceForm,
-#     extra=1, can_delete=True, can_delete_extra=True
-# )
-
 
 class CassetteCommentForm(forms.ModelForm):
     """Форма добавления коммментария"""

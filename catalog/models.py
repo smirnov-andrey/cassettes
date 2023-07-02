@@ -115,6 +115,10 @@ class Cassette(models.Model):
     collection = models.ForeignKey(CassetteCollection, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Collection')
     tape_length = models.ForeignKey(CassetteTapeLength, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Tape Length')
     year_release = models.IntegerField(null=True, blank=True, verbose_name='Year Release')
+    created = models.DateTimeField(auto_now=False, auto_now_add=True,
+                                   verbose_name='Date of comment created')
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False,
+                                   verbose_name='Date of comment updated')
 
     class Meta:
         verbose_name = 'Add cassettes'

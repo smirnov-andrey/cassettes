@@ -4,15 +4,17 @@ from .models import *
 
 class CassetteImageInline(admin.StackedInline):
     model = CassettesImage
-    extra = 3
+    extra = 0
 
 
 class CassettePriceInline(admin.TabularInline):
     model = CassettePrice
-    extra = 3
+    extra = 0
 
 
 class CassetteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'brand', 'model', 'year_release', 'user', )
+    list_display_links = ('id', 'brand', 'model', 'year_release', 'user', )
     inlines = [CassetteImageInline, CassettePriceInline]
 
 
