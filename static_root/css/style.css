@@ -1396,12 +1396,14 @@ section{
 
 .comment {
 	display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 .comment__text {
+    text-align: justify;
+    padding-left: 20px;
 	line-height: 20px;
 	color: rgba(41, 35, 27, 0.7);
-    max-width: 710px;
+    max-width: 790px;
 }
 
 .user {
