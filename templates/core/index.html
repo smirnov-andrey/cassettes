@@ -92,7 +92,7 @@
                 {{ comment.cassette.brand }} - {{ comment.cassette.series }}, {{ comment.cassette.brand.country }} ({{ comment.cassette.year_release }})
               </a>
               <p class="comment-last__text">{{ comment.comment|truncatechars:255 }}
-                <a href="{% url 'catalog:cassette' id=comment.cassette.id %}" class="comment-last__more more"> подробнее</a></p>
+                <a href="{% url 'catalog:cassette' id=comment.cassette.id %}#comment_{{ comment.id }}" class="comment-last__more more"> подробнее</a></p>
             </div>
             <div class="comment-last__author">
               <p class="comment-last__from">Комментарий от</p>
