@@ -18,6 +18,19 @@ class CassetteAdmin(admin.ModelAdmin):
     inlines = [CassetteImageInline, CassettePriceInline]
 
 
+class CassetteCommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'cassette', 'created', 'is_published', )
+    list_display_links = ('id', 'user', 'cassette', 'created', )
+    list_editable = ('is_published', )
+    ordering = ('-created',)
+    list_filter = ('is_published', 'created', 'updated', )
+    readonly_fields = ('id', 'created', 'updated',)
+    actions_selection_counter = True
+    show_full_result_count = True
+    search_fields = ('id', 'user__username', 'user__first_name', 'user__last_name', 'cassette__brand__title', 'cassette__model__title','comment',)
+    search_help_text = 'Search for comment by id, user, cassette or comment text'
+
+
 admin.site.register(CassetteBrand)
 admin.site.register(CassetteType)
 admin.site.register(CassetteSeries)
@@ -31,4 +44,4 @@ admin.site.register(CassetteCategory)
 admin.site.register(CassetteSeller)
 admin.site.register(CassetteChanger)
 admin.site.register(CassettesImage)
-admin.site.register(CassetteComment)
+admin.site.register(CassetteComment, CassetteCommentAdmin)

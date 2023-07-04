@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin
 
-from catalog.forms import (CassetteCreateForm,CassetteImageForm,
+from catalog.forms import (CassetteCreateForm, CassetteImageForm,
                            CassetteImageAddonsForm, CassettePriceForm,
                            CassetteCommentForm)
 from catalog.models import (CassetteCategory, CassetteBrand,
@@ -72,7 +73,7 @@ class TechnologyListView(ListView):
     context_object_name = 'technology_list'
 
 
-class CassetteDetailView(DetailView, FormMixin):
+class CassetteDetailView(FormMixin, DetailView):
     """Кассета"""
     model = Cassette
     template_name = 'catalog/cassette.html'
@@ -86,6 +87,7 @@ class CassetteDetailView(DetailView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(CassetteDetailView, self).get_context_data(**kwargs)
+        context['comments'] = CassetteComment.objects.filter(cassette=self.get_object(), is_published=True)
         context['form'] = CassetteCommentForm(
             initial={
                 'user': self.request.user,
@@ -107,12 +109,15 @@ class CassetteDetailView(DetailView, FormMixin):
         return super(CassetteDetailView, self).form_valid(form)
 
 
-class CassetteCreateView(CreateView):
+class CassetteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Добавление кассеты"""
     model = Cassette
     form_class = CassetteCreateForm
     # template_name = 'catalog/add-cassette.html'
     template_name = 'catalog/edit-cassette.html'
+
+    def test_func(self):
+        return self.request.user.is_moderator or self.request.user.is_superuser
 
     def get_success_url(self):
         return reverse('catalog:cassette', kwargs={'id': self.object.pk})
@@ -155,11 +160,14 @@ class CassetteCreateView(CreateView):
         return super().form_valid(form)
 
 
-class CassetteUpdateView(UpdateView):
+class CassetteUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """Редактирование кассеты"""
     model = Cassette
     form_class = CassetteCreateForm
     template_name = 'catalog/edit-cassette.html'
+
+    def test_func(self):
+        return self.request.user.is_moderator or self.request.user.is_superuser
 
     def get_success_url(self):
         return reverse('catalog:cassette', kwargs={'id': self.object.pk})
@@ -196,5 +204,3 @@ class CassetteUpdateView(UpdateView):
             return self.render_to_response(self.get_context_data(form=form))
 
         return super().form_valid(form)
-
-

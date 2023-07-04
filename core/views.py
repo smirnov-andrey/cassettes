@@ -10,6 +10,6 @@ def homepage(request):
         'collector_list':User.objects.all()[:5],
         'cassette_list': Cassette.objects.all()[:7],
         'category_list': CassetteCategory.objects.all(),
-        'comment_list': CassetteComment.objects.all()[:10],
+        'comment_list': CassetteComment.objects.filter(is_published=True)[:10],
     }
     return render(request, 'core/index.html', context)

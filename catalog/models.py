@@ -186,6 +186,7 @@ class CassetteComment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', related_name='comments')
     cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name='Cassette', related_name='comments')
     comment = models.TextField(verbose_name='Comments')
+    is_published = models.BooleanField(default=False, verbose_name='Publish')
     created = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='Date of comment created')
     updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='Date of comment updated')
 

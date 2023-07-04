@@ -1,368 +1,376 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <section class="product-section section_breadcrumb" id="product-section">
-    <div class="container">
-      <ul class="breadcrumb">
-        <li class="breadcrumb__item">
-          <a href="/">Главная</a>
-        </li>
-        <li class="breadcrumb__item">
-          <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
-        </li>
-        <li class="breadcrumb__item">
-          <a href="{% url 'catalog:catalog-detail' slug=object.category.slug %}">{{ object.category }}</a>
-        </li>
-        <li class="breadcrumb__item">
-          <a href="{% url 'catalog:brand-detail' slug=object.brand.slug %}">{{ object.brand }}</a>
-        </li>
-        <li class="breadcrumb__item">
-          <a href="#">{{ object.model }}</a>
-        </li>
-      </ul>
-      <div class="page__head page__head_flex">
-        <h2 class="page__title">{{ object.model }}</h2>
-        <a href="{% url 'catalog:cassette_update' id=object.id %}" class="page__head-link">Редактировать информацию</a>
-      </div>
-      <ul class="gallery-product">
-        {% with image=object.cassettesimage_set.get %}
-          {% if image.package_front_side %}<li class="gallery-product__item"><img src="{{ image.package_front_side.url }}"></li>{% endif %}
-          {% if image.package_back_side %}<li class="gallery-product__item"><img src="{{ image.package_back_side.url }}"></li>{% endif %}
-          {% if image.package_end_side %}<li class="gallery-product__item"><img src="{{ image.package_end_side.url }}"></li>{% endif %}
-          {% if image.box_front_side %}<li class="gallery-product__item"><img src="{{ image.box_front_side.url }}"></li>{% endif %}
-          {% if image.box_back_side %}<li class="gallery-product__item"><img src="{{ image.box_back_side.url }}"></li>{% endif %}
-          {% if image.description_one %}<li class="gallery-product__item"><img src="{{ image.description_one.url }}"></li>{% endif %}
-          {% if image.description_two %}<li class="gallery-product__item"><img src="{{ image.description_two.url }}"></li>{% endif %}
-          {% if image.item_side_a %}<li class="gallery-product__item"><img src="{{ image.item_side_a.url }}"></li>{% endif %}
-          {% if image.item_side_b %}<li class="gallery-product__item"><img src="{{ image.item_side_b.url }}"></li>{% endif %}
-          {% if image.box_general_view %}<li class="gallery-product__item"><img src="{{ image.box_general_view.url }}"></li>{% endif %}
-          {% if image.item_general_view %}<li class="gallery-product__item"><img src="{{ image.item_general_view.url }}"></li>{% endif %}
-          {% if image.general_view %}<li class="gallery-product__item"><img src="{{ image.general_view.url }}"></li>{% endif %}
-        {% endwith %}
-      </ul>
-      <form action="" class="product__form">
-        <div class="product__info">
-          <div class="product__info-wrapper page__wrapper product__info-wrapper">
-            <div class="page__left product__left">
-              <div class="product__block product__specifications">
-                <h3 class="product__subtitle">Характеристики</h3>
-                <table class="table-info product__table-info">
-                  <tr>
-                    <td style="width: 125px;" class="table-info__name">Бренд</td>
-                    <td class="table-info__value"><a href="#">{{ object.brand }}</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Производитель</td>
-                    <td class="table-info__value"><a href="#">{{ object.manufacturer }}</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Модель</td>
-                    <td class="table-info__value"><a href="#">{{ object.model }}</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Серия</td>
-                    <td class="table-info__value"><a href="#">{{ object.series }}</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Длина ленты</td>
-                    <td class="table-info__value">{{ object.tape_length }}
-                      <!-- <ul class="table-info__replase">
-                           <li>54</li>
-                           <li>60</li>
-                           <li class="bold">90</li>
-                           <li>54</li>
-                           <li>54</li>
-                       </ul> -->
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Тип кассеты</td>
-                    <td class="table-info__value">{{ object.type }}</td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Год выпуска</td>
-                    <td class="table-info__value"><a href="#">{{ object.year_release }}</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Страна</td>
-                    <td class="table-info__value"><a href="#">{{ object.brand.country }}</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Рынок</td>
-                    <td class="table-info__value"><a href="#">Locale</a></td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Штрих-код</td>
-                    {% if object.cassettesimage_set.get.barcode %}<td class="table-info__value"><img src="{{object.cassettesimage_set.get.barcode.url}}" alt="">{% endif %}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-info__name">Купить сейчас</td>
-                    <td class="table-info__value"><a href="#">Поиск похожих предметов на eBay</a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="product__block product__collection">
-                <h3 class="product__subtitle">Коллекция</h3>
-                <h4 class="product__collection-title">Состояние</h4>
-                <table class="table-cust product__collection-table">
-                  <tr>
-                    <th>Poor</th>
-                    <th>Good</th>
-                    <th>Very Good</th>
-                    <th>Excellent</th>
-                    <th>Near mint</th>
-                    <th>Mint</th>
-                  </tr>
-                  {% for price in object.prices.all %}
-                  <tr>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-1" {% if not price.poor %}disabled{% endif %}>
-                      <label for="condition-1">{% if price.poor %}{{ price.poor }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-2" {% if not price.good %}disabled{% endif %}>
-                      <label for="condition-2">{% if price.good %}{{ price.good }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-3" {% if not price.very_good %}disabled{% endif %}>
-                      <label for="condition-3">{% if price.very_good %}{{ price.very_good }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-4" {% if not price.excellent %}disabled{% endif %}>
-                      <label for="condition-4">{% if price.excellent %}{{ price.excellent }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-5" {% if not price.near_mint %}disabled{% endif %}>
-                      <label for="condition-5">{% if price.near_mint %}{{ price.near_mint }}{% else %}-{% endif %}</label>
-                    </td>
-                    <td>
-                      <input class="product__collection-radio" type="radio" name="condition"
-                             id="condition-6" {% if not price.mint %}disabled{% endif %}>
-                      <label for="condition-6">{% if price.mint %}{{ price.mint }}{% else %}-{% endif %}</label>
-                    </td>
-                  </tr>
-                  {% endfor %}
+    <section class="product-section section_breadcrumb" id="product-section">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li class="breadcrumb__item">
+                    <a href="/">Главная</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:catalog-detail' slug=object.category.slug %}">{{ object.category }}</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="{% url 'catalog:brand-detail' slug=object.brand.slug %}">{{ object.brand }}</a>
+                </li>
+                <li class="breadcrumb__item">
+                    <a href="#">{{ object.model }}</a>
+                </li>
+            </ul>
+            <div class="page__head page__head_flex">
+                <h2 class="page__title">{{ object.model }}</h2>
+                {% if user.is_authenticated %}
+                    {% if user.is_moderator or user.is_superuser %}
+                        <a href="{% url 'catalog:cassette_update' id=object.id %}" class="page__head-link">Редактировать информацию</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <ul class="gallery-product">
+                {% with image=object.cassettesimage_set.get %}
+                    {% if image.package_front_side %}<li class="gallery-product__item"><img src="{{ image.package_front_side.url }}"></li>{% endif %}
+                    {% if image.package_back_side %}<li class="gallery-product__item"><img src="{{ image.package_back_side.url }}"></li>{% endif %}
+                    {% if image.package_end_side %}<li class="gallery-product__item"><img src="{{ image.package_end_side.url }}"></li>{% endif %}
+                    {% if image.box_front_side %}<li class="gallery-product__item"><img src="{{ image.box_front_side.url }}"></li>{% endif %}
+                    {% if image.box_back_side %}<li class="gallery-product__item"><img src="{{ image.box_back_side.url }}"></li>{% endif %}
+                    {% if image.description_one %}<li class="gallery-product__item"><img src="{{ image.description_one.url }}"></li>{% endif %}
+                    {% if image.description_two %}<li class="gallery-product__item"><img src="{{ image.description_two.url }}"></li>{% endif %}
+                    {% if image.item_side_a %}<li class="gallery-product__item"><img src="{{ image.item_side_a.url }}"></li>{% endif %}
+                    {% if image.item_side_b %}<li class="gallery-product__item"><img src="{{ image.item_side_b.url }}"></li>{% endif %}
+                    {% if image.box_general_view %}<li class="gallery-product__item"><img src="{{ image.box_general_view.url }}"></li>{% endif %}
+                    {% if image.item_general_view %}<li class="gallery-product__item"><img src="{{ image.item_general_view.url }}"></li>{% endif %}
+                    {% if image.general_view %}<li class="gallery-product__item"><img src="{{ image.general_view.url }}"></li>{% endif %}
+                {% endwith %}
+            </ul>
+            <form action="" class="product__form">
+                <div class="product__info">
+                    <div class="product__info-wrapper page__wrapper product__info-wrapper">
+                        <div class="page__left product__left">
+                            <div class="product__block product__specifications">
+                                <h3 class="product__subtitle">Характеристики</h3>
+                                <table class="table-info product__table-info">
+                                    <tr>
+                                        <td style="width: 125px;" class="table-info__name">Бренд</td>
+                                        <td class="table-info__value"><a href="#">{{ object.brand }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Производитель</td>
+                                        <td class="table-info__value"><a href="#">{{ object.manufacturer }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Модель</td>
+                                        <td class="table-info__value"><a href="#">{{ object.model }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Серия</td>
+                                        <td class="table-info__value"><a href="#">{{ object.series }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Длина ленты</td>
+                                        <td class="table-info__value">{{ object.tape_length }}
+                                            <!-- <ul class="table-info__replase">
+                                                 <li>54</li>
+                                                 <li>60</li>
+                                                 <li class="bold">90</li>
+                                                 <li>54</li>
+                                                 <li>54</li>
+                                             </ul> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Тип кассеты</td>
+                                        <td class="table-info__value">{{ object.type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Год выпуска</td>
+                                        <td class="table-info__value"><a href="#">{{ object.year_release }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Страна</td>
+                                        <td class="table-info__value"><a href="#">{{ object.brand.country }}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Рынок</td>
+                                        <td class="table-info__value"><a href="#">Locale</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Штрих-код</td>
+                                        {% if object.cassettesimage_set.get.barcode %}<td class="table-info__value"><img src="{{object.cassettesimage_set.get.barcode.url}}" alt="">{% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-info__name">Купить сейчас</td>
+                                        <td class="table-info__value"><a href="#">Поиск похожих предметов на eBay</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="product__block product__collection">
+                                <h3 class="product__subtitle">Коллекция</h3>
+                                <h4 class="product__collection-title">Состояние</h4>
+                                <table class="table-cust product__collection-table">
+                                    <tr>
+                                        <th>Poor</th>
+                                        <th>Good</th>
+                                        <th>Very Good</th>
+                                        <th>Excellent</th>
+                                        <th>Near mint</th>
+                                        <th>Mint</th>
+                                    </tr>
+                                    {% for price in object.prices.all %}
+                                        <tr>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-1" {% if not price.poor %}disabled{% endif %}>
+                                                <label for="condition-1">{% if price.poor %}{{ price.poor }}{% else %}-{% endif %}</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-2" {% if not price.good %}disabled{% endif %}>
+                                                <label for="condition-2">{% if price.good %}{{ price.good }}{% else %}-{% endif %}</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-3" {% if not price.very_good %}disabled{% endif %}>
+                                                <label for="condition-3">{% if price.very_good %}{{ price.very_good }}{% else %}-{% endif %}</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-4" {% if not price.excellent %}disabled{% endif %}>
+                                                <label for="condition-4">{% if price.excellent %}{{ price.excellent }}{% else %}-{% endif %}</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-5" {% if not price.near_mint %}disabled{% endif %}>
+                                                <label for="condition-5">{% if price.near_mint %}{{ price.near_mint }}{% else %}-{% endif %}</label>
+                                            </td>
+                                            <td>
+                                                <input class="product__collection-radio" type="radio" name="condition"
+                                                       id="condition-6" {% if not price.mint %}disabled{% endif %}>
+                                                <label for="condition-6">{% if price.mint %}{{ price.mint }}{% else %}-{% endif %}</label>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
 
-                </table>
-                <div class="product__collection-save">
-                  <div class="product__collection-wrapper-checkbox checkbox-cust">
-                    <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                           name="save-collection" id="save-collection-1">
-                    <label for="save-collection-1">В мою коллекцию</label>
-                  </div>
-                  <div class="product__collection-wrapper-checkbox checkbox-cust">
-                    <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                           name="save-collection" id="save-collection-2">
-                    <label for="save-collection-2">В список желаний</label>
-                  </div>
-                  <div class="product__collection-wrapper-checkbox checkbox-cust">
-                    <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                           name="save-collection" id="save-collection-3">
-                    <label for="save-collection-3">Обменять</label>
-                  </div>
-                  <div class="product__collection-wrapper-checkbox checkbox-cust">
-                    <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                           name="save-collection" id="save-collection-4">
-                    <label for="save-collection-4">Продать</label>
-                  </div>
+                                </table>
+                                <div class="product__collection-save">
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
+                                               name="save-collection" id="save-collection-1">
+                                        <label for="save-collection-1">В мою коллекцию</label>
+                                    </div>
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
+                                               name="save-collection" id="save-collection-2">
+                                        <label for="save-collection-2">В список желаний</label>
+                                    </div>
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
+                                               name="save-collection" id="save-collection-3">
+                                        <label for="save-collection-3">Обменять</label>
+                                    </div>
+                                    <div class="product__collection-wrapper-checkbox checkbox-cust">
+                                        <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
+                                               name="save-collection" id="save-collection-4">
+                                        <label for="save-collection-4">Продать</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn_fill product__collection-btn">Добавить</button>
+                            </div>
+                            <div class="product__block product__frequencies">
+                                <h3 class="product__subtitle">Frequency Response</h3>
+                                {% if object.cassettesimage_set.get.frequency_response %}<img class="product__frequencies-image" src="{{object.cassettesimage_set.get.frequency_response.url}}" alt="">{% endif %}
+                            </div>
+                        </div>
+                        <div class="page__right product__right">
+                            <h4 class="page__subtitle">Сейчас на eBay</h4>
+                            <ul class="now-ebay product__now-ebay">
+                                <li class="now-ebay__item">
+                                    <a href="#" class="product-small">
+                                        <div class="product-small__image-wrapper">
+                                            <img src="/static/img/cassette-5.jpg" alt=""
+                                                 class="product-small__img">
+                                        </div>
+                                        <h2 class="product-small__name">AGFA MS 400, 1973</h2>
+                                        <p class="product-small__price">789 ₽</p>
+                                    </a>
+                                </li>
+                                <li class="now-ebay__item">
+                                    <a href="#" class="product-small">
+                                        <div class="product-small__image-wrapper">
+                                            <img src="/static/img/cassette-5.jpg" alt=""
+                                                 class="product-small__img">
+                                        </div>
+                                        <h2 class="product-small__name">AGFA MS 400, 1973</h2>
+                                        <p class="product-small__price">789 ₽</p>
+                                    </a>
+                                </li>
+                                <li class="now-ebay__item">
+                                    <a href="#" class="product-small">
+                                        <div class="product-small__image-wrapper">
+                                            <img src="/static/img/cassette-5.jpg" alt=""
+                                                 class="product-small__img">
+                                        </div>
+                                        <h2 class="product-small__name">AGFA MS 400, 1973</h2>
+                                        <p class="product-small__price">789 ₽</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product__variants">
+                        <h3 class="product__subtitle">Варианты</h3>
+                        <div class="product__variants-wrapper">
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-1" name="variant">
+                                <label for="variant-1">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством
+                                            в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-2" name="variant">
+                                <label for="variant-2">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством
+                                            в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-3" name="variant">
+                                <label for="variant-3">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством
+                                            в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper">
+                                <input class="product__variants-radio" type="radio" id="variant-4" name="variant">
+                                <label for="variant-4">
+                                    <div class="variant">
+                                        <div class="variant__img">
+                                            <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
+                                        </div>
+                                        <p class="variant__text">Легендарный немецкий концерн с кассетным производством
+                                            в Леверкузене. </p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product__variants">
+                        <h3 class="product__subtitle">Варианты выпуска</h3>
+                        <div class="product__variants-wrapper product__variants-wrapper_not-jcsb">
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release"
+                                       name="variant-release">
+                                <label for="variant-release-1">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="/static/img/cassette-11.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release-2"
+                                       name="variant-release">
+                                <label for="variant-release-2">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="/static/img/cassette-11.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release-3"
+                                       name="variant-release">
+                                <label for="variant-release-3">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="/static/img/cassette-11.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
+                                <input class="product__variants-radio" type="radio" id="variant-release-4"
+                                       name="variant-release">
+                                <label for="variant-release-4">
+                                    <div class="variant-release">
+                                        <div class="variant-release__img">
+                                            <img src="/static/img/cassette-12.jpg" alt="">
+                                        </div>
+                                        <div class="variant-release__wrapper">
+                                            <h2 class="variant-release__name">PS-IIx</h2>
+                                            <p class="variant-release__index">60</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn_fill product__collection-btn">Добавить</button>
-              </div>
-              <div class="product__block product__frequencies">
-                <h3 class="product__subtitle">Frequency Response</h3>
-                {% if object.cassettesimage_set.get.frequency_response %}<img class="product__frequencies-image" src="{{object.cassettesimage_set.get.frequency_response.url}}" alt="">{% endif %}
-              </div>
+            </form>
+
+            <div class="product__comments-add">
+                <h2 class="product__comments-title">Комментарии</h2>
+                {% if user.is_authenticated %}
+                    <p class="product__comments-text">Вы можете помочь улучшить наш каталог, добавив ваш комментарий.</p>
+                    <form action="" method="POST" class="product__comments-form">
+                        {% csrf_token %}
+                        {{ form.non_form_errors }}
+                        {{ form }}
+                        <button type="submit" value="Submit" class="product__comments-btn btn btn_fill">Оставить комментарий</button>
+                    </form>
+                {% else %}
+                    <p class="product__comments-text">Вы можете помочь улучшить наш каталог. Войдите или зарегистрируйтесь для того что бы оставить ваш комментарий.</p>
+                {% endif %}
             </div>
-            <div class="page__right product__right">
-              <h4 class="page__subtitle">Сейчас на eBay</h4>
-              <ul class="now-ebay product__now-ebay">
-                <li class="now-ebay__item">
-                  <a href="#" class="product-small">
-                    <div class="product-small__image-wrapper">
-                      <img src="/static/img/cassette-5.jpg" alt=""
-                           class="product-small__img">
-                    </div>
-                    <h2 class="product-small__name">AGFA MS 400, 1973</h2>
-                    <p class="product-small__price">789 ₽</p>
-                  </a>
-                </li>
-                <li class="now-ebay__item">
-                  <a href="#" class="product-small">
-                    <div class="product-small__image-wrapper">
-                      <img src="/static/img/cassette-5.jpg" alt=""
-                           class="product-small__img">
-                    </div>
-                    <h2 class="product-small__name">AGFA MS 400, 1973</h2>
-                    <p class="product-small__price">789 ₽</p>
-                  </a>
-                </li>
-                <li class="now-ebay__item">
-                  <a href="#" class="product-small">
-                    <div class="product-small__image-wrapper">
-                      <img src="/static/img/cassette-5.jpg" alt=""
-                           class="product-small__img">
-                    </div>
-                    <h2 class="product-small__name">AGFA MS 400, 1973</h2>
-                    <p class="product-small__price">789 ₽</p>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="product__variants">
-            <h3 class="product__subtitle">Варианты</h3>
-            <div class="product__variants-wrapper">
-              <div class="product__variants-radio-wrapper">
-                <input class="product__variants-radio" type="radio" id="variant-1" name="variant">
-                <label for="variant-1">
-                  <div class="variant">
-                    <div class="variant__img">
-                      <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
-                    </div>
-                    <p class="variant__text">Легендарный немецкий концерн с кассетным производством
-                      в Леверкузене. </p>
-                  </div>
-                </label>
-              </div>
-              <div class="product__variants-radio-wrapper">
-                <input class="product__variants-radio" type="radio" id="variant-2" name="variant">
-                <label for="variant-2">
-                  <div class="variant">
-                    <div class="variant__img">
-                      <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
-                    </div>
-                    <p class="variant__text">Легендарный немецкий концерн с кассетным производством
-                      в Леверкузене. </p>
-                  </div>
-                </label>
-              </div>
-              <div class="product__variants-radio-wrapper">
-                <input class="product__variants-radio" type="radio" id="variant-3" name="variant">
-                <label for="variant-3">
-                  <div class="variant">
-                    <div class="variant__img">
-                      <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
-                    </div>
-                    <p class="variant__text">Легендарный немецкий концерн с кассетным производством
-                      в Леверкузене. </p>
-                  </div>
-                </label>
-              </div>
-              <div class="product__variants-radio-wrapper">
-                <input class="product__variants-radio" type="radio" id="variant-4" name="variant">
-                <label for="variant-4">
-                  <div class="variant">
-                    <div class="variant__img">
-                      <img src="/static/img/cassette-10.jpg" alt="" class="variant__img">
-                    </div>
-                    <p class="variant__text">Легендарный немецкий концерн с кассетным производством
-                      в Леверкузене. </p>
-                  </div>
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="product__variants">
-            <h3 class="product__subtitle">Варианты выпуска</h3>
-            <div class="product__variants-wrapper product__variants-wrapper_not-jcsb">
-              <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
-                <input class="product__variants-radio" type="radio" id="variant-release"
-                       name="variant-release">
-                <label for="variant-release-1">
-                  <div class="variant-release">
-                    <div class="variant-release__img">
-                      <img src="/static/img/cassette-11.jpg" alt="">
-                    </div>
-                    <div class="variant-release__wrapper">
-                      <h2 class="variant-release__name">PS-IIx</h2>
-                      <p class="variant-release__index">60</p>
-                    </div>
-                  </div>
-                </label>
-              </div>
-              <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
-                <input class="product__variants-radio" type="radio" id="variant-release-2"
-                       name="variant-release">
-                <label for="variant-release-2">
-                  <div class="variant-release">
-                    <div class="variant-release__img">
-                      <img src="/static/img/cassette-11.jpg" alt="">
-                    </div>
-                    <div class="variant-release__wrapper">
-                      <h2 class="variant-release__name">PS-IIx</h2>
-                      <p class="variant-release__index">60</p>
-                    </div>
-                  </div>
-                </label>
-              </div>
-              <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
-                <input class="product__variants-radio" type="radio" id="variant-release-3"
-                       name="variant-release">
-                <label for="variant-release-3">
-                  <div class="variant-release">
-                    <div class="variant-release__img">
-                      <img src="/static/img/cassette-11.jpg" alt="">
-                    </div>
-                    <div class="variant-release__wrapper">
-                      <h2 class="variant-release__name">PS-IIx</h2>
-                      <p class="variant-release__index">60</p>
-                    </div>
-                  </div>
-                </label>
-              </div>
-              <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
-                <input class="product__variants-radio" type="radio" id="variant-release-4"
-                       name="variant-release">
-                <label for="variant-release-4">
-                  <div class="variant-release">
-                    <div class="variant-release__img">
-                      <img src="/static/img/cassette-12.jpg" alt="">
-                    </div>
-                    <div class="variant-release__wrapper">
-                      <h2 class="variant-release__name">PS-IIx</h2>
-                      <p class="variant-release__index">60</p>
-                    </div>
-                  </div>
-                </label>
-              </div>
-            </div>
-          </div>
+            <ul class="product__comments">
+                {% for comment in comments %}
+                    <li class="product__comments-item">
+                        <div class="comment">
+                            <div class="user ">
+                                <img src="{% if comment.user.image %}{{ comment.user.image.url }}{% else %}{% static 'img/avatar.jpg' %}{% endif %}" alt="" class="user__avatar">
+                                <div class="user__wrapper">
+                                    <h2 class="user__name">{{ comment.user.first_name }} {{ comment.user.last_name }}</h2>
+                                    <p class="user__nick">{{ comment.user.username }}</p>
+                                </div>
+                            </div>
+                            <p class="comment__text">{{ comment.comment }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
-      </form>
-
-      <div class="product__comments-add">
-        <h2 class="product__comments-title">Комментарии</h2>
-        <p class="product__comments-text">Вы можете помочь улучшить наш каталог, добавив ваш комментарий.</p>
-        <form action="" method="POST" class="product__comments-form">
-          {% csrf_token %}
-          {{ form.non_form_errors }}
-          {{ form }}
-          <button type="submit" value="Submit" class="product__comments-btn btn btn_fill">Оставить комментарий</button>
-        </form>
-      </div>
-      <ul class="product__comments">
-        {% for comment in cassette.comments.all %}
-          <li class="product__comments-item">
-            <div class="comment">
-              <div class="user ">
-                <img src="{% if comment.user.image %}{{ comment.user.image.url }}{% else %}{% static 'img/avatar.jpg' %}{% endif %}" alt="" class="user__avatar">
-                <div class="user__wrapper">
-                  <h2 class="user__name">{{ comment.user.first_name }} {{ comment.user.last_name }}</h2>
-                  <p class="user__nick">{{ comment.user.username }}</p>
-                </div>
-              </div>
-              <p class="comment__text">{{ comment.comment }}</p>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </section>
+    </section>
 {% endblock %}

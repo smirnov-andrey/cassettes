@@ -67,9 +67,13 @@
                     <li class="header-menu__item">
                         <a href="{% url 'users:profile' %}">Мои списки</a>
                     </li>
-                    <li class="header-menu__item">
-                        <a href="{% url 'catalog:cassette_create' %}">Добавить кассету</a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        {% if user.is_moderator or user.is_superuser %}
+                            <li class="header-menu__item">
+                                <a href="{% url 'catalog:cassette_create' %}">Добавить кассету</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
                 </ul>
                 <ul class="header-menu__list">
                     <li class="header-menu__item header-menu__item_left">
