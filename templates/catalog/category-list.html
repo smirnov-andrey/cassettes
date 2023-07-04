@@ -11,7 +11,21 @@
             <h2 class="page__title catalog__title">Каталог</h2>
             <div class="categories">
                 <ul class="categories__list">
-                    {% for category in category_list %}
+                    {% for category in category_audio %}
+                        <li class="categories__item">
+                            <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
+                                <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                                <div class="categories__wrapper">
+                                    <h1 class="categories__title">{{ category }}</h1>
+                                    <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <span class="categories__line"></span>
+                <ul class="categories__list">
+                    {% for category in category_video %}
                         <li class="categories__item">
                             <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
                                 <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">

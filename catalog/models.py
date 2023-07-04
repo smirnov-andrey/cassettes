@@ -10,6 +10,11 @@ class BaseModel(models.Model):
     """Базовая модель"""
     title = models.CharField(max_length=255, verbose_name='Title')
     slug = models.SlugField(unique=True, blank=True, verbose_name='URL')
+    is_published = models.BooleanField(default=False, verbose_name='Publish')
+    created = models.DateTimeField(auto_now=False, auto_now_add=True,
+                                   verbose_name='Date of created')
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False,
+                                   verbose_name='Date of updated')
 
     def __str__(self):
         return self.title
@@ -21,10 +26,15 @@ class BaseModel(models.Model):
 
 class CassetteCategory(BaseModel):
     """Модель категории"""
+    AUDIO = 'audio'
+    VIDEO = 'video'
+    CATEGORY_TYPE = ((AUDIO, 'Audio'), (VIDEO, 'Video'),)
+    type = models.CharField(max_length=5, choices=CATEGORY_TYPE, default=AUDIO)
     image = models.ImageField(upload_to='category', blank=True)
     logo = models.ImageField(upload_to='category_logo', blank=True)
     description = models.TextField(blank=True)
     brands = models.ManyToManyField('CassetteBrand', related_name='categories', blank=True, verbose_name='Brands')
+    is_published_to_home = models.BooleanField(default=False, verbose_name='Publish to home page')
 
     def cassettes_count(self):
         """Считаем количество кассет в категории"""

@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.views.generic import DetailView, ListView, CreateView, UpdateView
+from django.views.generic import (DetailView, ListView, CreateView,
+                                  TemplateView, UpdateView, )
 from django.views.generic.edit import FormMixin
 
 from catalog.forms import (CassetteCreateForm, CassetteImageForm,
@@ -12,11 +13,16 @@ from catalog.models import (CassetteCategory, CassetteBrand,
                             CassettePrice, CassetteComment)
 
 
-class CassetteCategoryListView(ListView):
+class CassetteCategoryListView(TemplateView):
     """Список категорий в каталоге"""
-    model = CassetteCategory
     template_name = 'catalog/category-list.html'
-    context_object_name = 'category_list'
+
+    def get_context_data(self, **kwargs):
+        queryset = CassetteCategory.objects.filter(is_published=True)
+        context = super().get_context_data(**kwargs)
+        context['category_audio'] = queryset.filter(type=CassetteCategory.AUDIO)
+        context['category_video'] = queryset.filter(type=CassetteCategory.VIDEO)
+        return context
 
 
 class CassetteCategoryDetailView(DetailView):
