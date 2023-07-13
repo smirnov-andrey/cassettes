@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <footer class="footer" id="footer">
     <div class="container">
         <div class="footer-top">
@@ -7,19 +8,23 @@
             </a>
             <ul class="footer-top__menu">
                 <li class="footer-top__menu-item">
-                    <a href="#">О сайте</a>
+                    {% comment %}Translators: Footer / О сайте{% endcomment %}
+                    <a href="#">{% translate "About" %}</a>
                 </li>
                 <li class="footer-top__menu-item">
-                    <a href="#">Поддержка</a>
+                    {% comment %}Translators: Footer / Поддержка {% endcomment %}
+                    <a href="#">{% translate "Support" %}</a>
                 </li>
                 <li class="footer-top__menu-item">
-                    <a href="#">Условия обслуживания</a>
+                    {% comment %}Translators: Footer / Условия обслуживания{% endcomment %}
+                    <a href="#">{% translate "Terms & Conditions" %}</a>
                 </li>
             </ul>
         </div>
         <div class="footer-bottom">
             <p class="footer-bottom__credits">Copyright © Tape Collector 2022</p>
-            <a href="#" class="footer-bottom__politics">Политика Конфиденциальности</a>
+            {% comment %}Translators: Footer / Политика Конфиденциальности<{% endcomment %}
+            <a href="#" class="footer-bottom__politics">{% translate "Privacy Statement" %}</a>
         </div>
     </div>
 </footer>

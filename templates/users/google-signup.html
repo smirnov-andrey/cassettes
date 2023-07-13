@@ -8,8 +8,7 @@
     <div class="container">
         <div class="page__content-center">
             {% if process == "connect" %}
-            <h1 class="page__title page__title_center">{% blocktrans with provider.name as provider %}Connect {{
-                provider }}{% endblocktrans %}</h1>
+            <h1 class="page__title page__title_center">{% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}</h1>
             <p class="page__text page__text_center">{% blocktrans with provider.name as provider %}You are about to
                 connect a new third party account from {{ provider }}.{% endblocktrans %}</p>
             {% else %}

@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
     <section class="brands-product section_breadcrumb" id="brands-product">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item">
-                    <a href="/">Главная</a>
+                    <a href="/">{% translate "Main" %}</a>
                 </li>
                 <li class="breadcrumb__item">
-                    <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
+                    <a href="{% url 'catalog:catalog-list' %}">{% translate "Catalog" %}</a>
                 </li>
                 <li class="breadcrumb__item">
                     <a href="{% url 'catalog:catalog-detail' slug=category.slug %}">{{ category }}</a>
@@ -23,7 +24,7 @@
                 <div class="position__wrapper">
                     <div class="position__search">
                         <input type="text" placeholder="Поиск">
-                        <button type="submit" class="btn btn_fill">Найти</button>
+                        <button type="submit" class="btn btn_fill">{% translate "Find" %}</button>
                     </div>
                     <div class="position__sorting">
                         <p class="position__sort-text">Сортировать по:</p>

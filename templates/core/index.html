@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 
     <section class="catalog" id="catalog">
@@ -21,7 +22,8 @@
                 </div>
                 <div class="catalog-users">
                     <div class="catalog-users__item">
-                        <h4 class="catalog-isers__title">Коллекционеры</h4>
+                    {% comment %}Translators: index / Коллекционеры{% endcomment %}
+                        <h4 class="catalog-isers__title">{% translate "Collectors" %}</h4>
                         <ul class="catalog-users__list">
                             {% for collector in collector_list %}
                                 <li class="catalog-users__item">
@@ -31,12 +33,14 @@
                         </ul>
                     </div>
                     <div class="catalog-users__item">
-                        <h4 class="catalog-isers__title">Редакторы</h3>
+                        {% comment %}Translators: index / Редакторы{% endcomment %}
+                        <h4 class="catalog-isers__title">{% translate "Editors" %}</h4>
                             <ul class="catalog-users__list">
                             </ul>
                     </div>
                     <div class="catalog-users__item">
-                        <h4 class="catalog-isers__title">Обменники</h3>
+                        {% comment %}Translators: index / Обменники{% endcomment %}
+                        <h4 class="catalog-isers__title">{% translate "Exchangers" %}</h4>
                             <ul class="catalog-users__list">
                             </ul>
                     </div>
@@ -51,7 +55,8 @@
                                 <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
-                                    <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                                    {% comment %}Translators: index / Объявлений{% endcomment %}
+                                    <p class="categories__ads-count">{{ category.cassettes.count }} {% translate "offers" %}</p>
                                 </div>
                             </a>
                         </li>
@@ -65,7 +70,8 @@
                                 <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
-                                    <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                                    {% comment %}Translators: index / Объявлений{% endcomment %}
+                                    <p class="categories__ads-count">{{ category.cassettes.count }} {% translate "offers" %}</p>
                                 </div>
                             </a>
                         </li>
@@ -77,12 +83,15 @@
 
     <section class="last-update" id="last-update">
         <div class="container">
-            <h2 class="section__title last-update__title">Последние обновления</h2>
+        {% comment %}Translators: index / Последние обновления{% endcomment %}
+            <h2 class="section__title last-update__title">{% translate "Latest updates" %}</h2>
             <ul class="products">
                 {% for cassette in cassette_list %}
                     <li class="product">
                         <a href="{% url 'catalog:cassette' id=cassette.id %}" class="product__link">
+                            {% if cassette.cassettesimage_set.first.package_front_side %}
                             <img src="{{ cassette.cassettesimage_set.first.package_front_side.url }}" alt="{{ cassette }}" class="product__img">
+                            {% endif %}
                             <p class="product__categories">{{ cassette.category }}</p>
                             <p class="product__name">{{ cassette.brand }} - {{ cassette.series }}, {{ cassette.brand.country }} ({{ cassette.year_release }}) </p>
                         </a>
@@ -94,7 +103,8 @@
 
     <section class="comment-last">
         <div class="container">
-            <h2 class="section__title comment-last__title">Последние комментарии</h2>
+        {% comment %}Translators: index / Последние комментарии{% endcomment %}
+            <h2 class="section__title comment-last__title">{% translate "Latest comments" %}</h2>
             <ul class="comment-last__list">
                 {% for comment in comment_list %}
                     <li class="comment-last__item">
@@ -106,10 +116,12 @@
                                 {{ comment.cassette.brand }} - {{ comment.cassette.series }}, {{ comment.cassette.brand.country }} ({{ comment.cassette.year_release }})
                             </a>
                             <p class="comment-last__text">{{ comment.comment|truncatechars:255 }}
-                                <a href="{% url 'catalog:cassette' id=comment.cassette.id %}#comment_{{ comment.id }}" class="comment-last__more more"> подробнее</a></p>
+                                {% comment %}Translators: index / подробнее{% endcomment %}
+                                <a href="{% url 'catalog:cassette' id=comment.cassette.id %}#comment_{{ comment.id }}" class="comment-last__more more"> {% translate "more" %}</a></p>
                         </div>
                         <div class="comment-last__author">
-                            <p class="comment-last__from">Комментарий от</p>
+                        {% comment %}Translators: index / Комментарий от{% endcomment %}
+                            <p class="comment-last__from">{% translate "Comment from" %}</p>
                             <div class="user ">
                                 <img src="{% if comment.user.image %}{{ comment.user.image.url }}{% else %}{% static 'img/avatar.jpg' %}{% endif %}" alt="" class="user__avatar">
                                 <div class="user__wrapper">

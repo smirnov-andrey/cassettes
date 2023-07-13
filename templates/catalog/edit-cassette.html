@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{page_title}}{% endblock %}
 {% load static %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% crispy form form.helper %}
 {% block content %}
@@ -14,7 +15,8 @@
         <div class="settings__wrapeer">
           <div class="setting__left-block">
             <div class="settings__block">
-              <h2 class="settings__title-block">Характеристики</h2>
+            {% comment %}Translators: edit-cassete / Характеристики{% endcomment %}
+              <h2 class="settings__title-block">{% translate "Characteristics" %}</h2>
               <table class="table__inputs">
                 <tr>
                   <td class="table__inputs-text settings__text-bold">{{ form.brand.label }}{% if form.brand.field.required  %}*{% endif %}</td>
@@ -76,7 +78,8 @@
                 </tr>
               </table>
               <div class="settings__wrapper">
-                <p class="settings__text-bold">Дополнительные параметры</p>
+                  {% comment %}Translators: edit-cassete / Дополнительные параметры{% endcomment %}
+                <p class="settings__text-bold">{% translate "Extra options" %}</p>
                 <div class="settings__wrapper-checkbox_objects">
                   <div class="checkbox-cust settings__checkbox">
                     {{ form.coil }}
@@ -96,19 +99,22 @@
               </div>
             </div>
             <div class="settings__block">
-              <h2 class="settings__title-block">Коллекция</h2>
+            {% comment %}Translators: edit-cassete / Коллекция{% endcomment %}
+              <h2 class="settings__title-block">{% translate "Collection" %}</h2>
               {{ cassette_price_form.non_form_errors }}
               <table class="table__inputs">
                 <tr>
                   <div class="settings__collection-wrapper">
                     <td class="table__inputs-text settings__text-bold">
-                      Состояние
+                        {% comment %}Translators: edit-cassete / Состояние{% endcomment %}
+                      {% translate "Condition" %}
                       {#                    <div class="settings__collection">#}
                       {#                      <p class="settings__text-bold settings__collection-title">Состояние</p>#}
                       {#                    </div>#}
                     </td>
                     <td class="table__inputs-value settings__text-bold">
-                      Цена
+                        {% comment %}Translators: edit-cassete / Цена{% endcomment %}
+                      {% translate "Price" %}
                       {#                     <div class="settings__collection">#}
                       {#                      <p class="settings__text-bold settings__collection-title">Цена</p>#}
                       {#                    </div>#}
@@ -195,7 +201,8 @@
           </div>
           <div class="setting__right-block">
             <div class="settings__block">
-              <p class="settings__title-block">Загрузить фото</p>
+            {% comment %}Translators: edit-cassete / Загрузить фото{% endcomment %}
+              <p class="settings__title-block">{% translate "Upload a photo" %}</p>
               <div class="add-photo__wrapper">
                 {{ cassette_image_form.non_form_errors }}
                 {% for field in cassette_image_form %}
@@ -216,15 +223,18 @@
                 {% endfor %}
               </div>
               <div class="settings__block">
-                <p class="settings__title-block">Дополнительные данные</p>
+              {% comment %}Translators: edit-cassete / Дополнительные данные<{% endcomment %}
+                <p class="settings__title-block">{% translate "Extra information" %}</p>
                 {{ cassette_image_addons_form.non_form_errors }}
                 {% for field in cassette_image_addons_form %}
                   <div class="settings__dropanddrop">
                     <p class="settings__text-bold settings__collection-title">{{ field.label }}</p>
                     <div id="dropContainer_Frequency" class="dropContainer">
                       <div class="dropContainer__wrapper">
-                        <label for="{{ field.id_for_label }}" class="btn btn_ghost dropContainer__btn">Выберите фото</label>
-                        <span>Или перетащите сюда</span>
+                          {% comment %}Translators: edit-cassete / Выберите фото{% endcomment %}
+                        <label for="{{ field.id_for_label }}" class="btn btn_ghost dropContainer__btn">{% translate "Chose a photo" %}</label>
+                          {% comment %}Translators: edit-cassete / Или перетащите сюда{% endcomment %}
+                        <span>{% translate "Or drag and drop here" %}</span>
                       </div>
                       {% if field.value %}
                         <div>
@@ -247,10 +257,12 @@
         </div>
         <div class="footer-buttons">
           <div>
-            <button type="submit" value="Update" class="btn btn_fill setting__btn">Сохранить изменения</button>
+              {% comment %}Translators: edit-cassete / Сохранить изменения{% endcomment %}
+            <button type="submit" value="Update" class="btn btn_fill setting__btn">{% translate "Save" %}</button>
           </div>
           <div>
-            <button type="button" onclick="location.href='{{ cassette.get_absolute_url }}'" class="btn btn_ghost setting__btn">Отменить изменения</button>
+              {% comment %}Translators: edit-cassete / Отменить изменения{% endcomment %}
+            <button type="button" onclick="location.href='{{ cassette.get_absolute_url }}'" class="btn btn_ghost setting__btn">{% translate "Cancel" %}</button>
           </div>
         </div>
       </form>

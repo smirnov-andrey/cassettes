@@ -1,5 +1,7 @@
 from django import forms
 from django.core import validators
+from django.utils.translation import gettext as _
+
 
 from catalog.models import (Cassette, CassettesImage, CassettePrice,
                             CassetteComment)
@@ -22,16 +24,16 @@ class CassetteCreateForm(forms.ModelForm):
             'comment'
         ]
         labels = {
-            'brand': 'Бренд',
-            'manufacturer': 'Производитель',
-            'model': 'Модель',
-            'series': 'Серия',
-            'tape_length': 'Длина ленты',
-            'type': 'Тип кассеты',
-            'year_release': 'Год выпуска',
-            'coil': 'Катушка',
-            'slim_case': 'Слим кейс',
-            'comment': 'Комментарий',
+            'brand': _('Brand'),
+            'manufacturer': _('Manufacturer'),
+            'model': _('Model'),
+            'series': _('Series'),
+            'tape_length': _('Tape length'),
+            'type': _('Type'),
+            'year_release': _('Brand'),
+            'coil': _('Coil'),
+            'slim_case': _('Slim case'),
+            'comment': _('Comment'),
         }
         widgets = {
             'brand': forms.Select(attrs={'class': 'input-cust'}),
@@ -53,7 +55,7 @@ class CassetteCreateForm(forms.ModelForm):
             }),
             'comment': forms.Textarea(attrs={
                 'class': 'textarea-cust',
-                'placeholder': 'Комментарий',
+                'placeholder': _('Comment'),
                 'rows': '5',
             }),
         }
@@ -78,18 +80,18 @@ class CassetteImageForm(forms.ModelForm):
             'general_view',
         ]
         labels = {
-            'package_front_side': 'Передняя сторона упаковки',
-            'package_back_side': 'Задняя сторона упаковки',
-            'package_end_side': 'Торец упаковки',
-            'box_front_side': 'Передняя сторона коробки',
-            'box_back_side': 'Задняя сторона коробки',
-            'description_one': 'Описание 1',
-            'description_two': 'Описание 2',
-            'item_side_a': 'Предмет (Сторона А)',
-            'item_side_b': 'Предмет (Сторона Б)',
-            'box_general_view': 'Общий вид (Коробка)',
-            'item_general_view': 'Общий вид (Предмет)',
-            'general_view': 'Общий вид',
+            'package_front_side': _('Front side of the package'),
+            'package_back_side': _('Back side of the package'),
+            'package_end_side': _('End side'),
+            'box_front_side': _('Front side of the box'),
+            'box_back_side': _('Back side of the box'),
+            'description_one': _('Description 1'),
+            'description_two': _('Description 2'),
+            'item_side_a': _('Item (Side A)'),
+            'item_side_b': _('Item (Side B)'),
+            'box_general_view': _('General view (Box)'),
+            'item_general_view': _('General view (Item)'),
+            'general_view': _('General view'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -107,8 +109,8 @@ class CassetteImageAddonsForm(forms.ModelForm):
             'barcode'
         ]
         labels = {
-            'frequency_response': 'Frequency Response',
-            'barcode': 'Добавить штрихкод'
+            'frequency_response': _('Frequency Response'),
+            'barcode': _('Barcode'), #'Добавить штрихкод'
         }
 
     def __init__(self, *args, **kwargs):
@@ -131,12 +133,12 @@ class CassettePriceForm(forms.ModelForm):
             'mint',
         ]
         labels = {
-            'poor': 'Poor',
-            'good': 'Good',
-            'very_good': 'Very good',
-            'excellent': 'Excellent',
-            'near_mint': 'Near mint',
-            'mint': 'Mint',
+            'poor': _('Poor'),
+            'good': _('Good'),
+            'very_good': _('Very good'),
+            'excellent': _('Excellent'),
+            'near_mint': _('Near mint'),
+            'mint': _('Mint'),
         }
         validators = {
             'poor': [validators.MinValueValidator(limit_value=1)],
@@ -160,9 +162,9 @@ class CassetteCommentForm(forms.ModelForm):
         model = CassetteComment
         fields = ['user', 'cassette','comment', ]
         labels = {'comment': '', }
-        validators = {'comment': [validators.MinLengthValidator(limit_value=1,  message='Оставьте комментарий')], }
+        validators = {'comment': [validators.MinLengthValidator(limit_value=1, message=_('Please leave a comment'))], } #'Оставьте комментарий'
         widgets = {
             'user': forms.HiddenInput(),
             'cassette': forms.HiddenInput(),
-            'comment': forms.Textarea(attrs={'class': 'textarea-cust', 'name': 'comments-add', 'id': 'comments-add', 'placeholder': 'Оставьте комментарий', 'rows': '5'}),
+            'comment': forms.Textarea(attrs={'class': 'textarea-cust', 'name': 'comments-add', 'id': 'comments-add', 'placeholder': _('Leave a comment'), 'rows': '5'}),
         }

@@ -1,15 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Зарегистрироваться{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "Sign up" %}{% endblock %}
 {% block content %}
     <section class="my-list" id="my-list">
         <div class="container">
             <div class="page__content-center">
                 <div class="card-body">
                     <div>
-                        <h1 class="modal__title">Signup</h1>
-                        <p class="modal__text modal__text_indent ">Пожалуйста, введите вашу электронную почту ниже и мы
-                            отправим на нее
-                            ссылку для создания нового аккаунта.</p>
+                        <h1 class="modal__title">{% translate "Signup" %}</h1>
+                        <p class="modal__text modal__text_indent ">
+                            {% translate "Please enter your email below and we will send a link to create a new account." %}
+{#                            Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта.#}
+                        </p>
                         <form method="post" action="{% url 'users:signup' %}">
                             {% csrf_token %}
                             {% for field in form %}
@@ -27,7 +29,7 @@
                                     {% endfor %}
                                 {% endif %}
                             {% endfor %}
-                            <input type="submit" class="btn header-top__btn-registration btn-modal" value="Зарегистрироваться">
+                            <input type="submit" class="btn header-top__btn-registration btn-modal" value="{% translate "Sign up" %}">
                         </form>
                     </div>
                 </div>

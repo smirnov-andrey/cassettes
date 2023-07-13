@@ -1,35 +1,36 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
     <section class="collectors section_breadcrumb" id="collectors">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item">
-                    <a href="#">Главная</a>
+                    <a href="#">{% translate "Main" %}</a>
                 </li>
-                <li class="breadcrumb__item">Коллекционеры</li>
+                <li class="breadcrumb__item">{% translate "Collectors" %}</li>
             </ul>
             <div class="page__head">
-                <h2 class="page__title collectors__title">Коллекционеры</h2>
+                <h2 class="page__title collectors__title">{% translate "Collectors" %}</h2>
             </div>
             <div class="position collectors__position">
                 <div class="position__wrapper">
                     <div class="position__search">
-                        <input type="text" placeholder="Введите имя">
-                        <button type="submit" class="btn btn_fill">Найти</button>
+                        <input type="text" placeholder="{% translate "Enter the name" %}">
+                        <button type="submit" class="btn btn_fill">{% translate "Find" %}</button>
                     </div>
                     <div class="position__sorting">
-                        <p class="position__sort-text">Сортировать по:</p>
+                        <p class="position__sort-text">{% translate "Sort by" %}:</p>
                         <div class="position__sort-drop dropdown">
-                            <button type="button" class="dropdown__select position__sort-select">По бренду</button>
+                            <button type="button" class="dropdown__select position__sort-select">{% translate "Brand" %}</button>
                         </div>
                     </div>
                 </div>
                 <ul class="sort-by-card">
                     <li class="sort-by-card__item">
-                        <a href="#">Рынок</a>
+                        <a href="#">{% translate "Market" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Страна</a>
+                        <a href="#">{% translate "Country" %}</a>
                     </li>
                 </ul>
                 <ul class="sort-by-word">
@@ -117,14 +118,14 @@
                 </ul>
                 <table class="table-cust">
                     <tr>
-                        <th style="width: 22%;">Пользователь</th>
-                        <th>Страна</th>
-                        <th>Рынок</th>
-                        <th>Рейтинг</th>
-                        <th>Коллекция</th>
-                        <th>Желания</th>
-                        <th>Обмен</th>
-                        <th>Продажа</th>
+                        <th style="width: 22%;">{% translate "User" %}</th>
+                        <th>{% translate "Country" %}</th>
+                        <th>{% translate "Market" %}</th>
+                        <th>{% translate "Rating" %}</th>
+                        <th>{% translate "Collection" %}</th>
+                        <th>{% translate "Whishes" %}</th>
+                        <th>{% translate "Exchange" %}</th>
+                        <th>{% translate "Sale" %}</th>
                     </tr>
                     {% for collector in collector_list %}
                         <tr>

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils.translation import gettext
 from django.views.generic import (DetailView, ListView, CreateView,
                                   TemplateView, UpdateView, )
 from django.views.generic.edit import FormMixin
@@ -130,12 +131,12 @@ class CassetteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CassetteCreateView, self).get_context_data(**kwargs)
-        context['page_title'] = 'Добавить предмет'
+        # Translators: Catalog view title for page ('Добавить предмет')
+        context['page_title'] = gettext('Add item')
         if self.request.POST:
             context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES)
             context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES)
             context['cassette_price_form'] = CassettePriceForm(self.request.POST)
-
         else:
             context['cassette_image_form'] = CassetteImageForm()
             context['cassette_image_addons_form'] = CassetteImageAddonsForm()
@@ -182,7 +183,8 @@ class CassetteUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         image_instance, _ = CassettesImage.objects.get_or_create(cassette=self.object)
         price_instance, _ = CassettePrice.objects.get_or_create(cassette=self.object)
         context = super(CassetteUpdateView, self).get_context_data(**kwargs)
-        context['page_title'] = 'Редактировать предмет'
+        # Translators: Catalog view title for page ('Редактировать предмет')
+        context['page_title'] = gettext('Edit Item')
         if self.request.POST:
             context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES, instance=image_instance)
             context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES, instance=image_instance)

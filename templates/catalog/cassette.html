@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
     <section class="product-section section_breadcrumb" id="product-section">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item">
-                    <a href="/">Главная</a>
+                    <a href="/">{% translate "Main" %}</a>
                 </li>
                 <li class="breadcrumb__item">
-                    <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
+                    <a href="{% url 'catalog:catalog-list' %}">{% translate "Catalog" %}</a>
                 </li>
                 <li class="breadcrumb__item">
                     <a href="{% url 'catalog:catalog-detail' slug=object.category.slug %}">{{ object.category }}</a>
@@ -24,7 +25,7 @@
                 <h2 class="page__title">{{ object.model }}</h2>
                 {% if user.is_authenticated %}
                     {% if user.is_moderator or user.is_superuser %}
-                        <a href="{% url 'catalog:cassette_update' id=object.id %}" class="page__head-link">Редактировать информацию</a>
+                        <a href="{% url 'catalog:cassette_update' id=object.id %}" class="page__head-link">{% translate "Edit Information" %}</a>
                     {% endif %}
                 {% endif %}
             </div>
@@ -49,26 +50,26 @@
                     <div class="product__info-wrapper page__wrapper product__info-wrapper">
                         <div class="page__left product__left">
                             <div class="product__block product__specifications">
-                                <h3 class="product__subtitle">Характеристики</h3>
+                                <h3 class="product__subtitle">{% translate "Characteristics" %}</h3>
                                 <table class="table-info product__table-info">
                                     <tr>
-                                        <td style="width: 125px;" class="table-info__name">Бренд</td>
+                                        <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
                                         <td class="table-info__value"><a href="#">{{ object.brand }}</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Производитель</td>
+                                        <td class="table-info__name">{% translate "Manufacturer" %}</td>
                                         <td class="table-info__value"><a href="#">{{ object.manufacturer }}</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Модель</td>
+                                        <td class="table-info__name">{% translate "Model" %}</td>
                                         <td class="table-info__value"><a href="#">{{ object.model }}</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Серия</td>
+                                        <td class="table-info__name">{% translate "Series" %}</td>
                                         <td class="table-info__value"><a href="#">{{ object.series }}</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Длина ленты</td>
+                                        <td class="table-info__name">{% translate "Tape length" %}</td>
                                         <td class="table-info__value">{{ object.tape_length }}
                                             <!-- <ul class="table-info__replase">
                                                  <li>54</li>
@@ -80,44 +81,46 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Тип кассеты</td>
+                                        <td class="table-info__name">{% translate "Type of cassete" %}</td>
                                         <td class="table-info__value">{{ object.type }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Год выпуска</td>
+                                        <td class="table-info__name">{% translate "Release year" %}</td>
                                         <td class="table-info__value"><a href="#">{{ object.year_release }}</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Страна</td>
+                                        <td class="table-info__name">{% translate "Country" %}</td>
                                         <td class="table-info__value"><a href="#">{{ object.brand.country }}</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Рынок</td>
+                                        <td class="table-info__name">{% translate "Market" %}</td>
                                         <td class="table-info__value"><a href="#">Locale</a></td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Штрих-код</td>
+                                        <td class="table-info__name">{% translate "Barcode" %}/td>
                                         {% if object.cassettesimage_set.get.barcode %}<td class="table-info__value"><img src="{{object.cassettesimage_set.get.barcode.url}}" alt="">{% endif %}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="table-info__name">Купить сейчас</td>
-                                        <td class="table-info__value"><a href="#">Поиск похожих предметов на eBay</a>
+                                         {% comment %}Translators: cassete /Купить сейчас{% endcomment %}
+                                        <td class="table-info__name">{% translate "Buy now" %}</td>
+                                        {% comment %}Translators: cassete /Поиск похожих предметов на eBay{% endcomment %}
+                                        <td class="table-info__value"><a href="#">{% translate "Search for similar items on eBay" %}</a>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="product__block product__collection">
-                                <h3 class="product__subtitle">Коллекция</h3>
-                                <h4 class="product__collection-title">Состояние</h4>
+                                <h3 class="product__subtitle">{% translate "Collection" %}</h3>
+                                <h4 class="product__collection-title">{% translate "Condition" %}</h4>
                                 <table class="table-cust product__collection-table">
                                     <tr>
-                                        <th>Poor</th>
-                                        <th>Good</th>
-                                        <th>Very Good</th>
-                                        <th>Excellent</th>
-                                        <th>Near mint</th>
-                                        <th>Mint</th>
+                                        <th>{% translate "Poor" %}</th>
+                                        <th>{% translate "Good" %}</th>
+                                        <th>{% translate "Very Good" %}</th>
+                                        <th>{% translate "Excellent" %}</th>
+                                        <th>{% translate "Near mint" %}</th>
+                                        <th>{% translate "Mint" %}</th>
                                     </tr>
                                     {% for price in object.prices.all %}
                                         <tr>
@@ -159,33 +162,33 @@
                                     <div class="product__collection-wrapper-checkbox checkbox-cust">
                                         <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
                                                name="save-collection" id="save-collection-1">
-                                        <label for="save-collection-1">В мою коллекцию</label>
+                                        <label for="save-collection-1">{% translate "My collection" %}</label>
                                     </div>
                                     <div class="product__collection-wrapper-checkbox checkbox-cust">
                                         <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
                                                name="save-collection" id="save-collection-2">
-                                        <label for="save-collection-2">В список желаний</label>
+                                        <label for="save-collection-2">{% translate "Wishlist" %}</label>
                                     </div>
                                     <div class="product__collection-wrapper-checkbox checkbox-cust">
                                         <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
                                                name="save-collection" id="save-collection-3">
-                                        <label for="save-collection-3">Обменять</label>
+                                        <label for="save-collection-3">{% translate "Exchange" %}</label>
                                     </div>
                                     <div class="product__collection-wrapper-checkbox checkbox-cust">
                                         <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
                                                name="save-collection" id="save-collection-4">
-                                        <label for="save-collection-4">Продать</label>
+                                        <label for="save-collection-4">{% translate "Sell" %}</label>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn_fill product__collection-btn">Добавить</button>
+                                <button type="submit" class="btn btn_fill product__collection-btn">{% translate "Add" %}</button>
                             </div>
                             <div class="product__block product__frequencies">
-                                <h3 class="product__subtitle">Frequency Response</h3>
+                                <h3 class="product__subtitle">{% translate "Frequency Response" %}</h3>
                                 {% if object.cassettesimage_set.get.frequency_response %}<img class="product__frequencies-image" src="{{object.cassettesimage_set.get.frequency_response.url}}" alt="">{% endif %}
                             </div>
                         </div>
                         <div class="page__right product__right">
-                            <h4 class="page__subtitle">Сейчас на eBay</h4>
+                            <h4 class="page__subtitle">{% translate "Now on eBay" %}</h4>
                             <ul class="now-ebay product__now-ebay">
                                 <li class="now-ebay__item">
                                     <a href="#" class="product-small">
@@ -221,7 +224,8 @@
                         </div>
                     </div>
                     <div class="product__variants">
-                        <h3 class="product__subtitle">Варианты</h3>
+                        {% comment %}Translators: cassete / Варианты{% endcomment %}
+                        <h3 class="product__subtitle">{% translate "Options" %}</h3>
                         <div class="product__variants-wrapper">
                             <div class="product__variants-radio-wrapper">
                                 <input class="product__variants-radio" type="radio" id="variant-1" name="variant">
@@ -274,7 +278,8 @@
                         </div>
                     </div>
                     <div class="product__variants">
-                        <h3 class="product__subtitle">Варианты выпуска</h3>
+                       {% comment %}Translators: cassete / Варианты выпуска{% endcomment %}
+                        <h3 class="product__subtitle">{% translate "Release options" %}</h3>
                         <div class="product__variants-wrapper product__variants-wrapper_not-jcsb">
                             <div class="product__variants-radio-wrapper product__variants-radio-wrapper_margin">
                                 <input class="product__variants-radio" type="radio" id="variant-release"
@@ -342,7 +347,7 @@
             </form>
 
             <div class="product__comments-add">
-                <h2 class="product__comments-title">Комментарии</h2>
+                <h2 class="product__comments-title">{% translate "Comments" %}</h2>
                 {% if user.is_authenticated %}
                     <p class="product__comments-text">Вы можете помочь улучшить наш каталог, добавив ваш комментарий.</p>
                     <form action="" method="POST" class="product__comments-form">

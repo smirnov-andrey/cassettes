@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
     <section class="catalog catalog_page" id="catalog">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item">
-                    <a href="#">Главная</a>
+                    <a href="#">{% translate "Main" %}</a>
                 </li>
-                <li class="breadcrumb__item">Каталог</li>
+                <li class="breadcrumb__item">{% translate "Catalog" %}</li>
             </ul>
-            <h2 class="page__title catalog__title">Каталог</h2>
+            <h2 class="page__title catalog__title">{% translate "Catalog" %}</h2>
             <div class="categories">
                 <ul class="categories__list">
                     {% for category in category_audio %}
@@ -17,7 +18,7 @@
                                 <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
-                                    <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                                    <p class="categories__ads-count">{{ category.cassettes.count }} {% translate "offers" %}</p>
                                 </div>
                             </a>
                         </li>
@@ -31,7 +32,7 @@
                                 <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
-                                    <p class="categories__ads-count">{{ category.cassettes.count }} Объявлений</p>
+                                    <p class="categories__ads-count">{{ category.cassettes.count }} {% translate "offers" %}</p>
                                 </div>
                             </a>
                         </li>

@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <header class="header" id="header">
     <div class="header__wrapper">
         <div class="container">
@@ -7,25 +9,71 @@
                     <img src="{% static 'img/logo.jpg' %}" alt="TapeCollector">
                 </a>
                 <div class="header-top__search">
-                    <input type="text" placeholder="Поиск">
+                    {% comment %}Translators: Search lable in header{% endcomment %}
+                    <input type="text" placeholder="{% translate "Search" %}">
                 </div>
                 <div class="header-top__wrapper">
-                    <div class="header-top__change-lang dropdown">
-                        <button class="header-top__lang dropdown__select">English</button>
-                        <ul class="dropdown__options header-top__options">
-                            <li data-value="По бренду" class="active">English</li>
-                            <li data-value="По бренду">Russian</li>
-                        </ul>
-                    </div>
+
+                    {#                                        <div class="header-top__change-lang dropdown">#}
+                    {#                                            <button class="header-top__lang dropdown__select">English</button>#}
+                    {#                                            <ul class="dropdown__options header-top__options">#}
+                    {#                                                <li data-value="По бренду" class="active">English</li>#}
+                    {#                                                <li data-value="По бренду">Russian</li>#}
+                    {#                                            </ul>#}
+                    {#                                        </div>#}
+                    {##}
+                    {#                                        <form action="{% url 'set_language' %}" method="post">#}
+                    {#                                            {% csrf_token %}#}
+                    {#                                            <input name="next" type="hidden" value="{{ redirect_to }}">#}
+                    {#                                            <select name="language">#}
+                    {#                                                {% get_current_language as LANGUAGE_CODE %}#}
+                    {#                                                {% get_available_languages as LANGUAGES %}#}
+                    {#                                                {% get_language_info_list for LANGUAGES as languages %}#}
+                    {#                                                {% for language in languages %}#}
+                    {#                                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>#}
+                    {#                                                        {{ language.name_local }} ({{ language.code }})#}
+                    {#                                                    </option>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            </select>#}
+                    {#                                            <input type="submit" value="Go">#}
+                    {#                                        </form>#}
+                    <img src="{% static 'img/lang-icon.svg' %}">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}">
+                        <div class="header-top__change-lang dropdown">
+                            <select name="language" class="header-top__lang dropdown__select" onchange="this.form.submit()">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                        {{ language.name_local }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+
+
                     <div class="header-top__profile">
                         {% if request.user.is_authenticated %}
-                            <a href="{% url 'users:profile' %}">{{ request.user.username }}</a> |
-                            <a href="{% url 'users:logout' %}">Logout</a>
+                            <a href="{% url 'users:profile' %}">
+                                {% if request.user.first_name or request.user.last_name %}
+                                    {{ request.user.first_name }} {{ request.user.last_name }}
+                                    {% else %}
+                                {{ request.user.username }}
+                                    {% endif %}
+                            </a> |
+                            {% comment %}Translators: header / Logout{% endcomment %}
+                            <a href="{% url 'users:logout' %}">{% translate "Logout" %}</a>
                         {% else %}
                             <button type="button" class="btn btn_ghost header-top__btn-login btn-modal"
-                                    data-modal="loginModal">Вход
+                                    {% comment %}Translators: header / Вход от{% endcomment %}
+                                    data-modal="loginModal">{% translate "Log in" %}
                             </button>
-                            <a class="btn btn_fill header-top__btn-registration btn-modal" href="{% url 'users:signup' %}">Регистрация</a>
+                            {% comment %}Translators: header / Регистрация{% endcomment %}
+                            <a class="btn btn_fill header-top__btn-registration btn-modal" href="{% url 'users:signup' %}">{% translate "Signup" %}</a>
 
                         {% endif %}
                     </div>
@@ -38,11 +86,11 @@
             <div class="header-brands">
                 <ul class="header-brands__audio-cassette">
                     {% for category in category_list %}
-                    <li class="header-brands__item">
-                        <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="header-brands__link">
-                            <img src="{{ category.logo.url }}" alt="{{ category }}">
-                        </a>
-                    </li>
+                        <li class="header-brands__item">
+                            <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="header-brands__link">
+                                <img src="{{ category.logo.url }}" alt="{{ category }}">
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -53,37 +101,37 @@
             <div class="header-menu__wrapper">
                 <ul class="header-menu__list">
                     <li class="header-menu__item">
-                        <a href="{% url 'catalog:catalog-list' %}">Каталог</a>
+                        <a href="{% url 'catalog:catalog-list' %}">{% translate "Catalog" %}</a>
                     </li>
                     <li class="header-menu__item">
-                        <a href="{% url 'catalog:brand-list' %}">Бренды</a>
+                        <a href="{% url 'catalog:brand-list' %}">{% translate "Brands" %}</a>
                     </li>
                     <li class="header-menu__item">
-                        <a href="{% url 'catalog:technologies' %}">Технологии</a>
+                        <a href="{% url 'catalog:technologies' %}">{% translate "Technologies" %}</a>
                     </li>
                     <li class="header-menu__item">
-                        <a href="{% url 'users:collectors' %}">Коллекционеры</a>
+                        <a href="{% url 'users:collectors' %}">{% translate "Collectors" %}</a>
                     </li>
                     <li class="header-menu__item">
-                        <a href="{% url 'users:profile' %}">Мои списки</a>
+                        <a href="{% url 'users:profile' %}">{% translate "My lists" %}</a>
                     </li>
                     {% if user.is_authenticated %}
                         {% if user.is_moderator or user.is_superuser %}
                             <li class="header-menu__item">
-                                <a href="{% url 'catalog:cassette_create' %}">Добавить кассету</a>
+                                <a href="{% url 'catalog:cassette_create' %}">{% translate "Add cassette" %}</a>
                             </li>
                         {% endif %}
                     {% endif %}
                 </ul>
                 <ul class="header-menu__list">
                     <li class="header-menu__item header-menu__item_left">
-                        <a href="help.html">Помощь</a>
+                        <a href="help.html">{% translate "Help" %}</a>
                     </li>
                     <li class="header-menu__item header-menu__item_left">
-                        <a href="#">Мерч</a>
+                        <a href="#">{% translate "Merchandise" %}</a>
                     </li>
                     <li class="header-menu__item header-menu__item_left">
-                        <a href="support.html">Поддержка</a>
+                        <a href="support.html">{% translate "Support" %}</a>
                     </li>
                 </ul>
             </div>

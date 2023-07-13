@@ -2,13 +2,20 @@ from datetime import date
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
 class Country(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Country')
+    title = models.CharField(max_length=200, verbose_name=_('country'))
+
+    class Meta:
+        verbose_name = _('country')
+        verbose_name_plural = _('countries')
 
     def __str__(self):
         return self.title
+
+
 
 
 class User(AbstractUser):
@@ -16,9 +23,9 @@ class User(AbstractUser):
     MODERATOR = 'moderator'
     ADMIN = 'admin'
     USER_ROLES = (
-        (USER, 'User'),
-        (MODERATOR, 'Moderator'),
-        (ADMIN, 'Admin'),
+        (USER, _('User')),
+        (MODERATOR, _('Moderator')),
+        (ADMIN, _('Admin')),
     )
     USER_LANGUAGE = (
         ('English', 'Английский'),
@@ -42,6 +49,8 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ('username',)
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
 
     # Можно лучше: можно добавить тут property для удобства
     @property

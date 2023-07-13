@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from django import forms
 
 User = get_user_model()
@@ -9,13 +10,14 @@ User = get_user_model()
 #  сделаем его наследником предустановленного класса UserCreationForm
 class CreationForm(UserCreationForm):
     username = forms.CharField(label='search',
-                        widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+                        widget=forms.TextInput(attrs={'placeholder': _('Username')}))
     email = forms.CharField(label='search',
-                               widget=forms.TextInput(attrs={'placeholder': 'Email'}))
+                               widget=forms.TextInput(attrs={'placeholder': _('Email')}))
     password1 = forms.CharField(label='search',
-                               widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+                               widget=forms.PasswordInput(attrs={'placeholder': _('Password')}))
     password2 = forms.CharField(label='search',
-                                 widget=forms.PasswordInput(attrs={'placeholder': 'Password repeat'}))
+                                 widget=forms.PasswordInput(attrs={'placeholder': _('Password repeat')}))
+
     class Meta(UserCreationForm.Meta):
         # укажем модель, с которой связана создаваемая форма
         model = User
@@ -32,7 +34,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'born_date', 'country', 'image', 'language', 'website', 'bio')
+        fields = ('email', 'born_date', 'country', 'image', 'language', 'website', 'bio', 'premium')
         labels = {
             'bio': 'О себе',
         }

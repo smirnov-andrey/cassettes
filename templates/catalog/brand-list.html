@@ -1,45 +1,46 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
+{% load i18n %}
 {% block content %}
     <section class="brands section_breadcrumb" id="brands">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item">
-                    <a href="/">Главная</a>
+                    <a href="/">{% translate "Main" %}</a>
                 </li>
-                <li class="breadcrumb__item">Бренды</li>
+                <li class="breadcrumb__item">{% translate "Brands" %}</li>
             </ul>
             <div class="page__wrapper">
                 <div class="page__left">
                     <div class="page__head">
-                        <h2 class="page__title categories-page__title">Бренды</h2>
+                        <h2 class="page__title categories-page__title">{% translate "Brands" %}</h2>
                     </div>
                     <div class="position categories__position">
                         <div class="position__wrapper">
                             <div class="position__search">
-                                <input type="text" placeholder="Поиск">
-                                <button type="submit" class="btn btn_fill">Найти</button>
+                                <input type="text" placeholder="{% translate "Search" %}">
+                                <button type="submit" class="btn btn_fill">{% translate "Find" %}</button>
                             </div>
                             <div class="position__sorting">
-                                <p class="position__sort-text">Сортировать по:</p>
+                                <p class="position__sort-text">{% translate "Sort" %}</p>
                                 <div class="position__sort-drop dropdown">
-                                    <button type="button" class="dropdown__select position__sort-select">По бренду
+                                    <button type="button" class="dropdown__select position__sort-select">{% translate "by Brand" %}
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <ul class="sort-by-card">
                             <li class="sort-by-card__item">
-                                <a href="#">Категория</a>
+                                <a href="#">{% translate "Category" %}</a>
                             </li>
                             <li class="sort-by-card__item">
-                                <a href="#">Бренд</a>
+                                <a href="#">{% translate "Brand" %}</a>
                             </li>
                             <li class="sort-by-card__item">
-                                <a href="#">Год</a>
+                                <a href="#">{% translate "Year" %}</a>
                             </li>
                             <li class="sort-by-card__item">
-                                <a href="#">Страна</a>
+                                <a href="#"{% translate "Country" %}></a>
                             </li>
                         </ul>
                         <ul class="sort-by-word">
@@ -127,12 +128,12 @@
                         </ul>
                         <div class="table-overflow">
                             <table class="table-cust">
-                                <tr><th style="width: 22%;">Лого</th>
-                                    <th>Бренд</th>
-                                    <th>Кол-во кассет<br>в каталоге</th>
-                                    <th>Год</th>
-                                    <th>Кол-во кассет<br>в коллекции</th>
-                                    <th>Страна</th>
+                                <tr><th style="width: 22%;">{% translate "Logo" %}</th>
+                                    <th>{% translate "Brand" %}</th>
+                                    <th>{% translate "Number of cassettes" %}<br>{% translate "in catalog" %}</th>
+                                    <th>{% translate "Year" %}</th>
+                                    <th>{% translate "Number of cassettes" %}<br>{% translate "in collection" %}</th>
+                                    <th>{% translate "Country" %}</th>
                                 </tr>
                                 {% for brand in brand_list %}
                                     <tr>
@@ -165,7 +166,7 @@
                     </div>
                 </div>
                 <div class="page__right">
-                    <h4 class="page__subtitle">Сейчас на eBay</h4>
+                    <h4 class="page__subtitle">{% translate "Now on eBay" %}</h4>
                     <ul class="now-ebay">
                         <li class="now-ebay__item">
                             <a href="#" class="product-small">

@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
     <section class="brands-product section_breadcrumb" id="brands-product">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb__item">
-                    <a href="/">Главная</a>
+                    <a href="/">{% translate "Main" %}</a>
                 </li>
                 <li class="breadcrumb__item">
-                    <a href="{% url 'catalog:brand-list' %}">Бренды</a>
+                    <a href="{% url 'catalog:brand-list' %}">{% translate "Brands" %}</a>
                 </li>
                 <li class="breadcrumb__item">{{ brand }}</li>
             </ul>
@@ -19,37 +20,37 @@
             <div class="position categories__position">
                 <div class="position__wrapper">
                     <div class="position__search">
-                        <input type="text" placeholder="Поиск">
-                        <button type="submit" class="btn btn_fill">Найти</button>
+                        <input type="text" placeholder="{% translate "Search" %}">
+                        <button type="submit" class="btn btn_fill">{% translate "Find" %}</button>
                     </div>
                     <div class="position__sorting">
-                        <p class="position__sort-text">Сортировать по:</p>
+                        <p class="position__sort-text">{% translate "Sort" %}:</p>
                         <div class="position__sort-drop dropdown">
-                            <button type="button" class="dropdown__select position__sort-select">По бренду</button>
+                            <button type="button" class="dropdown__select position__sort-select">{% translate "by Brand" %}</button>
                         </div>
                     </div>
                 </div>
                 <ul class="sort-by-card">
                     <li class="sort-by-card__item">
-                        <a href="#">Тип ленты</a>
+                        <a href="#">{% translate "Type of tape" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Серия</a>
+                        <a href="#">{% translate "Series" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Длительность</a>
+                        <a href="#">{% translate "Tape length" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Год</a>
+                        <a href="#">{% translate "Year" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Страна</a>
+                        <a href="#">{% translate "Country" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Рынок</a>
+                        <a href="#">{% translate "Market" %}</a>
                     </li>
                     <li class="sort-by-card__item">
-                        <a href="#">Информация</a>
+                        <a href="#">{% translate "Information" %}</a>
                     </li>
                 </ul>
                 <ul class="sort-by-word">
@@ -139,15 +140,15 @@
                     <table class="table-cust">
                         <tr>
                             <th style="width: 10%;"></th>
-                            <th style="width: 10%;">Бренд</th>
-                            <th>Модель</th>
-                            <th>Тип ленты</th>
-                            <th>Серия</th>
-                            <th>Длительность</th>
-                            <th style="width: 6%;">Год</th>
-                            <th>Страна-производитель</th>
-                            <th style="width: 15%;">Рынок</th>
-                            <th>Информация</th>
+                            <th style="width: 10%;">{% translate "Brand" %}</th>
+                            <th>{% translate "Model" %}</th>
+                            <th>{% translate "Type of tape" %}</th>
+                            <th>{% translate "Series" %}</th>
+                            <th>{% translate "Tape length" %}</th>
+                            <th style="width: 6%;">{% translate "Year" %}</th>
+                            <th>{% translate "Country" %}</th>
+                            <th style="width: 15%;">{% translate "Market" %}</th>
+                            <th>{% translate "Information" %}</th>
                         </tr>
                         {% for cassette in brand.cassettes.all %}
                             <tr>
@@ -171,7 +172,8 @@
                                 <td>{{ brand.country }}</td>
                                 <td>Locale</td>
                                 <td>
-                                    <p class="info correct">Требуется уточнение</p>
+                                    {% comment %}Translators: brand-detail / Требуется уточнение{% endcomment %}
+                                    <p class="info correct">{% translate "Clarification required" %}</p>
                                 </td>
                             </tr>
                         {% endfor %}

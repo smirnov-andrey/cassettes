@@ -1,11 +1,12 @@
 {# Это код файла templates/users/logged_out.html #}
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}You logout!{% endblock %}
 {% block content %}
     <section class="my-list" id="my-list">
         <div class="container">
             <div class="page__content-center">
-                <p class="page__text page__text_center">You logout!</p>
+                <p class="page__text page__text_center">{% translate "You logout" %}!</p>
             </div>
         </div>
     </section>
