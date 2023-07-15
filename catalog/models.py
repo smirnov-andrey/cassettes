@@ -58,8 +58,8 @@ class CassetteBrand(BaseModel):
         return year_period
 
     class Meta:
-        verbose_name = _('Brand')
-        verbose_name_plural = _('Brands')
+        verbose_name = _('brand')
+        verbose_name_plural = _('brands')
 
 
 class CassetteModel(BaseModel):

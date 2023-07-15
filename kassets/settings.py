@@ -35,6 +35,7 @@ ALLOWED_HOSTS = str(os.getenv('DJ_ALLOWED_HOSTS')).split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -151,6 +152,10 @@ USE_TZ = True
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+MODELTRANSLATION_LANGUAGES = ('en', 'ru')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_AUTO_POPULATE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

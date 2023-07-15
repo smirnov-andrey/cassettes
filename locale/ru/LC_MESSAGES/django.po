@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-13 16:05+0300\n"
+"POT-Creation-Date: 2023-07-15 16:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,12 +24,13 @@ msgstr ""
 msgid "catalog"
 msgstr "каталог"
 
-#: catalog/forms.py:27 catalog/forms.py:33 catalog/models.py:61
-#: catalog/models.py:144 templates/catalog/brand-detail.html:143
-#: templates/catalog/brand-list.html:37 templates/catalog/brand-list.html:132
-#: templates/catalog/cassette.html:56 templates/catalog/category-detail.html:31
+#: catalog/forms.py:27 catalog/forms.py:33 catalog/models.py:144
+#: templates/catalog/brand-detail.html:143 templates/catalog/brand-list.html:37
+#: templates/catalog/brand-list.html:132 templates/catalog/cassette.html:56
+#: templates/catalog/category-detail.html:31
 #: templates/catalog/category-detail.html:41
 #: templates/catalog/category-detail.html:137
+#: templates/users/collectors.html:24
 msgid "Brand"
 msgstr "Бренд"
 
@@ -188,9 +189,9 @@ msgstr "Аудио"
 msgid "Video"
 msgstr "Видео"
 
-#: catalog/models.py:37 catalog/models.py:62
-#: templates/catalog/brand-detail.html:12 templates/catalog/brand-list.html:11
-#: templates/catalog/brand-list.html:16 templates/includes/header.html:107
+#: catalog/models.py:37 templates/catalog/brand-detail.html:12
+#: templates/catalog/brand-list.html:11 templates/catalog/brand-list.html:16
+#: templates/includes/header.html:107
 msgid "Brands"
 msgstr "Бренды"
 
@@ -207,13 +208,22 @@ msgstr "Категория"
 msgid "Categories"
 msgstr "Категории"
 
-#: catalog/models.py:51
+#: catalog/models.py:51 users/models.py:9 users/models.py:12
 msgid "country"
 msgstr "страна"
 
 #: catalog/models.py:53
 msgid "image"
 msgstr "изображение"
+
+#: catalog/models.py:61
+msgid "brand"
+msgstr "бренд"
+
+#: catalog/models.py:62
+#| msgid "brand"
+msgid "brands"
+msgstr "бренды"
 
 #: catalog/models.py:69
 msgid "Models"
@@ -238,6 +248,8 @@ msgstr "Производители"
 #. Translators: edit-cassete / Коллекция
 #: catalog/models.py:103 catalog/models.py:150
 #: templates/catalog/cassette.html:114 templates/catalog/edit-cassette.html:103
+#: templates/users/collector.html:14 templates/users/collectors.html:125
+#: templates/users/user-profile.html:16
 msgid "Collection"
 msgstr "Коллекция"
 
@@ -250,7 +262,6 @@ msgid "Tape lengtes"
 msgstr "Длины лент"
 
 #: catalog/models.py:121
-#, fuzzy
 #| msgid "Price"
 msgid "Poor price"
 msgstr "цена Poor"
@@ -276,7 +287,6 @@ msgid "Mint price"
 msgstr "цена Mint"
 
 #: catalog/models.py:127
-#, fuzzy
 #| msgid "Cassette"
 msgid "cassette"
 msgstr "касета"
@@ -291,28 +301,16 @@ msgid "Prices"
 msgstr "Цены"
 
 #: catalog/models.py:139 catalog/models.py:221
+#: templates/users/collectors.html:121 users/models.py:26
 msgid "User"
 msgstr "Пользователь"
-
-msgid "user"
-msgstr "пользователь"
-
-msgid "users"
-msgstr "пользователи"
-
-msgid "Enter the name"
-msgstr "Введите имя"
 
 #: catalog/models.py:142 catalog/models.py:223 catalog/models.py:231
 #: templates/catalog/cassette.html:350
 msgid "Comments"
 msgstr "Комментарии"
 
-msgid "Lists"
-msgstr "Списки"
-
 #: catalog/models.py:151
-#, fuzzy
 #| msgid "Tape length"
 msgid "Tape Length"
 msgstr "Длинна ленты"
@@ -322,13 +320,11 @@ msgid "Year Release"
 msgstr "Год релиза"
 
 #: catalog/models.py:154 catalog/models.py:225
-#, fuzzy
 #| msgid "Date of created"
 msgid "Date of comment created"
 msgstr "Дата создания"
 
 #: catalog/models.py:156 catalog/models.py:226
-#, fuzzy
 #| msgid "Date of updated"
 msgid "Date of comment updated"
 msgstr "Дата обновления"
@@ -368,23 +364,20 @@ msgid "Changers"
 msgstr "Обменники"
 
 #. Translators: Catalog view title for page ('Добавить предмет')
+#: catalog/views.py:135
 msgid "Add item"
 msgstr "Добавить предмет"
-
-msgid "Add cassette"
-msgstr "Добавить кассету"
-
 
 #. Translators: Catalog view title for page ('Редактировать предмет')
 #: catalog/views.py:187
 msgid "Edit Item"
 msgstr "Редактировать предмет"
 
-#: kassets/settings.py:139
+#: kassets/settings.py:140
 msgid "English"
 msgstr "Английский"
 
-#: kassets/settings.py:140
+#: kassets/settings.py:141
 msgid "Russian"
 msgstr "Русский"
 
@@ -404,7 +397,7 @@ msgstr "Администрирование Tape Collector"
 #: templates/catalog/cassette.html:9
 #: templates/catalog/category-brand-cassette-list.html:9
 #: templates/catalog/category-detail.html:9
-#: templates/catalog/category-list.html:8
+#: templates/catalog/category-list.html:8 templates/users/collectors.html:8
 msgid "Main"
 msgstr "Главная"
 
@@ -416,7 +409,7 @@ msgstr "Поиск"
 
 #: templates/catalog/brand-detail.html:24 templates/catalog/brand-list.html:22
 #: templates/catalog/category-brand-cassette-list.html:27
-#: templates/catalog/category-detail.html:26
+#: templates/catalog/category-detail.html:26 templates/users/collectors.html:19
 msgid "Find"
 msgstr "Найти"
 
@@ -425,7 +418,6 @@ msgid "Sort"
 msgstr "Сортировать"
 
 #: templates/catalog/brand-detail.html:29 templates/catalog/brand-list.html:27
-#, fuzzy
 #| msgid "Brand"
 msgid "by Brand"
 msgstr "по Бренду"
@@ -447,15 +439,16 @@ msgstr "Год"
 #: templates/catalog/brand-detail.html:149 templates/catalog/brand-list.html:43
 #: templates/catalog/brand-list.html:136 templates/catalog/cassette.html:92
 #: templates/catalog/category-detail.html:47
-#: templates/catalog/category-detail.html:142
+#: templates/catalog/category-detail.html:142 templates/users/collector.html:58
+#: templates/users/collectors.html:33 templates/users/collectors.html:122
+#: templates/users/user-profile.html:60 templates/users/user-settings.html:39
 msgid "Country"
 msgstr "Страна"
 
-msgid "countries"
-msgstr "страны"
-
 #: templates/catalog/brand-detail.html:50
 #: templates/catalog/brand-detail.html:150 templates/catalog/cassette.html:96
+#: templates/users/collector.html:62 templates/users/collectors.html:30
+#: templates/users/collectors.html:123
 msgid "Market"
 msgstr "Рынок"
 
@@ -483,14 +476,12 @@ msgstr "Кол-во кассет"
 
 #: templates/catalog/brand-list.html:133
 #: templates/catalog/category-detail.html:139
-#, fuzzy
 #| msgid "catalog"
 msgid "in catalog"
 msgstr "в каталоге"
 
 #: templates/catalog/brand-list.html:135
 #: templates/catalog/category-detail.html:141
-#, fuzzy
 #| msgid "Collection"
 msgid "in collection"
 msgstr "в коллекции"
@@ -518,8 +509,6 @@ msgid "Characteristics"
 msgstr "Характеристики"
 
 #: templates/catalog/cassette.html:84
-#, fuzzy
-
 msgid "Type of cassete"
 msgstr "Тип кассеты"
 
@@ -550,110 +539,21 @@ msgstr ""
 msgid "My collection"
 msgstr "В мою коллекцию"
 
-#: templates/catalog/cassette.html:170
+#: templates/catalog/cassette.html:170 templates/users/collector.html:21
+#: templates/users/user-profile.html:23
 msgid "Wishlist"
 msgstr "Cписок желаний"
 
-msgid "Whishes"
-msgstr "Желания"
-
-msgid "Rating"
-msgstr "Рейтинг"
-
-msgid "Language"
-msgstr "Язык"
-
-msgid "Birthday"
-msgstr "День рождения"
-
-msgid "About user"
-msgstr "О пользователе"
-
-msgid "Add user note"
-msgstr "Добавить заметку о пользователе"
-
-msgid "Complain"
-msgstr "Пожаловаться"
-
-msgid "Edit profile"
-msgstr "Редактировать профиль"
-
-msgid "Print collection"
-msgstr "Распечатать коллекцию"
-
-
-msgid "Premium Subscription"
-msgstr "Премиум подписка"
-
-
-msgid "We give you the opportunity to get all the benefits of a Premium subscription for free for 14 days."
-msgstr "Мы даем возможность получить все преимущества Премиум подписки бесплатно в течение 14 дней."
-
-msgid "Premium subscription gives you the opportunity to enjoy several useful additional features."
-msgstr "Премиум подписка дает возможность пользоваться несколькими полезными дополнительными функциями."
-
-msgid "Start Free Trial"
-msgstr "Начать бесплатный пробный период"
-
-msgid "Subscribe"
-msgstr "Оформить подписку"
-
-msgid "Cancel subscription"
-msgstr "Отменить подписку"
-
-
-msgid "Personal account settings"
-msgstr "Настройки личного кабинета"
-
-msgid "Personal information"
-msgstr "Персональная информация"
-
-msgid "Photo"
-msgstr "Фото"
-
-msgid "Delete photo"
-msgstr "Удалить фото"
-
-msgid "Upload photo"
-msgstr "Выбрать фото"
-
-msgid "Personal website"
-msgstr "Личный вебсайт"
-
-msgid "About Me"
-msgstr "О себе"
-
-msgid "Confidentiality"
-msgstr "Конфиденциальность"
-
-msgid "Don't show real name"
-msgstr "Не показывать настоящее имя"
-
-msgid "Hide account from search"
-msgstr "Скрыть аккаунт из поиска"
-
-msgid "Hide age"
-msgstr "Скрыть возраст"
-
-msgid "Delete account"
-msgstr "Удалить аккаунт"
-
-
-#: templates/catalog/cassette.html:175
+#: templates/catalog/cassette.html:175 templates/users/collector.html:28
+#: templates/users/collectors.html:127 templates/users/user-profile.html:30
 msgid "Exchange"
 msgstr "Обмен"
 
-msgid "Change"
-msgstr "Обменять"
-
-
+#: templates/catalog/cassette.html:180
 msgid "Sell"
 msgstr "Продать"
 
-msgid "Sale"
-msgstr "Продажа"
-
-#: templates/catalog/cassette.html:183
+#: templates/catalog/cassette.html:183 templates/users/collector.html:81
 msgid "Add"
 msgstr "Добавить"
 
@@ -667,7 +567,7 @@ msgstr "Варианты"
 msgid "Release options"
 msgstr "Варианты выпуска"
 
-#: templates/catalog/category-detail.html:29
+#: templates/catalog/category-detail.html:29 templates/users/collectors.html:22
 msgid "Sort by"
 msgstr "Сортировать по"
 
@@ -705,16 +605,19 @@ msgstr "Или перетащите сюда"
 
 #. Translators: edit-cassete / Сохранить изменения
 #: templates/catalog/edit-cassette.html:261
+#: templates/users/user-settings.html:124
 msgid "Save"
 msgstr "Сохранить изменения"
 
 #. Translators: edit-cassete / Отменить изменения
 #: templates/catalog/edit-cassette.html:265
+#: templates/users/user-settings.html:127
 msgid "Cancel"
 msgstr "Отменить изменения"
 
 #. Translators: index / Коллекционеры
 #: templates/core/index.html:26 templates/includes/header.html:113
+#: templates/users/collectors.html:10 templates/users/collectors.html:13
 msgid "Collectors"
 msgstr "Коллекционеры"
 
@@ -734,18 +637,17 @@ msgid "Latest updates"
 msgstr "Последние обновления"
 
 #. Translators: index / Последние комментарии
-#: templates/core/index.html:105
+#: templates/core/index.html:107
 msgid "Latest comments"
 msgstr "Последние комментарии"
 
-
 #. Translators: index / подробнее
-#: templates/core/index.html:118
+#: templates/core/index.html:120
 msgid "more"
 msgstr "подробнее"
 
 #. Translators: index / Комментарий от
-#: templates/core/index.html:122
+#: templates/core/index.html:124
 msgid "Comment from"
 msgstr "Комментарий от"
 
@@ -783,25 +685,17 @@ msgid "Log in"
 msgstr "Войти"
 
 #. Translators: header / Регистрация
-#. Translators: Modal / Зарегистрируйтесь.
-#: templates/includes/header.html:76 templates/includes/modals.html:28
-#, fuzzy
-msgid "Sign In"
-msgstr "Войти"
-
-msgid "Sign up"
-msgstr "Зарегистрироваться"
-
+#: templates/includes/header.html:76 templates/users/signup.html:10
 msgid "Signup"
 msgstr "Регистрация"
 
-msgid "You logout"
-msgstr "Вы вышли"
-
-#: templates/includes/header.html:116
+#: templates/includes/header.html:116 templates/users/user-profile.html:9
 msgid "My lists"
 msgstr "Мои списки"
 
+#: templates/includes/header.html:121
+msgid "Add cassette"
+msgstr "Добавить кассету"
 
 #: templates/includes/header.html:128
 msgid "Help"
@@ -829,12 +723,14 @@ msgstr "или"
 
 #. Translators: Modal / Email
 #: templates/includes/modals.html:16 templates/includes/modals.html:48
+#: templates/users/user-settings.html:30 users/forms.py:15
 msgid "Email"
 msgstr ""
 
 #. Translators: Modal / Пароль
 #. Translators: Modal / Password
 #: templates/includes/modals.html:18 templates/includes/modals.html:52
+#: users/forms.py:17
 msgid "Password"
 msgstr "Пароль"
 
@@ -848,6 +744,12 @@ msgstr "Забыли пароль?"
 msgid "Don't have an account?"
 msgstr "Еще нет аккаунта?"
 
+#. Translators: Modal / Зарегистрируйтесь.
+#: templates/includes/modals.html:28 templates/users/signup.html:3
+#: templates/users/signup.html:32
+msgid "Sign up"
+msgstr "Зарегистрироваться"
+
 #. Translators: Modal / Регистрация
 #: templates/includes/modals.html:37
 msgid "Create Account"
@@ -855,19 +757,21 @@ msgstr "Регистрация"
 
 #. Translators: Modal / Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее
 #. ссылку для создания нового аккаунта.
-#: templates/includes/modals.html:40
+#: templates/includes/modals.html:40 templates/users/signup.html:12
 msgid ""
 "Please enter your email below and we will send a link to create a new "
 "account."
-msgstr "Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку для создания нового аккаунта"
+msgstr ""
+"Пожалуйста, введите вашу электронную почту ниже и мы отправим на нее ссылку "
+"для создания нового аккаунта"
 
 #. Translators: Modal / Username
-#: templates/includes/modals.html:50
+#: templates/includes/modals.html:50 users/forms.py:13
 msgid "Username"
 msgstr "Имя пользователя"
 
 #. Translators: Modal / Password repeat
-#: templates/includes/modals.html:54
+#: templates/includes/modals.html:54 users/forms.py:19
 msgid "Password repeat"
 msgstr "Повтор пароля"
 
@@ -880,6 +784,50 @@ msgstr "Подтвердить"
 #: templates/includes/modals.html:60
 msgid "Already have an account?"
 msgstr "Уже есть аккаунт?"
+
+#: templates/users/collector.html:9
+msgid "Lists"
+msgstr "Списки"
+
+#: templates/users/collector.html:35 templates/users/collectors.html:128
+#: templates/users/user-profile.html:37
+msgid "Sale"
+msgstr "Продажа"
+
+#: templates/users/collector.html:54 templates/users/collectors.html:124
+#: templates/users/user-profile.html:56
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: templates/users/collector.html:66 templates/users/user-profile.html:64
+#: templates/users/user-settings.html:48
+msgid "Language"
+msgstr "Язык"
+
+#: templates/users/collector.html:70 templates/users/user-profile.html:68
+#: templates/users/user-settings.html:56
+msgid "Birthday"
+msgstr "День рождения"
+
+#: templates/users/collector.html:75 templates/users/user-profile.html:73
+msgid "About user"
+msgstr "О пользователе"
+
+#: templates/users/collector.html:79
+msgid "Add user note"
+msgstr "Добавить заметку о пользователе"
+
+#: templates/users/collector.html:83
+msgid "Complain"
+msgstr "Пожаловаться"
+
+#: templates/users/collectors.html:18
+msgid "Enter the name"
+msgstr "Введите имя"
+
+#: templates/users/collectors.html:126
+msgid "Whishes"
+msgstr "Желания"
 
 #: templates/users/edit-password.html:14
 msgid "Please correct the error below."
@@ -895,35 +843,155 @@ msgid ""
 "password twice so we can verify you typed it in correctly."
 msgstr ""
 
+#: templates/users/google-signup.html:4
+msgid "Sign In"
+msgstr "Войти"
 
 #: templates/users/google-signup.html:11
-msgid ""
-"Connect {{\n"
-"                provider }}"
+#, python-format
+msgid "Connect %(provider)s"
 msgstr ""
 
-#: templates/users/google-signup.html:13
+#: templates/users/google-signup.html:12
 #, python-format
 msgid ""
 "You are about to\n"
 "                connect a new third party account from %(provider)s."
 msgstr ""
 
-#: templates/users/google-signup.html:16
+#: templates/users/google-signup.html:15
 #, python-format
 msgid "Sign In Via %(provider)s"
 msgstr ""
 
-#: templates/users/google-signup.html:18
+#: templates/users/google-signup.html:17
 #, python-format
 msgid ""
 "You are about to sign\n"
 "                in using a third party account from %(provider)s."
 msgstr ""
 
-#: templates/users/google-signup.html:25
+#: templates/users/google-signup.html:24
 msgid "Continue"
 msgstr ""
+
+#: templates/users/logged_out.html:9
+msgid "You logout"
+msgstr "Вы вышли"
+
+#: templates/users/user-profile.html:10
+msgid "Edit profile"
+msgstr "Редактировать профиль"
+
+#: templates/users/user-profile.html:11
+msgid "Print collection"
+msgstr "Распечатать коллекцию"
+
+#: templates/users/user-profile.html:80 templates/users/user-settings.html:83
+#: templates/users/user-settings.html:89
+msgid "Premium Subscription"
+msgstr "Премиум подписка"
+
+#: templates/users/user-profile.html:81 templates/users/user-settings.html:94
+msgid ""
+"We give you the opportunity to get all the benefits of a Premium "
+"subscription for free for 14 days."
+msgstr ""
+"Мы даем возможность получить все преимущества Премиум подписки бесплатно в "
+"течение 14 дней."
+
+#: templates/users/user-profile.html:82
+msgid "Start Free Trial"
+msgstr "Начать бесплатный пробный период"
+
+#: templates/users/user-settings.html:8
+msgid "Personal account settings"
+msgstr "Настройки личного кабинета"
+
+#: templates/users/user-settings.html:12
+msgid "Personal information"
+msgstr "Персональная информация"
+
+#: templates/users/user-settings.html:13
+msgid "Photo"
+msgstr "Фото"
+
+#: templates/users/user-settings.html:16
+msgid "Delete photo"
+msgstr "Удалить фото"
+
+#: templates/users/user-settings.html:20
+msgid "Upload photo"
+msgstr "Выбрать фото"
+
+#: templates/users/user-settings.html:25
+#| msgid "Forgot password?"
+msgid "Change password"
+msgstr "Забыли пароль?"
+
+#: templates/users/user-settings.html:66
+msgid "Personal website"
+msgstr "Личный вебсайт"
+
+#: templates/users/user-settings.html:75
+msgid "About Me"
+msgstr "О себе"
+
+#: templates/users/user-settings.html:85 templates/users/user-settings.html:91
+msgid ""
+"Premium subscription gives you the opportunity to enjoy several useful "
+"additional features."
+msgstr ""
+"Премиум подписка дает возможность пользоваться несколькими полезными "
+"дополнительными функциями."
+
+#: templates/users/user-settings.html:87
+msgid "Cancel subscription"
+msgstr "Отменить подписку"
+
+#: templates/users/user-settings.html:96
+msgid "Subscribe"
+msgstr "Оформить подписку"
+
+#: templates/users/user-settings.html:102
+msgid "Confidentiality"
+msgstr "Конфиденциальность"
+
+#: templates/users/user-settings.html:106
+msgid "Don't show real name"
+msgstr "Не показывать настоящее имя"
+
+#: templates/users/user-settings.html:110
+msgid "Hide account from search"
+msgstr "Скрыть аккаунт из поиска"
+
+#: templates/users/user-settings.html:114
+msgid "Hide age"
+msgstr "Скрыть возраст"
+
+#: templates/users/user-settings.html:117
+msgid "Delete account"
+msgstr "Удалить аккаунт"
+
+#: users/apps.py:8 users/models.py:53
+msgid "users"
+msgstr "пользователи"
+
+#: users/models.py:13
+msgid "countries"
+msgstr "страны"
+
+#: users/models.py:27
+msgid "Moderator"
+msgstr ""
+
+#: users/models.py:28
+msgid "Admin"
+msgstr ""
+
+#: users/models.py:52
+msgid "user"
+msgstr "пользователь"
 
 #: venv/lib/python3.10/site-packages/django/contrib/messages/apps.py:15
 msgid "Messages"
@@ -1546,6 +1614,9 @@ msgstr ""
 msgid "Currently"
 msgstr ""
 
+#: venv/lib/python3.10/site-packages/django/forms/widgets.py:441
+msgid "Change"
+msgstr "Обменять"
 
 #: venv/lib/python3.10/site-packages/django/forms/widgets.py:769
 msgid "Unknown"
@@ -2116,4 +2187,8 @@ msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/views/templates/default_urlconf.html:249
 msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: venv/lib/python3.10/site-packages/modeltranslation/widgets.py:24
+msgid "None"
 msgstr ""
