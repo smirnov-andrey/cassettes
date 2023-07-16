@@ -20,6 +20,28 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
+
+#:
+msgid "Search for Country by country name or id"
+msgstr "Поиск страны по наименованию или идентификатору"
+
+#:
+msgid "Search by id, title or slug"
+msgstr "Поиск по наименованию, идентификатору или текстовому идентификатору (slug)"
+
+#:
+msgid "Search for comment by id, user, cassette or comment text"
+msgstr "Поиск комментария по идентификатору, автору, кассете или тексту комментария"
+
+#:
+msgid "Search for category by id, title, slug, description or brands"
+msgstr "Поиск категории по идентификатору, заголовку, описанию, бренду или текстовому идентификатору (slug)"
+
+#:
+msgid "Search for brand by id, title, slug, description"
+msgstr "Поиск бренда по идентификатору, заголовку, описанию или текстовому идентификатору (slug)"
+
+
 #: catalog/apps.py:8
 msgid "catalog"
 msgstr "каталог"
