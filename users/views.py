@@ -84,7 +84,7 @@ class Collector(FormMixin, DetailView):
         return User.objects.get(id=self.kwargs['id'])
 
     def get_context_data(self, **kwargs):
-        feedbacks = CollectorFeedback.objects.filter(collector=self.get_object(), is_published=True)
+        feedbacks = CollectorFeedback.published_objects.filter(collector=self.get_object())
         context = super(Collector, self).get_context_data(**kwargs)
         context['feedbacks'] = feedbacks
         context['feedback_provided'] = self.request.user.is_anonymous or feedbacks.filter(user=self.request.user).exists() or self.request.user == self.object
@@ -92,8 +92,6 @@ class Collector(FormMixin, DetailView):
             initial={
                 'user': self.request.user,
                 'collector': self.object,
-                'rating_score': 3,
-                'feedback': 'ttttttt'
             }
         )
         return context

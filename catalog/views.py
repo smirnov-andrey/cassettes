@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext
+from django.utils.decorators import method_decorator
 from django.views.generic import (DetailView, ListView, CreateView,
                                   TemplateView, UpdateView, )
 from django.views.generic.edit import FormMixin
@@ -19,7 +21,7 @@ class CassetteCategoryListView(TemplateView):
     template_name = 'catalog/category-list.html'
 
     def get_context_data(self, **kwargs):
-        queryset = CassetteCategory.objects.filter(is_published=True)
+        queryset = CassetteCategory.published_objects.all()
         context = super().get_context_data(**kwargs)
         context['category_audio'] = queryset.filter(type=CassetteCategory.AUDIO)
         context['category_video'] = queryset.filter(type=CassetteCategory.VIDEO)
@@ -32,11 +34,11 @@ class CassetteCategoryDetailView(DetailView):
     template_name = 'catalog/category-detail.html'
 
     def get_object(self, queryset=None):
-        return CassetteCategory.objects.get(slug=self.kwargs['slug'])
+        return CassetteCategory.published_objects.get(slug=self.kwargs['slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['brand_list'] = CassetteBrand.objects.filter(cassettes__category=self.get_object()).distinct()
+        context['brand_list'] = CassetteBrand.published_objects.filter(cassettes__category=self.get_object()).distinct()
         return context
 
 
@@ -51,8 +53,8 @@ class CassetteCatalogBrandDetailView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CassetteCatalogBrandDetailView, self).get_context_data(**kwargs)
-        context['brand'] = CassetteBrand.objects.get(slug=self.kwargs['brand_slug'])
-        context['category'] = CassetteCategory.objects.get(slug=self.kwargs['slug'])
+        context['brand'] = CassetteBrand.published_objects.get(slug=self.kwargs['brand_slug'])
+        context['category'] = CassetteCategory.published_objects.get(slug=self.kwargs['slug'])
         return context
 
 
@@ -70,7 +72,7 @@ class CassetteBrandDetail(DetailView):
     context_object_name = 'brand'
 
     def get_object(self, queryset=None):
-        return CassetteBrand.objects.get(slug=self.kwargs['slug'])
+        return CassetteBrand.published_objects.get(slug=self.kwargs['slug'])
 
 
 class TechnologyListView(ListView):
@@ -94,7 +96,7 @@ class CassetteDetailView(FormMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CassetteDetailView, self).get_context_data(**kwargs)
-        context['comments'] = CassetteComment.objects.filter(cassette=self.get_object(), is_published=True)
+        context['comments'] = CassetteComment.published_objects.filter(cassette=self.get_object())
         context['form'] = CassetteCommentForm(
             initial={
                 'user': self.request.user,
@@ -103,13 +105,19 @@ class CassetteDetailView(FormMixin, DetailView):
         )
         return context
 
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        if request.POST.get('form_name') == 'comment':
+            form = self.get_form()
+            if form.is_valid():
+                return self.form_valid(form)
+            else:
+                return self.form_invalid(form)
+        if request.POST.get('form_name') == 'collection':
+            # if
+            print('collection')
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.save()
@@ -120,7 +128,6 @@ class CassetteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """Добавление кассеты"""
     model = Cassette
     form_class = CassetteCreateForm
-    # template_name = 'catalog/add-cassette.html'
     template_name = 'catalog/edit-cassette.html'
 
     def test_func(self):
@@ -162,8 +169,6 @@ class CassetteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             image_object.save()
         else:
             return self.render_to_response(self.get_context_data(form=form))
-        print(self.object)
-
         return super().form_valid(form)
 
 

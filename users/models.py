@@ -78,6 +78,11 @@ class User(AbstractUser):
         return self.role == User.MODERATOR
 
 
+class PublishModelManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=True)
+
+
 class CollectorFeedback(models.Model):
     """Отзывы о коллекционерах с оценкой для пользовательского рейтинга."""
     user = models.ForeignKey(
@@ -103,6 +108,9 @@ class CollectorFeedback(models.Model):
                                    verbose_name=_('Date of created'))
     updated = models.DateTimeField(auto_now=True, auto_now_add=False,
                                    verbose_name=_('Date of updated'))
+
+    objects = models.Manager()
+    published_objects = PublishModelManager()
 
     class Meta:
         constraints = [

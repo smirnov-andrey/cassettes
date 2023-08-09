@@ -7,6 +7,11 @@ from users.models import Country, User
 from pytils.translit import slugify
 
 
+class PublishModelManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=True)
+
+
 class BaseModel(models.Model):
     """Базовая модель"""
     title = models.CharField(max_length=255, verbose_name=_('Title'))
@@ -16,6 +21,9 @@ class BaseModel(models.Model):
                                    verbose_name=_('Date of created'))
     updated = models.DateTimeField(auto_now=True, auto_now_add=False,
                                    verbose_name=_('Date of updated'))
+
+    objects = models.Manager()
+    published_objects = PublishModelManager()
 
     def __str__(self):
         return self.title
@@ -225,6 +233,9 @@ class CassetteComment(models.Model):
     created = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name=_('Date of comment created'))
     updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name=_('Date of comment updated'))
 
+    objects = models.Manager()
+    published_objects = PublishModelManager()
+
     class Meta:
         ordering = ('-created',)
         verbose_name = _('Comment')
@@ -232,3 +243,66 @@ class CassetteComment(models.Model):
 
     def __str__(self):
         return f'{self.cassette} + {self.user}'
+
+#
+# class CollectionBaseModel(models.Model):
+#     POOR = 'poor'
+#     GOOD = 'good'
+#     VERY_GOOD = 'very_good'
+#     EXCELLENT = 'excellent'
+#     NEAR_MINT = 'near_mint'
+#     MINT = 'mint'
+#     CONDITIONS = (
+#         (POOR, _('Poor')),
+#         (GOOD, _('Good')),
+#         (VERY_GOOD, _('Very good')),
+#         (EXCELLENT, _('Excellent')),
+#         (NEAR_MINT, _('Near mint')),
+#         (MINT, _('Mint')),
+#     )
+#     user = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         verbose_name=_('User'),
+#         related_name="%(app_label)s_%(class)s_related",
+#         related_query_name="%(app_label)s_%(class)ss"
+#     )
+#     cassette = models.ForeignKey(
+#         Cassette,
+#         on_delete=models.CASCADE,
+#         verbose_name=_('Cassette'),
+#         related_name="%(app_label)s_%(class)s_related",
+#         related_query_name="%(app_label)s_%(class)ss"
+#     )
+#     type = models.CharField(max_length=9, choices=CONDITIONS)
+#     created = models.DateTimeField(auto_now=False, auto_now_add=True,
+#                                    verbose_name=_('Date of created'))
+#     updated = models.DateTimeField(auto_now=True, auto_now_add=False,
+#                                    verbose_name=_('Date of updated'))
+#
+#     class Meta:
+#         abstract = True
+#
+#
+# class PersonalCollection(CollectionBaseModel):
+#     class Meta(CollectionBaseModel.Meta):
+#         verbose_name = _('personal collection')
+#         verbose_name_plural = _('personal collections')
+#
+#
+# class WishlistCollection(CollectionBaseModel):
+#     class Meta(CollectionBaseModel.Meta):
+#         verbose_name = _('wishlist collection')
+#         verbose_name_plural = _('wishlist collections')
+#
+#
+# class ExchangeCollection(CollectionBaseModel):
+#     class Meta(CollectionBaseModel.Meta):
+#         verbose_name = _('exchange collection')
+#         verbose_name_plural = _('exchange collections')
+#
+#
+# class SellCollection(CollectionBaseModel):
+#     class Meta(CollectionBaseModel.Meta):
+#         verbose_name = _('sell collection')
+#         verbose_name_plural = _('sell collections')

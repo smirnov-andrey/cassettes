@@ -129,3 +129,9 @@ admin.site.register(CassetteSeller)
 admin.site.register(CassetteChanger)
 admin.site.register(CassettesImage)
 admin.site.register(CassetteComment, CassetteCommentAdmin)
+# admin.site.register(PersonalCollection)
+# admin.site.register(WishlistCollection)
+# admin.site.register(ExchangeCollection)
+# admin.site.register(SellCollection)
+
+
