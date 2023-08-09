@@ -2212,5 +2212,40 @@ msgid "Connect, get help, or contribute"
 msgstr ""
 
 #: venv/lib/python3.10/site-packages/modeltranslation/widgets.py:24
-msgid "None"
-msgstr ""
+msgid "Last collector's feedbacks"
+msgstr "Последние отзывы о коллекционере"
+
+msgid "Feedback from"
+msgstr "Отзыв от"
+
+msgid "Add feedback for the collector"
+msgstr "Оставьте отзыв о коллекционере"
+
+msgid "Feedback"
+msgstr "Отзыв"
+
+msgid "Rating score"
+msgstr "Оценка"
+
+msgid "rating score"
+msgstr "Оценка"
+
+msgid "Feedback with this User and Collector already exists"
+msgstr "Отзыв с этими пользователем и коллекционером уже существует"
+
+msgid "Feedback with matching User and Collector is not allowed"
+msgstr "Отзыв с совпадающими пользователем и коллекционером не допустимы"
+
+msgid "feedback"
+msgstr "отзыв"
+
+msgid "feedbacks"
+msgstr "отзывы"
+
+msgid "collector"
+msgstr "коллекционер"
+
+msgid "publish"
+msgstr "опубликовать"
+
+
