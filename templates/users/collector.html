@@ -52,7 +52,11 @@
                         <table class="table-info collector-user__table-info">
                             <tr>
                                 <td style="width: 90px;" class="table-info__name collector-user__table-name">{% translate "Rating" %}</td>
-                                <td class="table-info__value collector-user__table-value reyting">0</td>
+                                {% if object.rating %}
+                                    <td class="table-info__value collector-user__table-value reyting">{{ object.rating }}</td>
+                                {% else %}
+                                    <td class="table-info__value collector-user__table-value">-</td>
+                                {% endif %}
                             </tr>
                             <tr>
                                 <td class="table-info__name collector-user__table-name">{% translate "Country" %}</td>
@@ -75,15 +79,73 @@
                             <h4 class="collector-user__about-title">{% translate "About user" %}</h4>
                             <p class="collector-user__about-text">{{ object.bio }}</p>
                         </div>
-                        <div class="collector-user__note">
-                            <div class="collector-user__note-title">{% translate "Add user note" %}</div>
-                            <textarea class="textarea-cust collector-user__textarea"></textarea>
-                            <button class="btn btn_fill">{% translate "Add" %}</button>
-                        </div>
-                        <a class="collector-user__complain">{% translate "Complain" %}</a>
+                        {% if user.is_authenticated %}
+                            <div class="collector-user__note">
+                                <div class="collector-user__note-title">{% translate "Add user note" %}</div>
+                                <textarea class="textarea-cust collector-user__textarea"></textarea>
+                                <button class="btn btn_fill">{% translate "Add" %}</button>
+                            </div>
+                            <a class="collector-user__complain">{% translate "Complain" %}</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
+        {#    </section>#}
+        {#    <section class="comment-last">#}
+        <div class="container">
+        {% if not feedback_provided %}
+            <div class="settings__block">
+                <div class="collector-user__note-title">{% translate "Add feedback for the collector" %}</div>
+                {% if user.is_authenticated %}
+                    {#                    <p class="product__comments-text">Вы можете помочь улучшить наш каталог, добавив ваш комментарий.</p>#}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ feedback_form.non_form_errors }}
+                        {{ feedback_form.user.as_hidden }}
+                        {{ feedback_form.collector.as_hidden }}
+                        <table class="table__inputs">
+                            <tr>
+                                <td class="table__inputs-text settings__text">{{ feedback_form.rating_score.label }} *</td>
+                                <td class="table__inputs-value">
+                                    {{ feedback_form.rating_score.errors }}{{ feedback_form.rating_score }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table__inputs-text settings__text">{{ feedback_form.feedback.label }} *</td>
+                                <td class="table__inputs-value ">
+                                    {{ feedback_form.feedback.errors }}{{ feedback_form.feedback }}
+                                </td>
+                            </tr>
+                        </table>
+                        <button type="submit" value="Submit" class="product__comments-btn btn btn_fill">Оставить отзыв</button>
+                    </form>
+                {% else %}
+                    <p class="product__comments-text">Войдите или зарегистрируйтесь для того что бы оставить ваш отзыв о коллекционере.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="collector-user__list-title">{% translate "Last collector's feedbacks" %}</div>
+            <ul class="comment-last__list">
+                {% for feedback in feedbacks %}
+                    <li class="comment-last__item">
+                        <div class="comment-last__img collector-user__table-value reyting">{{ feedback.rating_score }}</div>
+                        <div class="comment-last__wrapper">
+                            <p class="comment-last__text">{{ feedback.feedback }}</p>
+                        </div>
+                        <div class="comment-last__author">
+                            <p class="comment-last__from">{% translate "Feedback from" %}</p>
+                            <div class="user ">
+                                <img src="{% if feedback.user.image %}{{ feedback.user.image.url }}{% else %}{% static 'img/avatar.jpg' %}{% endif %}" alt="" class="user__avatar">
+                                <div class="user__wrapper">
+                                    <h2 class="user__name">{{ feedback.user.first_name }} {{ feedback.user.last_name }}</h2>
+                                    <p class="user__nick">[{{ feedback.user.username }}]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </section>
 {% endblock %}

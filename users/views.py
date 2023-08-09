@@ -6,13 +6,15 @@ from django.utils.decorators import method_decorator
 
 # Импортируем CreateView, чтобы создать ему наследника
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
+from django.views.generic.edit import FormMixin
 
 # Функция reverse_lazy позволяет получить URL по параметрам функции path()
 # Берём, тоже пригодится
 from django.urls import reverse_lazy, reverse
 
 # Импортируем класс формы, чтобы сослаться на неё во view-классе
-from .forms import CreationForm, ProfileForm
+from .forms import CreationForm, ProfileForm, CollectorFeedbackForm
+from .models import CollectorFeedback
 
 from allauth.account.views import SignupView, LoginView, PasswordResetView
 
@@ -72,9 +74,44 @@ class Collectors(ListView):
     context_object_name = 'collector_list'
 
 
-class Collector(DetailView):
+class Collector(FormMixin, DetailView):
     model = User
     template_name = 'users/collector.html'
+    context_object_name = 'object'
+    form_class = CollectorFeedbackForm
 
     def get_object(self, queryset=None):
         return User.objects.get(id=self.kwargs['id'])
+
+    def get_context_data(self, **kwargs):
+        feedbacks = CollectorFeedback.objects.filter(collector=self.get_object(), is_published=True)
+        context = super(Collector, self).get_context_data(**kwargs)
+        context['feedbacks'] = feedbacks
+        context['feedback_provided'] = self.request.user.is_anonymous or feedbacks.filter(user=self.request.user).exists() or self.request.user == self.object
+        context['feedback_form'] = CollectorFeedbackForm(
+            initial={
+                'user': self.request.user,
+                'collector': self.object,
+                'rating_score': 3,
+                'feedback': 'ttttttt'
+            }
+        )
+        return context
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        # form.user = request.user
+        # form.collector = self.object
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super(Collector, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('users:collector', kwargs={'id': self.object.id})

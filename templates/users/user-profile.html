@@ -43,7 +43,7 @@
                 <div class="collector-user__info-wrapper">
                     {% if object.image %}
                         <img src="{{ object.image.url }}" alt="" class="collector-user__avatar">
-                        {% else %}
+                    {% else %}
                         <img src="{% static 'img/avatar.jpg' %}" alt="" class="collector-user__avatar">
                     {% endif %}
                     <div class="collector-user__info">
@@ -54,8 +54,11 @@
                         <table class="table-info collector-user__table-info">
                             <tr>
                                 <td style="width: 90px;" class="table-info__name collector-user__table-name">{% translate "Rating" %}</td>
-                                <td class="table-info__value collector-user__table-value reyting">0</td>
-                            </tr>
+                                {% if object.rating %}
+                                    <td class="table-info__value collector-user__table-value reyting">{{ object.rating }}</td>
+                                {% else %}
+                                    <td class="table-info__value collector-user__table-value">-</td>
+                                {% endif %}                            </tr>
                             <tr>
                                 <td class="table-info__name collector-user__table-name">{% translate "Country" %}</td>
                                 <td class="table-info__value collector-user__table-value">{{ object.country|default_if_none:'edit in profile' }}</td>
@@ -76,11 +79,11 @@
                     </div>
                 </div>
                 {% if not object.premium %}
-                <div class="collector-user__premium">
-                    <h3 class="collector-user__premium-title">{% translate "Premium Subscription" %}</h3>
-                    <p class="collector-user__premium-text">{% translate "We give you the opportunity to get all the benefits of a Premium subscription for free for 14 days." %}</p>
-                    <a href="#" class="collector-user__premium-link">{% translate "Start Free Trial" %}</a>
-                </div>
+                    <div class="collector-user__premium">
+                        <h3 class="collector-user__premium-title">{% translate "Premium Subscription" %}</h3>
+                        <p class="collector-user__premium-text">{% translate "We give you the opportunity to get all the benefits of a Premium subscription for free for 14 days." %}</p>
+                        <a href="#" class="collector-user__premium-link">{% translate "Start Free Trial" %}</a>
+                    </div>
                 {% endif %}
             </div>
         </div>

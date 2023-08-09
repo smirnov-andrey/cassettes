@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
+from .models import CollectorFeedback
+
 User = get_user_model()
 
 
@@ -46,4 +48,31 @@ class ProfileForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['country'].widget.attrs.update({'class': 'input-cust input-cust_fz14'})
         self.fields['language'].widget.attrs.update({'class': 'input-cust input-cust_fz14'})
+
+
+class CollectorFeedbackForm(forms.ModelForm):
+    rating_score = forms.IntegerField(
+        min_value=1,
+        max_value=5,
+        widget=forms.NumberInput(attrs={
+            'class': 'input-cust',
+            'placeholder': _('Rate collector'),
+        }),
+        label=_('Rating score')
+    )
+    feedback = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'textarea-cust',
+                'placeholder': _('Leave feedback'),
+                'rows': '2',
+            }
+        ),
+        label=_('Feedback')
+    )
+
+    class Meta:
+        model = CollectorFeedback
+        fields = ('user', 'collector', 'rating_score', 'feedback') #'user', 'collector',
+
 

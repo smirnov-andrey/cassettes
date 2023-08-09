@@ -30,7 +30,7 @@ class CassetteCreateForm(forms.ModelForm):
             'series': _('Series'),
             'tape_length': _('Tape length'),
             'type': _('Type'),
-            'year_release': _('Brand'),
+            'year_release': _('Year release'),
             'coil': _('Coil'),
             'slim_case': _('Slim case'),
             'comment': _('Comment'),
@@ -42,7 +42,7 @@ class CassetteCreateForm(forms.ModelForm):
             'series': forms.Select(attrs={'class': 'input-cust'}),
             'tape_length': forms.Select(attrs={'class': 'input-cust'}),
             'type': forms.Select(attrs={'class': 'input-cust'}),
-            'year_release': forms. NumberInput(attrs={'class': 'input-cust'}),
+            'year_release': forms.NumberInput(attrs={'class': 'input-cust'}),
             'coil': forms.CheckboxInput(attrs={
                 'class': 'checkbox-cust__input',
                 'name': 'parametrs',
@@ -56,7 +56,7 @@ class CassetteCreateForm(forms.ModelForm):
             'comment': forms.Textarea(attrs={
                 'class': 'textarea-cust',
                 'placeholder': _('Comment'),
-                'rows': '5',
+                'rows': '3',
             }),
         }
 
