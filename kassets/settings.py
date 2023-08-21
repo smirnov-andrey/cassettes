@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
     'catalog.apps.CatalogConfig',
+    'collection_management.apps.CollectionManagementConfig',
 
     'allauth',
     'allauth.account',

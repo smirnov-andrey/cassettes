@@ -128,32 +128,32 @@
                                     {% for price in object.prices.all %}
                                         <tr>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="poor"
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Poor"
                                                        id="condition-1" {% if not price.poor %}disabled{% endif %}>
                                                 <label for="condition-1">{% if price.poor %}{{ price.poor }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="good"
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Good"
                                                        id="condition-2" {% if not price.good %}disabled{% endif %}>
                                                 <label for="condition-2">{% if price.good %}{{ price.good }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="very_good"
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Very Good"
                                                        id="condition-3" {% if not price.very_good %}disabled{% endif %}>
                                                 <label for="condition-3">{% if price.very_good %}{{ price.very_good }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="excellent"
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Excellent"
                                                        id="condition-4" {% if not price.excellent %}disabled{% endif %}>
                                                 <label for="condition-4">{% if price.excellent %}{{ price.excellent }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="near_mint"
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Near Mint"
                                                        id="condition-5" {% if not price.near_mint %}disabled{% endif %}>
                                                 <label for="condition-5">{% if price.near_mint %}{{ price.near_mint }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="mint"
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Mint"
                                                        id="condition-6" {% if not price.mint %}disabled{% endif %}>
                                                 <label for="condition-6">{% if price.mint %}{{ price.mint }}{% else %}-{% endif %}</label>
                                             </td>
@@ -183,8 +183,12 @@
                                                    name="sell-collection" id="save-collection-4">
                                             <label for="save-collection-4">{% translate "Sell" %}</label>
                                         </div>
+                                        <div>
+                                            <label for="collection_price_input">{% translate "Price" %}</label>
+                                            <input type="number" name="collection_price" id="collection_price_input" min="1">
+                                        </div>
                                     </div>
-                                    <button type="submit" value="Submit" name="condition" class="btn btn_fill product__collection-btn">{% translate "Add" %}</button>
+                                    <button type="submit" value="Submit" class="btn btn_fill product__collection-btn">{% translate "Add" %}</button>
                                 {% else %}
                                     <p class="product__comments-text">Войдите или зарегистрируйтесь для того что бы добавить кассету в коллекцию, список желаний, обмена или продажи.</p>
                                 {% endif %}

@@ -7,6 +7,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import F, Q
 from django.utils.translation import gettext_lazy as _
 
+# from catalog.models import Cassette, Condition
+
 
 class Country(models.Model):
     title = models.CharField(max_length=200, verbose_name=_('country'))

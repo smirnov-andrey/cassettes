@@ -54,6 +54,11 @@ class Profile(DetailView):
         user = self.request.user
         return user
 
+    def get_context_data(self, **kwargs):
+        context = super(Profile, self).get_context_data(**kwargs)
+        context['feedbacks'] = CollectorFeedback.published_objects.filter(user=self.get_object())
+        return context
+
 
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):

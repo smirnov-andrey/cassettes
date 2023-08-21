@@ -11,31 +11,31 @@
                     <a href="#" class="collector-user__print">{% translate "Print collection" %}</a>
                     <ul class="tabs__list">
                         <li class="tabs__item">
-                            <a href="#" class="tabs__link">
+                            <a href="{% url 'lists:collection' collector_id=object.id %}" class="tabs__link">
                                 <img src="{% static '/img/collection.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Collection" %}</h4>
-                                <p class="tabs__count">0</p>
+                                <p class="tabs__count">{{ object.collections.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
-                            <a href="#" class="tabs__link">
+                            <a href="{% url 'lists:whishlist' collector_id=object.id %}" class="tabs__link">
                                 <img src="{% static 'img/magic-wand-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Wishlist" %}</h4>
-                                <p class="tabs__count">0</p>
+                                <p class="tabs__count">{{ object.whishlists.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
-                            <a href="#" class="tabs__link">
+                            <a href="{% url 'lists:exchange' collector_id=object.id %}" class="tabs__link">
                                 <img src="{% static 'img/exchange-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Exchange" %}</h4>
-                                <p class="tabs__count">0</p>
+                                <p class="tabs__count">{{ object.exchanges.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
-                            <a href="#" class="tabs__link">
+                            <a href="{% url 'lists:sale' collector_id=object.id %}" class="tabs__link">
                                 <img src="{% static 'img/shopping-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Sale" %}</h4>
-                                <p class="tabs__count">0</p>
+                                <p class="tabs__count">{{ object.sales.count }}</p>
                             </a>
                         </li>
                     </ul>
@@ -86,6 +86,31 @@
                     </div>
                 {% endif %}
             </div>
+        </div>
+    </section>
+    <section class="comment-last">
+        <div class="container">
+            <div class="collector-user__list-title">{% translate "My feedbacks" %}</div>
+            <ul class="comment-last__list">
+                {% for feedback in feedbacks %}
+                    <li class="comment-last__item">
+                        <div class="comment-last__img collector-user__table-value reyting">{{ feedback.rating_score }}</div>
+                        <div class="comment-last__wrapper">
+                            <p class="comment-last__text">{{ feedback.feedback }}</p>
+                        </div>
+                        <div class="comment-last__author">
+                            <p class="comment-last__from">{% translate "To collector" %}</p>
+                            <div class="user ">
+                                <img src="{% if feedback.collector.image %}{{ feedback.collector.image.url }}{% else %}{% static 'img/avatar.jpg' %}{% endif %}" alt="" class="user__avatar">
+                                <div class="user__wrapper">
+                                    <h2 class="user__name">{{ feedback.collector.first_name }} {{ feedback.collector.last_name }}</h2>
+                                    <p class="user__nick">[{{ feedback.collector.username }}]</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </section>
 {% endblock %}

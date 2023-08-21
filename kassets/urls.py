@@ -19,6 +19,7 @@ urlpatterns += i18n_patterns(
     # Django пойдёт искать его в django.contrib.auth
     path('auth/', include('django.contrib.auth.urls')),
     path('catalog/', include('catalog.urls')), path('', include('core.urls')),
+    path('lists/', include('collection_management.urls'))
 )
 
 if settings.DEBUG:

@@ -13,7 +13,8 @@ from catalog.forms import (CassetteCreateForm, CassetteImageForm,
                            CassetteCommentForm)
 from catalog.models import (CassetteCategory, CassetteBrand,
                             Cassette, CassetteTechnology, CassettesImage,
-                            CassettePrice, CassetteComment)
+                            CassettePrice, CassetteComment, Condition)
+from collection_management.models import Collection, Wishlist, Exchange, Sale
 
 
 class CassetteCategoryListView(TemplateView):
@@ -115,8 +116,47 @@ class CassetteDetailView(FormMixin, DetailView):
             else:
                 return self.form_invalid(form)
         if request.POST.get('form_name') == 'collection':
-            # if
-            print('collection')
+            if request.POST.get('condition'):
+                condition = get_object_or_404(
+                    Condition, name=request.POST.get('condition'))
+                if request.POST.get('my-collection'):
+                    collection_obj, _ = Collection.objects.get_or_create(
+                        user=request.user,
+                        cassette=self.object,
+                        condition=condition
+                    )
+                    if request.POST.get('collection_price'):
+                        collection_obj.price = int(request.POST.get('collection_price'))
+                        collection_obj.save()
+                if request.POST.get('wishlist-collection'):
+                    collection_obj, _ = Wishlist.objects.get_or_create(
+                        user=request.user,
+                        cassette=self.object,
+                        condition=condition
+                    )
+                    if request.POST.get('collection_price'):
+                        collection_obj.price = int(request.POST.get('collection_price'))
+                        collection_obj.save()
+                if request.POST.get('exchange-collection'):
+                    collection_obj, _ = Exchange.objects.get_or_create(
+                        user=request.user,
+                        cassette=self.object,
+                        condition=condition
+                    )
+                    if request.POST.get('collection_price'):
+                        collection_obj.price = int(request.POST.get('collection_price'))
+                        collection_obj.save()
+                if request.POST.get('sell-collection'):
+                    collection_obj, _ = Sale.objects.get_or_create(
+                        user=request.user,
+                        cassette=self.object,
+                        condition=condition
+                    )
+                    if request.POST.get('collection_price'):
+                        collection_obj.price = int(request.POST.get('collection_price'))
+                        collection_obj.save()
+
+
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):

@@ -306,3 +306,29 @@ class CassetteComment(models.Model):
 #     class Meta(CollectionBaseModel.Meta):
 #         verbose_name = _('sell collection')
 #         verbose_name_plural = _('sell collections')
+
+class Condition(models.Model):
+    """Tape conditions model."""
+    name = models.CharField(
+        verbose_name=_('name'),
+        unique=True,
+        max_length=10,
+    )
+    abbreviation = models.CharField(
+        verbose_name=_('abbreviation'),
+        blank=True, unique=True, max_length=5,)
+    description = models.CharField(
+        verbose_name=_('description'),
+        blank=True, max_length=5000,)
+    is_published = models.BooleanField(default=True,
+                                       verbose_name=_('publish'))
+
+    class Meta:
+        verbose_name = _('condition')
+        verbose_name_plural = _('conditions')
+
+    def __str__(self):
+        return f'{self.name} ({self.abbreviation})'
+
+
+

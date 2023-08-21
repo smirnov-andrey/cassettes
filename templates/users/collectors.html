@@ -148,10 +148,10 @@
                             <td>{{ collector.country }}</td>
                             <td>Локальный</td>
                             {% if collector.rating %}<td>{{ collector.rating }}</td>{% else %} <td>-</td> {% endif %}
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td>{{ collector.collections.count }}</td>
+                            <td>{{ collector.whishlists.count }}</td>
+                            <td>{{ collector.exchanges.count }}</td>
+                            <td>{{ collector.sales.count }}</td>
                         </tr>
                     {% endfor %}
                 </table>

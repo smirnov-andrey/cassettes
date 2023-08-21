@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+    <section class="collector-user section_breadcrumb" id="collector-user">
+        <div class="container">
+            <div class="collector-user__wrapper">
+                <div class="collector-user__list">
+                    <h4 class="collector-user__list-title">{% translate "Lists" %} {{ collector.first_name }} {{ collector.last_name }}</h4>
+                    <ul class="tabs__list">
+                        <li class="tabs__item active">
+                            <a href="{% url 'lists:collection' collector_id=collector.id %}" class="tabs__link">
+                                <img src="../static/img/collection.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">{% translate "Collection" %}</h4>
+                                <p class="tabs__count">{{ collector.collections.count }}</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="{% url 'lists:whishlist' collector_id=collector.id %}" class="tabs__link">
+                                <img src="../static/img/magic-wand-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">{% translate "Wishlist" %}</h4>
+                                <p class="tabs__count">{{ collector.whishlists.count }}</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="{% url 'lists:exchange' collector_id=collector.id %}" class="tabs__link">
+                                <img src="../static/img/exchange-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">{% translate "Exchange" %}</h4>
+                                <p class="tabs__count">{{ collector.exchanges.count }}</p>
+                            </a>
+                        </li>
+                        <li class="tabs__item">
+                            <a href="{% url 'lists:sale' collector_id=collector.id %}" class="tabs__link">
+                                <img src="../static/img/shopping-icon.svg" alt="" class="tabs__icon">
+                                <h4 class="tabs__name">{% translate "Sale" %}</h4>
+                                <p class="tabs__count">{{ collector.sales.count }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+               <div class="collector-user__collection">
+                    <div class="page__head">
+                        <h2 class="page__title collector-user__title">{% translate title %} {{ collector.first_name }} {{ collector.last_name }}</h2>
+                    </div>
+                    <div class="position collection__position">
+                        <div class="position__wrapper">
+                            <div class="position__search">
+                                <input type="text" placeholder="{% translate "Search" %}">
+                                <button type="submit" class="btn btn_fill">{% translate "Find" %}</button>
+                            </div>
+                            <div class="position__sorting">
+                                <p class="position__sort-text">{% translate "Sort by" %}:</p>
+                                <div class="position__sort-drop dropdown">
+                                    <button type="button" class="dropdown__select position__sort-select">По бренду</button>
+                                    <ul class="dropdown__options">
+                                        <li data-value="По бренду" class="active">{% translate "Brand" %}/li>
+                                        <li data-value="По бренду">По количеству кассет в каталоге</li>
+                                        <li data-value="По бренду">По количеству кассет в коллекции</li>
+                                        <li data-value="По бренду">По стране</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="sort-by-card">
+                            <li class="sort-by-card__item">
+                                <a href="#"> {% translate "Category" %}</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">{% translate "Brand" %}</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">{% translate "Year" %}</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">{% translate "Country" %}</a>
+                            </li>
+                            <li class="sort-by-card__item">
+                                <a href="#">{% translate "Market" %}</a>
+                            </li>
+                        </ul>
+                        <ul class="sort-by-word">
+                            <li class="sort-by-word__item">
+                                <a href="#">A</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">B</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">C</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">D</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">E</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">F</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">G</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">H</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">I</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">J</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">K</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">L</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">M</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">N</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">O</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">P</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">Q</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">R</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">S</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">T</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">U</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">V</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">W</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">X</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">Y</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">Z</a>
+                            </li>
+                            <li class="sort-by-word__item">
+                                <a href="#">123</a>
+                            </li>
+                        </ul>
+                        <table class="table-cust">
+                            <tr>
+                                <th style="width: 5%;"></th>
+                                <th style="width: 10%;">{% translate "Manufacturer" %}</th>
+                                <th style="width: 10%;">{% translate "Model" %}</th>
+                                <th style="width: 10%;">{% translate "Type of cassete" %}</th>
+                                <th style="width: 10%;">{% translate "Series" %}</th>
+                                <th style="width: 10%;">{% translate "Tape length" %}</th>
+                                <th style="width: 6%;">{% translate "Year" %}</th>
+                                <th style="width: 10%;">{% translate "Country" %}</th>
+                                <th style="width: 15%;">{% translate "Condition" %}</th>
+{#                                <th>Информация</th>#}
+                            </tr>
+                            {% for object in object_list %}
+                            <tr>
+                                <td>
+                                    {% if object.cassette.cassettesimage_set.first.package_front_side %}
+                                        <img src="{{ object.cassette.cassettesimage_set.first.package_front_side.url }}" alt="" class="product-img">
+                                    {% endif %}
+                                </td>
+                                <td class="table-cust__medium">{{ object.cassette.brand }}</td>
+                                <td>{{ object.cassette.model }}</td>
+                                <td>{{ object.cassette.type }}</td>
+                                <td>{{ object.cassette.series }}</td>
+                                <td>{{ object.cassette.tape_length }}</td>
+                                <td>{{ object.cassette.year_release }}</td>
+                                <td>{{ object.cassette.brand.country }}</td>
+                                <td>{{ object.condition}}</td>
+{#                                <td>#}
+{#                                    <p class="info correct">Требуется уточнение</p>#}
+{#                                </td>#}
+                            </tr>
+                            {% endfor %}
+{#                            <tr>#}
+{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+{#                                <td class="table-cust__medium">AGFA</td>#}
+{#                                <td>MS 500</td>#}
+{#                                <td>Тип I</td>#}
+{#                                <td>Super High Fidelity</td>#}
+{#                                <td>С - 90</td>#}
+{#                                <td>1973</td>#}
+{#                                <td>Австралия</td>#}
+{#                                <td>Новый Южный Уэльс</td>#}
+{#                                <td>#}
+{#                                    <p class="info not-info">Требуется информация</p>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+{#                                <td class="table-cust__medium">AGFA</td>#}
+{#                                <td>MS 600</td>#}
+{#                                <td>Тип I</td>#}
+{#                                <td>Another Series</td>#}
+{#                                <td>С - 90</td>#}
+{#                                <td>1973</td>#}
+{#                                <td>Австралия</td>#}
+{#                                <td>Новый Южный Уэльс</td>#}
+{#                                <td>#}
+{#                                    <p class="info data">Полные данные</p>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+{#                                <td class="table-cust__medium">AGFA</td>#}
+{#                                <td>MS 400</td>#}
+{#                                <td>Тип I</td>#}
+{#                                <td>Super High Fidelity</td>#}
+{#                                <td>С - 90</td>#}
+{#                                <td>1973</td>#}
+{#                                <td>Австралия</td>#}
+{#                                <td>Новый Южный Уэльс</td>#}
+{#                                <td>#}
+{#                                    <p class="info correct">Требуется уточнение</p>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+{#                                <td class="table-cust__medium">AGFA</td>#}
+{#                                <td>MS 500</td>#}
+{#                                <td>Тип I</td>#}
+{#                                <td>Super High Fidelity</td>#}
+{#                                <td>С - 90</td>#}
+{#                                <td>1973</td>#}
+{#                                <td>Австралия</td>#}
+{#                                <td>Новый Южный Уэльс</td>#}
+{#                                <td>#}
+{#                                    <p class="info not-info">Требуется информация</p>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+{#                                <td class="table-cust__medium">AGFA</td>#}
+{#                                <td>MS 600</td>#}
+{#                                <td>Тип I</td>#}
+{#                                <td>Another Series</td>#}
+{#                                <td>С - 90</td>#}
+{#                                <td>1973</td>#}
+{#                                <td>Австралия</td>#}
+{#                                <td>Новый Южный Уэльс</td>#}
+{#                                <td>#}
+{#                                    <p class="info data">Полные данные</p>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+{#                                <td class="table-cust__medium">AGFA</td>#}
+{#                                <td>MS 500</td>#}
+{#                                <td>Тип I</td>#}
+{#                                <td>Super High Fidelity</td>#}
+{#                                <td>С - 90</td>#}
+{#                                <td>1973</td>#}
+{#                                <td>Австралия</td>#}
+{#                                <td>Новый Южный Уэльс</td>#}
+{#                                <td>#}
+{#                                    <p class="info not-info">Требуется информация</p>#}
+{#                                </td>#}
+{#                            </tr>#}
+                        </table>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
