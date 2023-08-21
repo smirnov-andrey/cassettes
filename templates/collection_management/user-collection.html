@@ -10,28 +10,28 @@
                     <ul class="tabs__list">
                         <li class="tabs__item active">
                             <a href="{% url 'lists:collection' collector_id=collector.id %}" class="tabs__link">
-                                <img src="../static/img/collection.svg" alt="" class="tabs__icon">
+                                <img src="{% static '/img/collection.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Collection" %}</h4>
                                 <p class="tabs__count">{{ collector.collections.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
                             <a href="{% url 'lists:whishlist' collector_id=collector.id %}" class="tabs__link">
-                                <img src="../static/img/magic-wand-icon.svg" alt="" class="tabs__icon">
+                                <img src="{% static 'img/magic-wand-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Wishlist" %}</h4>
                                 <p class="tabs__count">{{ collector.whishlists.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
                             <a href="{% url 'lists:exchange' collector_id=collector.id %}" class="tabs__link">
-                                <img src="../static/img/exchange-icon.svg" alt="" class="tabs__icon">
+                                <img src="{% static 'img/exchange-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Exchange" %}</h4>
                                 <p class="tabs__count">{{ collector.exchanges.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
                             <a href="{% url 'lists:sale' collector_id=collector.id %}" class="tabs__link">
-                                <img src="../static/img/shopping-icon.svg" alt="" class="tabs__icon">
+                                <img src="{% static 'img/shopping-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Sale" %}</h4>
                                 <p class="tabs__count">{{ collector.sales.count }}</p>
                             </a>
