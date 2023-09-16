@@ -97,82 +97,86 @@ class CassetteDetailView(FormMixin, DetailView):
         return Cassette.objects.get(id=self.kwargs['id'])
 
     def get_context_data(self, **kwargs):
-        collection_queryset = self.request.user.collections.filter(
-            cassette=self.object
-        )
-        exchange_queryset = self.request.user.exchanges.filter(
-            cassette=self.object
-        )
-        sell_queryset = self.request.user.sales.filter(cassette=self.object)
-
-        condition_in_collection = []
-        for cassete in collection_queryset:
-            condition_in_collection.append(cassete.condition)
-        condition_in_exchange = []
-        for cassete in exchange_queryset:
-            condition_in_exchange.append(cassete.condition)
-        condition_in_sell = []
-        for cassete in sell_queryset:
-            condition_in_sell.append(cassete.condition)
         context = super(CassetteDetailView, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            collection_queryset = self.request.user.collections.filter(
+                cassette=self.object
+            )
+            exchange_queryset = self.request.user.exchanges.filter(
+                cassette=self.object
+            )
+            sell_queryset = self.request.user.sales.filter(cassette=self.object)
+
+            condition_in_collection = []
+            for cassete in collection_queryset:
+                condition_in_collection.append(cassete.condition)
+            condition_in_exchange = []
+            for cassete in exchange_queryset:
+                condition_in_exchange.append(cassete.condition)
+            condition_in_sell = []
+            for cassete in sell_queryset:
+                condition_in_sell.append(cassete.condition)
+
+            # -- collection
+            context['is_in_collection'] = collection_queryset.exists()
+            context['condition_in_collection'] = condition_in_collection
+            form_add_collection = AddCollectionForm(
+                initial={'user': self.request.user, 'cassette': self.object}
+            )
+            form_add_collection.fields['condition'].choices = (
+                [(condition.id, condition.__str__()) for condition
+                 in Condition.objects.all() if condition
+                 not in condition_in_collection]
+            )
+            context['form_add_collection'] = form_add_collection
+            collection_condition_choices = (
+                [(condition.id, condition.__str__()) for condition
+                 in condition_in_collection]
+            )
+            form_remove_list = RemoveListForm()
+            form_remove_list.fields['condition'].choices = collection_condition_choices
+            context['form_remove_list_collection'] = form_remove_list
+
+            # -- exchange
+            context['is_in_exchange'] = exchange_queryset.exists()
+            context['condition_in_exchange'] = condition_in_exchange
+            form_add_exchange = AddExchangeForm(
+                initial={'user': self.request.user, 'cassette': self.object}
+            )
+            form_add_exchange.fields['condition'].choices = collection_condition_choices
+            context['form_add_exchange'] = form_add_exchange
+            form_remove_exchange = RemoveListForm()
+            form_remove_exchange.fields['condition'].choices = (
+                [(condition.id, condition.__str__()) for condition
+                 in condition_in_exchange]
+            )
+            context['form_remove_exchange'] = form_remove_exchange
+
+            # -- sell
+            context['is_in_sell'] = sell_queryset.exists()
+            context['condition_in_sell'] = condition_in_sell
+            form_add_sell = AddSaleForm(
+                initial={'user': self.request.user, 'cassette': self.object}
+            )
+            form_add_sell.fields['condition'].choices = collection_condition_choices
+            context['form_add_sell'] = form_add_sell
+            form_remove_sell = RemoveListForm()
+            form_remove_sell.fields['condition'].choices = (
+                [(condition.id, condition.__str__()) for condition
+                 in condition_in_sell]
+            )
+            context['form_remove_sell'] = form_remove_sell
+
+            # -- wishlist
+            context['is_in_wishlist'] = self.request.user.wishlists.filter(
+                cassette=self.object).exists()
+
         # -- comments
-        context['comments'] = CassetteComment.published_objects.filter(cassette=self.get_object())
+        context['comments'] = CassetteComment.published_objects.filter(
+            cassette=self.get_object())
         context['form'] = CassetteCommentForm(
             initial={'user': self.request.user, 'cassette': self.object}
         )
-        # -- collection
-        context['is_in_collection'] = collection_queryset.exists()
-        context['condition_in_collection'] = condition_in_collection
-        form_add_collection = AddCollectionForm(
-            initial={'user': self.request.user, 'cassette': self.object}
-        )
-        form_add_collection.fields['condition'].choices = (
-            [(condition.id, condition.__str__()) for condition
-             in Condition.objects.all() if condition
-             not in condition_in_collection]
-        )
-        context['form_add_collection'] = form_add_collection
-        collection_condition_choices = (
-            [(condition.id, condition.__str__()) for condition
-             in condition_in_collection]
-        )
-        form_remove_list = RemoveListForm()
-        form_remove_list.fields['condition'].choices = collection_condition_choices
-        context['form_remove_list_collection'] = form_remove_list
-
-        # -- exchange
-        context['is_in_exchange'] = exchange_queryset.exists()
-        context['condition_in_exchange'] = condition_in_exchange
-        form_add_exchange = AddExchangeForm(
-            initial={'user': self.request.user, 'cassette': self.object}
-        )
-        form_add_exchange.fields['condition'].choices = collection_condition_choices
-        context['form_add_exchange'] = form_add_exchange
-        form_remove_exchange = RemoveListForm()
-        form_remove_exchange.fields['condition'].choices = (
-            [(condition.id, condition.__str__()) for condition
-             in condition_in_exchange]
-        )
-        context['form_remove_exchange'] = form_remove_exchange
-
-        # -- sell
-        context['is_in_sell'] = sell_queryset.exists()
-        context['condition_in_sell'] = condition_in_sell
-        form_add_sell = AddSaleForm(
-            initial={'user': self.request.user, 'cassette': self.object}
-        )
-        form_add_sell.fields['condition'].choices = collection_condition_choices
-        context['form_add_sell'] = form_add_sell
-        form_remove_sell = RemoveListForm()
-        form_remove_sell.fields['condition'].choices = (
-            [(condition.id, condition.__str__()) for condition
-             in condition_in_sell]
-        )
-        context['form_remove_sell'] = form_remove_sell
-
-        # -- wishlist
-        context['is_in_wishlist'] = self.request.user.wishlists.filter(
-            cassette=self.object).exists()
 
         return context
 
