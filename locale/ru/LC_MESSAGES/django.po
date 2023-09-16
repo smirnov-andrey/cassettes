@@ -559,7 +559,7 @@ msgstr ""
 
 #: templates/catalog/cassette.html:165
 msgid "My collection"
-msgstr "В мою коллекцию"
+msgstr "Моя коллекция"
 
 #: templates/catalog/cassette.html:170 templates/users/collector.html:21
 #: templates/users/user-profile.html:23
@@ -578,6 +578,35 @@ msgstr "Продать"
 #: templates/catalog/cassette.html:183 templates/users/collector.html:81
 msgid "Add"
 msgstr "Добавить"
+
+msgid "Add to My Collection"
+msgstr "Добавить в Мою коллекцию"
+
+msgid "Remove from My Collection"
+msgstr "Удалить из Моей коллекции"
+
+msgid "Add to Whishlist"
+msgstr "Добавить в Список желаний"
+
+msgid "Remove from Whishlist"
+msgstr "Удалить из Списка желаний"
+
+msgid "Add to Exchange"
+msgstr "Добавить в список Обмена"
+
+msgid "Remove from Exchange"
+msgstr "Удалить из списка обмена"
+
+msgid "Add to Sell"
+msgstr "Добавить в список Продажи"
+
+msgid "Remove from Sell"
+msgstr "Удалить из списка Продажи"
+
+msgid "Add cassette to collection to make it available for sale or exchange!"
+msgstr "Добавьте кассету в коллекцию, чтобы сделать ее доступной для продажи или обмена!"
+
+
 
 #. Translators: cassete / Варианты
 #: templates/catalog/cassette.html:228

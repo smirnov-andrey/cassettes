@@ -70,15 +70,7 @@
                                 </tr>
                                 <tr>
                                     <td class="table-info__name">{% translate "Tape length" %}</td>
-                                    <td class="table-info__value">{{ object.tape_length }}
-                                        <!-- <ul class="table-info__replase">
-                                             <li>54</li>
-                                             <li>60</li>
-                                             <li class="bold">90</li>
-                                             <li>54</li>
-                                             <li>54</li>
-                                         </ul> -->
-                                    </td>
+                                    <td class="table-info__value">{{ object.tape_length }}</td>
                                 </tr>
                                 <tr>
                                     <td class="table-info__name">{% translate "Type of cassete" %}</td>
@@ -97,7 +89,7 @@
                                     <td class="table-info__value"><a href="#">Locale</a></td>
                                 </tr>
                                 <tr>
-                                    <td class="table-info__name">{% translate "Barcode" %}/td>
+                                    <td class="table-info__name">{% translate "Barcode" %}</td>
                                     {% if object.cassettesimage_set.get.barcode %}<td class="table-info__value"><img src="{{object.cassettesimage_set.get.barcode.url}}" alt="">{% endif %}
                                     </td>
                                 </tr>
@@ -111,9 +103,9 @@
                             </table>
                         </div>
                         <div class="product__block product__collection">
-                            <form action="" method="POST">
-                                {% csrf_token %}
-                                <input name="form_name" value="collection" type="hidden"/>
+{#                            <form action="" method="POST">#}
+{#                                {% csrf_token %}#}
+{#                                <input name="form_name" value="collection" type="hidden"/>#}
                                 <h3 class="product__subtitle">{% translate "Collection" %}</h3>
                                 <h4 class="product__collection-title">{% translate "Condition" %}</h4>
                                 <table class="table-cust product__collection-table">
@@ -133,8 +125,8 @@
                                                 <label for="condition-1">{% if price.poor %}{{ price.poor }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
-                                                <input class="product__collection-radio" type="radio" name="condition" value="Good"
-                                                       id="condition-2" {% if not price.good %}disabled{% endif %}>
+                                                <input class="product__collection-radio" type="radio" name="condition" value="Good" id="condition-2"
+                                                       {% if not price.good %}disabled{% endif %}>
                                                 <label for="condition-2">{% if price.good %}{{ price.good }}{% else %}-{% endif %}</label>
                                             </td>
                                             <td>
@@ -162,37 +154,83 @@
 
                                 </table>
                                 {% if user.is_authenticated %}
+                                    {{ form_collection.non_field_errors }}
+
                                     <div class="product__collection-save">
                                         <div class="product__collection-wrapper-checkbox checkbox-cust">
-                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                                                   name="my-collection" id="save-collection-1">
-                                            <label for="save-collection-1">{% translate "My collection" %}</label>
+                                            {% if is_in_collection %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="my-collection" id="save-collection-1" onclick="return false;" checked>
+                                                <label for="save-collection-1">{% translate "My collection" %}: {{ condition_in_collection|join:", " }}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addMyCollection" >{% translate "Add" %}</a>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="removeMyCollection" >{% translate "Remove" %}</a>
+                                            {% else %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="my-collection" id="save-collection-1" onclick="return false;">
+                                                <label for="save-collection-1">{% translate "My collection" %}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addMyCollection" >{% translate "Add" %}</a>
+                                                {# <button type="button" class="btn btn_ghost btn-modal" data-modal="addMyCollection">{% translate "My collection" %}</button>#}
+                                            {% endif %}
                                         </div>
                                         <div class="product__collection-wrapper-checkbox checkbox-cust">
-                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                                                   name="wishlist-collection" id="save-collection-2">
-                                            <label for="save-collection-2">{% translate "Wishlist" %}</label>
+                                            {% if is_in_wishlist %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="my-collection" id="save-wishlist" onclick="return false;" checked>
+                                                <label for="save-wishlist">{% translate "Wishlist" %}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="removeWishlist" >{% translate "Remove" %}</a>
+                                            {% else %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="my-collection" id="save-wishlist" onclick="return false;">
+                                                <label for="save-wishlist">{% translate "Wishlist" %}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addWishlist" >{% translate "Add" %}</a>
+                                                {# <button type="button" class="btn btn_ghost btn-modal" data-modal="addWishlist">{% translate "Wishlist" %}</button>#}
+                                            {% endif %}
                                         </div>
                                         <div class="product__collection-wrapper-checkbox checkbox-cust">
-                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                                                   name="exchange-collection" id="save-collection-3">
-                                            <label for="save-collection-3">{% translate "Exchange" %}</label>
+                                            {% if is_in_exchange %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="exchange" id="exchange" onclick="return false;" checked>
+                                                <label for="exchange">{% translate "Exchange" %}: {{ condition_in_exchange|join:", " }}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addExchange" >{% translate "Add" %}</a>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="removeExchange" >{% translate "Remove" %}</a>
+                                            {% else %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="exchange" id="exchange" onclick="return false;">
+                                                <label for="exchange">{% translate "Exchange" %}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addExchange" >{% translate "Add" %}</a>
+                                            {% endif %}
                                         </div>
                                         <div class="product__collection-wrapper-checkbox checkbox-cust">
-                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"
-                                                   name="sell-collection" id="save-collection-4">
-                                            <label for="save-collection-4">{% translate "Sell" %}</label>
+                                            {% if is_in_sell %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="sell" id="sell" onclick="return false;" checked>
+                                                <label for="sell">{% translate "Sell" %}: {{ condition_in_sell|join:", " }}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addSell" >{% translate "Add" %}</a>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="removeSell" >{% translate "Remove" %}</a>
+                                            {% else %}
+                                                <input class="checkbox-cust__input product__collection-checkbox" type="checkbox" name="sell" id="sell" onclick="return false;">
+                                                <label for="sell">{% translate "Sell" %}</label>
+                                                <a href="#" class="btn-modal comment-last__more more" data-modal="addSell" >{% translate "Add" %}</a>
+                                            {% endif %}
                                         </div>
-                                        <div>
-                                            <label for="collection_price_input">{% translate "Price" %}</label>
-                                            <input type="number" name="collection_price" id="collection_price_input" min="1">
-                                        </div>
+{#                                        <div class="product__collection-wrapper-checkbox checkbox-cust">#}
+{#                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"#}
+{#                                                   name="wishlist-collection" id="save-collection-2">#}
+{#                                            <label for="save-collection-2">{% translate "Wishlist" %}</label>#}
+{#                                        </div>#}
+{#                                        <div class="product__collection-wrapper-checkbox checkbox-cust">#}
+{#                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"#}
+{#                                                   name="exchange-collection" id="save-collection-3">#}
+{#                                            <label for="save-collection-3">{% translate "Exchange" %}</label>#}
+{#                                        </div>#}
+{#                                        <div class="product__collection-wrapper-checkbox checkbox-cust">#}
+{#                                            <input class="checkbox-cust__input product__collection-checkbox" type="checkbox"#}
+{#                                                   name="sell-collection" id="save-collection-4">#}
+{#                                            <label for="save-collection-4">{% translate "Sell" %}</label>#}
+{#                                        </div>#}
+{#                                        <div>#}
+{#                                            <label for="collection_price_input">{% translate "Price" %}</label>#}
+{#                                            <input type="number" name="collection_price" id="collection_price_input" min="1">#}
+{#                                        </div>#}
                                     </div>
-                                    <button type="submit" value="Submit" class="btn btn_fill product__collection-btn">{% translate "Add" %}</button>
+{#                                    <button type="submit" value="Submit" class="btn btn_fill product__collection-btn">{% translate "Add" %}</button>#}
                                 {% else %}
                                     <p class="product__comments-text">Войдите или зарегистрируйтесь для того что бы добавить кассету в коллекцию, список желаний, обмена или продажи.</p>
                                 {% endif %}
-                            </form>
+{#                            </form>#}
                         </div>
 
                         <div class="product__block product__frequencies">

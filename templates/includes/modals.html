@@ -64,3 +64,371 @@
     </div>
 </div>
 <!--  -->
+<div class="modal" id="addMyCollection">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">{% translate "Add to My Collection" %}</h1>
+
+        <table class="table-info product__table-info">
+            <tr>
+                <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                <td class="table-info__value">{{ object.brand }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                <td class="table-info__value">{{ object.manufacturer }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Model" %}</td>
+                <td class="table-info__value">{{ object.model }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Series" %}</td>
+                <td class="table-info__value">{{ object.series }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Tape length" %}</td>
+                <td class="table-info__value">{{ object.tape_length }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                <td class="table-info__value">{{ object.type }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Release year" %}</td>
+                <td class="table-info__value">{{ object.year_release }}</td>
+            </tr>
+        </table>
+        <form action="#" class="modal__form" name="form_add_collection" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form_add_collection.non_form_errors }}
+            {{ form_add_collection }}
+            <input name="form_name" value="form_add_collection" type="hidden"/>
+            <button type="submit" class="btn modal__btn btn_fill">{% translate "Add" %}</button>
+        </form>
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="removeMyCollection">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">
+            {% translate "Remove from My Collection" %}
+        </h1>
+
+        <table class="table-info product__table-info">
+            <tr>
+                <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                <td class="table-info__value">{{ object.brand }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                <td class="table-info__value">{{ object.manufacturer }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Model" %}</td>
+                <td class="table-info__value">{{ object.model }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Series" %}</td>
+                <td class="table-info__value">{{ object.series }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Tape length" %}</td>
+                <td class="table-info__value">{{ object.tape_length }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                <td class="table-info__value">{{ object.type }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Release year" %}</td>
+                <td class="table-info__value">{{ object.year_release }}</td>
+            </tr>
+        </table>
+        <form action="#" class="modal__form" name="form_remove_collection" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form_remove_list_collection.non_form_errors }}
+            {{ form_remove_list_collection }}
+            <input name="form_name" value="form_remove_collection" type="hidden"/>
+            <button type="submit" class="btn modal__btn btn_fill">{% translate "Remove" %}</button>
+        </form>
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="addWishlist">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">{% translate "Add to Whishlist" %}</h1>
+
+        <table class="table-info product__table-info">
+            <tr>
+                <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                <td class="table-info__value">{{ object.brand }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                <td class="table-info__value">{{ object.manufacturer }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Model" %}</td>
+                <td class="table-info__value">{{ object.model }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Series" %}</td>
+                <td class="table-info__value">{{ object.series }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Tape length" %}</td>
+                <td class="table-info__value">{{ object.tape_length }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                <td class="table-info__value">{{ object.type }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Release year" %}</td>
+                <td class="table-info__value">{{ object.year_release }}</td>
+            </tr>
+        </table>
+        <form action="#" class="modal__form" name="form_add_wishlist" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input name="form_name" value="form_add_wishlist" type="hidden"/>
+            <button type="submit" class="btn modal__btn btn_fill">{% translate "Add" %}</button>
+        </form>
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="removeWishlist">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">
+            {% translate "Remove from Whishlist" %}
+        </h1>
+
+        <table class="table-info product__table-info">
+            <tr>
+                <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                <td class="table-info__value">{{ object.brand }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                <td class="table-info__value">{{ object.manufacturer }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Model" %}</td>
+                <td class="table-info__value">{{ object.model }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Series" %}</td>
+                <td class="table-info__value">{{ object.series }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Tape length" %}</td>
+                <td class="table-info__value">{{ object.tape_length }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                <td class="table-info__value">{{ object.type }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Release year" %}</td>
+                <td class="table-info__value">{{ object.year_release }}</td>
+            </tr>
+        </table>
+        <form action="#" class="modal__form" name="form_remove_wishlist" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input name="form_name" value="form_remove_wishlist" type="hidden"/>
+            <button type="submit" class="btn modal__btn btn_fill">{% translate "Remove" %}</button>
+        </form>
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="addExchange">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">{% translate "Add to Exchange" %}</h1>
+        {% if is_in_collection %}
+            <table class="table-info product__table-info">
+                <tr>
+                    <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                    <td class="table-info__value">{{ object.brand }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                    <td class="table-info__value">{{ object.manufacturer }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Model" %}</td>
+                    <td class="table-info__value">{{ object.model }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Series" %}</td>
+                    <td class="table-info__value">{{ object.series }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Tape length" %}</td>
+                    <td class="table-info__value">{{ object.tape_length }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                    <td class="table-info__value">{{ object.type }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Release year" %}</td>
+                    <td class="table-info__value">{{ object.year_release }}</td>
+                </tr>
+            </table>
+            <form action="#" class="modal__form" name="form_add_exchange" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form_add_exchange.non_form_errors }}
+                {{ form_add_exchange }}
+                <input name="form_name" value="form_add_exchange" type="hidden"/>
+                <button type="submit" class="btn modal__btn btn_fill">{% translate "Add" %}</button>
+            </form>
+        {% else %}
+            {% translate "Add cassette to collection to make it available for sale or exchange!" %}
+        {% endif %}
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="removeExchange">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">
+            {% translate "Remove from Exchange" %}
+        </h1>
+        <table class="table-info product__table-info">
+            <tr>
+                <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                <td class="table-info__value">{{ object.brand }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                <td class="table-info__value">{{ object.manufacturer }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Model" %}</td>
+                <td class="table-info__value">{{ object.model }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Series" %}</td>
+                <td class="table-info__value">{{ object.series }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Tape length" %}</td>
+                <td class="table-info__value">{{ object.tape_length }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                <td class="table-info__value">{{ object.type }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Release year" %}</td>
+                <td class="table-info__value">{{ object.year_release }}</td>
+            </tr>
+        </table>
+        <form action="#" class="modal__form" name="form_remove_exchange" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form_remove_exchange.non_form_errors }}
+            {{ form_remove_exchange }}
+            <input name="form_name" value="form_remove_exchange" type="hidden"/>
+            <button type="submit" class="btn modal__btn btn_fill">{% translate "Remove" %}</button>
+        </form>
+
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="addSell">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">{% translate "Add to Sell" %}</h1>
+        {% if is_in_collection %}
+            <table class="table-info product__table-info">
+                <tr>
+                    <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                    <td class="table-info__value">{{ object.brand }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                    <td class="table-info__value">{{ object.manufacturer }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Model" %}</td>
+                    <td class="table-info__value">{{ object.model }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Series" %}</td>
+                    <td class="table-info__value">{{ object.series }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Tape length" %}</td>
+                    <td class="table-info__value">{{ object.tape_length }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                    <td class="table-info__value">{{ object.type }}</td>
+                </tr>
+                <tr>
+                    <td class="table-info__name">{% translate "Release year" %}</td>
+                    <td class="table-info__value">{{ object.year_release }}</td>
+                </tr>
+            </table>
+            <form action="#" class="modal__form" name="form_add_sell" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form_add_sell.non_form_errors }}
+                {{ form_add_sell }}
+                <input name="form_name" value="form_add_sell" type="hidden"/>
+                <button type="submit" class="btn modal__btn btn_fill">{% translate "Add" %}</button>
+            </form>
+        {% else %}
+            {% translate "Add cassette to collection to make it available for sale or exchange!" %}
+        {% endif %}
+    </div>
+</div>
+<!--  -->
+<div class="modal" id="removeSell">
+    <div class="modal__wrapper">
+        <img src="{% static 'img/close-icon.svg' %}" alt="" class="modal__close">
+        <h1 class="modal__title">
+            {% translate "Remove from Sell" %}
+        </h1>
+        <table class="table-info product__table-info">
+            <tr>
+                <td style="width: 125px;" class="table-info__name">{% translate "Brand" %}</td>
+                <td class="table-info__value">{{ object.brand }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Manufacturer" %}</td>
+                <td class="table-info__value">{{ object.manufacturer }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Model" %}</td>
+                <td class="table-info__value">{{ object.model }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Series" %}</td>
+                <td class="table-info__value">{{ object.series }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Tape length" %}</td>
+                <td class="table-info__value">{{ object.tape_length }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Type of cassete" %}</td>
+                <td class="table-info__value">{{ object.type }}</td>
+            </tr>
+            <tr>
+                <td class="table-info__name">{% translate "Release year" %}</td>
+                <td class="table-info__value">{{ object.year_release }}</td>
+            </tr>
+        </table>
+        <form action="#" class="modal__form" name="form_remove_sell" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form_remove_sell.non_form_errors }}
+            {{ form_remove_sell }}
+            <input name="form_name" value="form_remove_sell" type="hidden"/>
+            <button type="submit" class="btn modal__btn btn_fill">{% translate "Remove" %}</button>
+        </form>
+    </div>
+</div>

@@ -19,7 +19,7 @@
                             <a href="{% url 'lists:whishlist' collector_id=collector.id %}" class="tabs__link">
                                 <img src="{% static 'img/magic-wand-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Wishlist" %}</h4>
-                                <p class="tabs__count">{{ collector.whishlists.count }}</p>
+                                <p class="tabs__count">{{ collector.wishlists.count }}</p>
                             </a>
                         </li>
                         <li class="tabs__item">
@@ -38,7 +38,7 @@
                         </li>
                     </ul>
                 </div>
-               <div class="collector-user__collection">
+                <div class="collector-user__collection">
                     <div class="page__head">
                         <h2 class="page__title collector-user__title">{% translate title %} {{ collector.first_name }} {{ collector.last_name }}</h2>
                     </div>
@@ -53,7 +53,7 @@
                                 <div class="position__sort-drop dropdown">
                                     <button type="button" class="dropdown__select position__sort-select">По бренду</button>
                                     <ul class="dropdown__options">
-                                        <li data-value="По бренду" class="active">{% translate "Brand" %}/li>
+                                        <li data-value="По бренду" class="active">{% translate "Brand" %}</li>
                                         <li data-value="По бренду">По количеству кассет в каталоге</li>
                                         <li data-value="По бренду">По количеству кассет в коллекции</li>
                                         <li data-value="По бренду">По стране</li>
@@ -171,116 +171,124 @@
                                 <th style="width: 10%;">{% translate "Tape length" %}</th>
                                 <th style="width: 6%;">{% translate "Year" %}</th>
                                 <th style="width: 10%;">{% translate "Country" %}</th>
-                                <th style="width: 15%;">{% translate "Condition" %}</th>
-{#                                <th>Информация</th>#}
+                                {% if show_condition == True %}<th style="width: 15%;">{% translate "Condition" %}</th>{% endif %}
+                                {#                                <th>Информация</th>#}
                             </tr>
                             {% for object in object_list %}
-                            <tr>
-                                <td>
-                                    {% if object.cassette.cassettesimage_set.first.package_front_side %}
-                                        <img src="{{ object.cassette.cassettesimage_set.first.package_front_side.url }}" alt="" class="product-img">
-                                    {% endif %}
-                                </td>
-                                <td class="table-cust__medium">{{ object.cassette.brand }}</td>
-                                <td>{{ object.cassette.model }}</td>
-                                <td>{{ object.cassette.type }}</td>
-                                <td>{{ object.cassette.series }}</td>
-                                <td>{{ object.cassette.tape_length }}</td>
-                                <td>{{ object.cassette.year_release }}</td>
-                                <td>{{ object.cassette.brand.country }}</td>
-                                <td>{{ object.condition}}</td>
-{#                                <td>#}
-{#                                    <p class="info correct">Требуется уточнение</p>#}
-{#                                </td>#}
-                            </tr>
+                                <tr>
+                                    <td><a href="{% url 'catalog:cassette' id=object.id %}">
+                                        {% if object.cassettesimage_set.first.package_front_side %}
+                                            <img src="{{ object.cassettesimage_set.first.package_front_side.url }}" alt="" class="product-img">
+                                        {% endif %}
+                                    </a></td>
+                                    <td class="table-cust__medium"><a href="{% url 'catalog:brand-detail' slug=object.brand.slug %}">
+                                        {{ object.brand }}
+                                    </a></td>
+                                    <td><a href="{% url 'catalog:cassette' id=object.id %}" >
+                                        {{ object.model }}
+                                    </a></td>
+                                    <td>{{ object.type }}</td>
+                                    <td>{{ object.series }}</td>
+                                    <td>{{ object.tape_length }}</td>
+                                    <td>{{ object.year_release }}</td>
+                                    <td>{{ object.brand.country }}</td>
+                                    {% if show_condition == True %}<td>
+                                        {% for condition in object.conditions %}
+                                            <p>{{ condition }}</p>
+                                        {% endfor %}
+                                    </td>{% endif %}
+                                    {#                                <td>#}
+                                    {#                                    <p class="info correct">Требуется уточнение</p>#}
+                                    {#                                </td>#}
+                                </tr>
                             {% endfor %}
-{#                            <tr>#}
-{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
-{#                                <td class="table-cust__medium">AGFA</td>#}
-{#                                <td>MS 500</td>#}
-{#                                <td>Тип I</td>#}
-{#                                <td>Super High Fidelity</td>#}
-{#                                <td>С - 90</td>#}
-{#                                <td>1973</td>#}
-{#                                <td>Австралия</td>#}
-{#                                <td>Новый Южный Уэльс</td>#}
-{#                                <td>#}
-{#                                    <p class="info not-info">Требуется информация</p>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
-{#                                <td class="table-cust__medium">AGFA</td>#}
-{#                                <td>MS 600</td>#}
-{#                                <td>Тип I</td>#}
-{#                                <td>Another Series</td>#}
-{#                                <td>С - 90</td>#}
-{#                                <td>1973</td>#}
-{#                                <td>Австралия</td>#}
-{#                                <td>Новый Южный Уэльс</td>#}
-{#                                <td>#}
-{#                                    <p class="info data">Полные данные</p>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
-{#                                <td class="table-cust__medium">AGFA</td>#}
-{#                                <td>MS 400</td>#}
-{#                                <td>Тип I</td>#}
-{#                                <td>Super High Fidelity</td>#}
-{#                                <td>С - 90</td>#}
-{#                                <td>1973</td>#}
-{#                                <td>Австралия</td>#}
-{#                                <td>Новый Южный Уэльс</td>#}
-{#                                <td>#}
-{#                                    <p class="info correct">Требуется уточнение</p>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
-{#                                <td class="table-cust__medium">AGFA</td>#}
-{#                                <td>MS 500</td>#}
-{#                                <td>Тип I</td>#}
-{#                                <td>Super High Fidelity</td>#}
-{#                                <td>С - 90</td>#}
-{#                                <td>1973</td>#}
-{#                                <td>Австралия</td>#}
-{#                                <td>Новый Южный Уэльс</td>#}
-{#                                <td>#}
-{#                                    <p class="info not-info">Требуется информация</p>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
-{#                                <td class="table-cust__medium">AGFA</td>#}
-{#                                <td>MS 600</td>#}
-{#                                <td>Тип I</td>#}
-{#                                <td>Another Series</td>#}
-{#                                <td>С - 90</td>#}
-{#                                <td>1973</td>#}
-{#                                <td>Австралия</td>#}
-{#                                <td>Новый Южный Уэльс</td>#}
-{#                                <td>#}
-{#                                    <p class="info data">Полные данные</p>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                            <tr>#}
-{#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
-{#                                <td class="table-cust__medium">AGFA</td>#}
-{#                                <td>MS 500</td>#}
-{#                                <td>Тип I</td>#}
-{#                                <td>Super High Fidelity</td>#}
-{#                                <td>С - 90</td>#}
-{#                                <td>1973</td>#}
-{#                                <td>Австралия</td>#}
-{#                                <td>Новый Южный Уэльс</td>#}
-{#                                <td>#}
-{#                                    <p class="info not-info">Требуется информация</p>#}
-{#                                </td>#}
-{#                            </tr>#}
+                            {#                            <tr>#}
+                            {#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+                            {#                                <td class="table-cust__medium">AGFA</td>#}
+                            {#                                <td>MS 500</td>#}
+                            {#                                <td>Тип I</td>#}
+                            {#                                <td>Super High Fidelity</td>#}
+                            {#                                <td>С - 90</td>#}
+                            {#                                <td>1973</td>#}
+                            {#                                <td>Австралия</td>#}
+                            {#                                <td>Новый Южный Уэльс</td>#}
+                            {#                                <td>#}
+                            {#                                    <p class="info not-info">Требуется информация</p>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
+                            {#                            <tr>#}
+                            {#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+                            {#                                <td class="table-cust__medium">AGFA</td>#}
+                            {#                                <td>MS 600</td>#}
+                            {#                                <td>Тип I</td>#}
+                            {#                                <td>Another Series</td>#}
+                            {#                                <td>С - 90</td>#}
+                            {#                                <td>1973</td>#}
+                            {#                                <td>Австралия</td>#}
+                            {#                                <td>Новый Южный Уэльс</td>#}
+                            {#                                <td>#}
+                            {#                                    <p class="info data">Полные данные</p>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
+                            {#                            <tr>#}
+                            {#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+                            {#                                <td class="table-cust__medium">AGFA</td>#}
+                            {#                                <td>MS 400</td>#}
+                            {#                                <td>Тип I</td>#}
+                            {#                                <td>Super High Fidelity</td>#}
+                            {#                                <td>С - 90</td>#}
+                            {#                                <td>1973</td>#}
+                            {#                                <td>Австралия</td>#}
+                            {#                                <td>Новый Южный Уэльс</td>#}
+                            {#                                <td>#}
+                            {#                                    <p class="info correct">Требуется уточнение</p>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
+                            {#                            <tr>#}
+                            {#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+                            {#                                <td class="table-cust__medium">AGFA</td>#}
+                            {#                                <td>MS 500</td>#}
+                            {#                                <td>Тип I</td>#}
+                            {#                                <td>Super High Fidelity</td>#}
+                            {#                                <td>С - 90</td>#}
+                            {#                                <td>1973</td>#}
+                            {#                                <td>Австралия</td>#}
+                            {#                                <td>Новый Южный Уэльс</td>#}
+                            {#                                <td>#}
+                            {#                                    <p class="info not-info">Требуется информация</p>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
+                            {#                            <tr>#}
+                            {#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+                            {#                                <td class="table-cust__medium">AGFA</td>#}
+                            {#                                <td>MS 600</td>#}
+                            {#                                <td>Тип I</td>#}
+                            {#                                <td>Another Series</td>#}
+                            {#                                <td>С - 90</td>#}
+                            {#                                <td>1973</td>#}
+                            {#                                <td>Австралия</td>#}
+                            {#                                <td>Новый Южный Уэльс</td>#}
+                            {#                                <td>#}
+                            {#                                    <p class="info data">Полные данные</p>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
+                            {#                            <tr>#}
+                            {#                                <td><img src="../static/img/cassette-4.jpg" alt="" class="product-img"></td>#}
+                            {#                                <td class="table-cust__medium">AGFA</td>#}
+                            {#                                <td>MS 500</td>#}
+                            {#                                <td>Тип I</td>#}
+                            {#                                <td>Super High Fidelity</td>#}
+                            {#                                <td>С - 90</td>#}
+                            {#                                <td>1973</td>#}
+                            {#                                <td>Австралия</td>#}
+                            {#                                <td>Новый Южный Уэльс</td>#}
+                            {#                                <td>#}
+                            {#                                    <p class="info not-info">Требуется информация</p>#}
+                            {#                                </td>#}
+                            {#                            </tr>#}
                         </table>
                     </div>
-               </div>
+                </div>
             </div>
         </div>
     </section>
