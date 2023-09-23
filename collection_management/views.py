@@ -74,7 +74,7 @@ class ExchangeListView(ListView):
         context["collector"] = get_object_or_404(
             User, id=self.kwargs['collector_id'])
         context['title'] = 'Exchange'
-        context['show_condition'] = True
+        context['show_condition'] = False
         return context
 
 
@@ -96,6 +96,6 @@ class SaleListView(ListView):
         context["collector"] = get_object_or_404(User,
             id=self.kwargs['collector_id'])
         context['title'] = 'Sale'
-        context['show_condition'] = True
+        context['show_condition'] = False
         return context
 
