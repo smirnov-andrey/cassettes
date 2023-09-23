@@ -10,8 +10,7 @@ from django.views.generic.edit import FormMixin
 
 from catalog.forms import (CassetteCreateForm, CassetteImageForm,
                            CassetteImageAddonsForm, CassettePriceForm,
-                           CassetteCommentForm, RemoveListForm,
-                           AddCollectionForm, AddExchangeForm, AddSaleForm)
+                           CassetteCommentForm)
 from catalog.models import (CassetteCategory, CassetteBrand,
                             Cassette, CassetteTechnology, CassettesImage,
                             CassettePrice, CassetteComment, Condition)
@@ -105,78 +104,24 @@ class CassetteDetailView(FormMixin, DetailView):
             exchange_queryset = self.request.user.exchanges.filter(
                 cassette=self.object
             )
-            sell_queryset = self.request.user.sales.filter(cassette=self.object)
+            sell_queryset = self.request.user.sales.filter(
+                cassette=self.object
+            )
 
             condition_in_collection = []
             for cassete in collection_queryset:
-                condition_in_collection.append(cassete.condition)
-            condition_in_exchange = []
-            for cassete in exchange_queryset:
-                condition_in_exchange.append(cassete.condition)
-            condition_in_sell = []
-            for cassete in sell_queryset:
-                condition_in_sell.append(cassete.condition)
-
-            # -- collection
+                condition_in_collection.append(cassete.condition.name)
+            context['conditions_set'] = condition_in_collection
             context['is_in_collection'] = collection_queryset.exists()
-            context['condition_in_collection'] = condition_in_collection
-            form_add_collection = AddCollectionForm(
-                initial={'user': self.request.user, 'cassette': self.object}
-            )
-            form_add_collection.fields['condition'].choices = (
-                [(condition.id, condition.__str__()) for condition
-                 in Condition.objects.all() if condition
-                 not in condition_in_collection]
-            )
-            context['form_add_collection'] = form_add_collection
-            collection_condition_choices = (
-                [(condition.id, condition.__str__()) for condition
-                 in condition_in_collection]
-            )
-            form_remove_list = RemoveListForm()
-            form_remove_list.fields['condition'].choices = collection_condition_choices
-            context['form_remove_list_collection'] = form_remove_list
-
-            # -- exchange
             context['is_in_exchange'] = exchange_queryset.exists()
-            context['condition_in_exchange'] = condition_in_exchange
-            form_add_exchange = AddExchangeForm(
-                initial={'user': self.request.user, 'cassette': self.object}
-            )
-            form_add_exchange.fields['condition'].choices = collection_condition_choices
-            context['form_add_exchange'] = form_add_exchange
-            form_remove_exchange = RemoveListForm()
-            form_remove_exchange.fields['condition'].choices = (
-                [(condition.id, condition.__str__()) for condition
-                 in condition_in_exchange]
-            )
-            context['form_remove_exchange'] = form_remove_exchange
-
-            # -- sell
             context['is_in_sell'] = sell_queryset.exists()
-            context['condition_in_sell'] = condition_in_sell
-            form_add_sell = AddSaleForm(
-                initial={'user': self.request.user, 'cassette': self.object}
-            )
-            form_add_sell.fields['condition'].choices = collection_condition_choices
-            context['form_add_sell'] = form_add_sell
-            form_remove_sell = RemoveListForm()
-            form_remove_sell.fields['condition'].choices = (
-                [(condition.id, condition.__str__()) for condition
-                 in condition_in_sell]
-            )
-            context['form_remove_sell'] = form_remove_sell
-
-            # -- wishlist
             context['is_in_wishlist'] = self.request.user.wishlists.filter(
                 cassette=self.object).exists()
-
-        # -- comments
+            context['form'] = CassetteCommentForm(
+                initial={'user': self.request.user, 'cassette': self.object}
+            )
         context['comments'] = CassetteComment.published_objects.filter(
             cassette=self.get_object())
-        context['form'] = CassetteCommentForm(
-            initial={'user': self.request.user, 'cassette': self.object}
-        )
 
         return context
 
@@ -184,62 +129,53 @@ class CassetteDetailView(FormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data()
-        # -- collection
-        if request.POST.get('form_name') == 'form_add_collection':
-            form = AddCollectionForm(request.POST)
-            if form.is_valid():
-                return self.form_valid(form)
+        checkboxes = request.POST.getlist('collections')
+        conditions = request.POST.getlist('conditions')
+        if (request.POST.get('form_name')
+                and request.POST.get('form_name') == 'collection'):
+            if conditions:
+                for condition in Condition.objects.all():
+                    if condition.name in conditions:
+                        obj, created = Collection.objects.get_or_create(
+                            user=self.request.user,
+                            cassette=self.object,
+                            condition=condition
+                        )
+                        if created and request.POST.get('price-collection'):
+                            obj.price = int(request.POST.get('price-collection'))
+                            obj.save()
+            Collection.objects.filter(
+                user=self.request.user,
+                cassette=self.object,
+            ).exclude(
+                condition__name__in=conditions
+            ).delete()
+        elif (request.POST.get('form_name')
+                and request.POST.get('form_name') == 'lists'):
+            if 'wishlist' in checkboxes:
+                Wishlist.objects.get_or_create(user=self.request.user,
+                                               cassette=self.object)
             else:
-                return self.form_invalid(form)
-        if request.POST.get('form_name') == 'form_remove_collection':
-            form = RemoveListForm(request.POST)
-            if form.is_valid():
-                request.user.collections.filter(
-                    cassette=self.object,
-                    condition=form.data['condition']
+                Wishlist.objects.filter(
+                    user=self.request.user,
+                    cassette=self.object
                 ).delete()
-            return redirect(self.object.get_absolute_url())
-        # -- exchange
-        if request.POST.get('form_name') == 'form_add_exchange':
-            form = AddExchangeForm(request.POST)
-            if form.is_valid():
-                return self.form_valid(form)
+            if 'exchange' in checkboxes:
+                Exchange.objects.get_or_create(user=self.request.user,
+                                               cassette=self.object)
             else:
-                return self.form_invalid(form)
-        if request.POST.get('form_name') == 'form_remove_exchange':
-            form = RemoveListForm(request.POST)
-            if form.is_valid():
-                request.user.exchanges.filter(
-                    cassette=self.object,
-                    condition=form.data['condition']
+                Exchange.objects.filter(
+                    user=self.request.user,
+                    cassette=self.object
                 ).delete()
-            return redirect(self.object.get_absolute_url())
-        # -- sell
-        if request.POST.get('form_name') == 'form_add_sell':
-            form = AddSaleForm(request.POST)
-            if form.is_valid():
-                return self.form_valid(form)
+            if 'sell' in checkboxes:
+                Sale.objects.get_or_create(user=self.request.user,
+                                           cassette=self.object)
             else:
-                return self.form_invalid(form)
-        if request.POST.get('form_name') == 'form_remove_sell':
-            form = RemoveListForm(request.POST)
-            if form.is_valid():
-                request.user.sales.filter(
-                    cassette=self.object,
-                    condition=form.data['condition']
+                Sale.objects.filter(
+                    user=self.request.user,
+                    cassette=self.object
                 ).delete()
-            return redirect(self.object.get_absolute_url())
-        if request.POST.get('form_name') == 'form_add_wishlist':
-            request.user.wishlists.get_or_create(cassette=self.object)
-            return redirect(self.object.get_absolute_url())
-        if request.POST.get('form_name') == 'form_remove_wishlist':
-            request.user.wishlists.filter(cassette=self.object).delete()
-            return redirect(self.object.get_absolute_url())
-
-
-
-
-
         if request.POST.get('form_name') == 'comment':
             form = self.form_class(request.POST)
             if form.is_valid():

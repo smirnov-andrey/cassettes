@@ -16,7 +16,9 @@ class CollectionListView(ListView):
             User,
             id=self.kwargs['collector_id']
         )
-        cassettes = Cassette.objects.filter(collections__user=collector)
+        cassettes = Cassette.objects.filter(
+            collections__user=collector
+        ).distinct()
         for cassette in cassettes:
             cassette.conditions = Condition.objects.filter(
                 collections__user=collector,

@@ -559,17 +559,17 @@ msgstr ""
 
 #: templates/catalog/cassette.html:165
 msgid "My collection"
-msgstr "Моя коллекция"
+msgstr "В мою коллекцию"
 
 #: templates/catalog/cassette.html:170 templates/users/collector.html:21
 #: templates/users/user-profile.html:23
 msgid "Wishlist"
-msgstr "Cписок желаний"
+msgstr "В список желаний"
 
 #: templates/catalog/cassette.html:175 templates/users/collector.html:28
 #: templates/users/collectors.html:127 templates/users/user-profile.html:30
 msgid "Exchange"
-msgstr "Обмен"
+msgstr "Обменять"
 
 #: templates/catalog/cassette.html:180
 msgid "Sell"

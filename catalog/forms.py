@@ -2,11 +2,8 @@ from django import forms
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
-
 from catalog.models import (Cassette, CassettesImage, CassettePrice,
                             CassetteComment)
-from collection_management.models import Collection, Exchange, Sale
-from catalog.models import Condition
 
 
 class CassetteCreateForm(forms.ModelForm):
@@ -170,62 +167,3 @@ class CassetteCommentForm(forms.ModelForm):
             'cassette': forms.HiddenInput(),
             'comment': forms.Textarea(attrs={'class': 'textarea-cust', 'name': 'comments-add', 'id': 'comments-add', 'placeholder': _('Leave a comment'), 'rows': '5'}),
         }
-
-
-class BaseAddListForm(forms.ModelForm):
-
-    class Meta:
-        abstract = True
-        # model = Collection
-        fields = ['user', 'cassette', 'condition', 'price']
-        labels = {
-            'condition': _('Condition'),
-            'price': _('Price'),
-        }
-        widgets = {
-            'user': forms.HiddenInput(),
-            'cassette': forms.HiddenInput(),
-            'condition': forms.Select(attrs={'class': 'input-cust'}),
-            'price': forms.NumberInput(attrs={'class': 'input-cust'}),
-        }
-
-
-class AddCollectionForm(BaseAddListForm):
-
-    class Meta(BaseAddListForm.Meta):
-        model = Collection
-
-
-class AddExchangeForm(BaseAddListForm):
-    class Meta(BaseAddListForm.Meta):
-        model = Exchange
-
-
-class AddSaleForm(BaseAddListForm):
-    class Meta(BaseAddListForm.Meta):
-        model = Sale
-
-
-class RemoveListForm(forms.Form):
-    condition = forms.ChoiceField(
-        label=_('Condition'),
-        widget=forms.Select(attrs={'class': 'input-cust'}),
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(RemoveListForm, self).__init__(*args, **kwargs)
-        self.fields['condition'].choices = self._get_choices()
-
-    @staticmethod
-    def _get_choices():
-        return [(condition.id, condition.__str__()) for condition
-                in Condition.objects.all()]
-
-
-    # class Meta:
-    #     labels = {
-    #         'condition': _('Condition'),
-    #     }
-    #     widgets = {
-    #         'condition': forms.Select(attrs={'class': 'input-cust'}),
-    #     }
