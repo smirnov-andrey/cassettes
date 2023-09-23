@@ -585,10 +585,10 @@ msgstr "Добавить в Мою коллекцию"
 msgid "Remove from My Collection"
 msgstr "Удалить из Моей коллекции"
 
-msgid "Add to Whishlist"
+msgid "Add to Wishlist"
 msgstr "Добавить в Список желаний"
 
-msgid "Remove from Whishlist"
+msgid "Remove from Wishlist"
 msgstr "Удалить из Списка желаний"
 
 msgid "Add to Exchange"

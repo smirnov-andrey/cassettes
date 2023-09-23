@@ -16,7 +16,7 @@
                             </a>
                         </li>
                         <li class="tabs__item">
-                            <a href="{% url 'lists:whishlist' collector_id=collector.id %}" class="tabs__link">
+                            <a href="{% url 'lists:wishlist' collector_id=collector.id %}" class="tabs__link">
                                 <img src="{% static 'img/magic-wand-icon.svg' %}" alt="" class="tabs__icon">
                                 <h4 class="tabs__name">{% translate "Wishlist" %}</h4>
                                 <p class="tabs__count">{{ collector.wishlists.count }}</p>
