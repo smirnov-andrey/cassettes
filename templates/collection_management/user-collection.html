@@ -178,7 +178,7 @@
                                 <tr>
                                     <td><a href="{% url 'catalog:cassette' id=object.id %}">
                                         {% if object.cassettesimage_set.first.package_front_side %}
-                                            <img src="{{ object.cassettesimage_set.first.package_front_side.url }}" alt="" class="product-img">
+                                            <img src="{{ object.cassettesimage_set.first.package_front_side.url }}" alt="" class="product-img" height="50">
                                         {% endif %}
                                     </a></td>
                                     <td class="table-cust__medium"><a href="{% url 'catalog:brand-detail' slug=object.brand.slug %}">
