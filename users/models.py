@@ -8,17 +8,18 @@ from django.db.models import F, Q
 from django.utils.translation import gettext_lazy as _
 
 # from catalog.models import Cassette, Condition
+from core.models import Country, Language
 
 
-class Country(models.Model):
-    title = models.CharField(max_length=200, verbose_name=_('country'))
-
-    class Meta:
-        verbose_name = _('country')
-        verbose_name_plural = _('countries')
-
-    def __str__(self):
-        return self.title
+# class Country(models.Model):
+#     title = models.CharField(max_length=200, verbose_name=_('country'))
+#
+#     class Meta:
+#         verbose_name = _('country')
+#         verbose_name_plural = _('countries')
+#
+#     def __str__(self):
+#         return self.title
 
 
 class UserManager(DjangoUserManager):
@@ -35,11 +36,11 @@ class User(AbstractUser):
         (MODERATOR, _('Moderator')),
         (ADMIN, _('Admin')),
     )
-    USER_LANGUAGE = (
-        ('English', 'Английский'),
-        ('Russian', 'Русский'),
-        ('Spanish', 'Испанский'),
-    )
+    # USER_LANGUAGE = (
+    #     ('English', 'Английский'),
+    #     ('Russian', 'Русский'),
+    #     ('Spanish', 'Испанский'),
+    # )
     role = models.CharField(
         # Можно лучше: Тут обычно задают 9, как в moderator.
         # Я бы закладывался сразу с запасом
@@ -51,9 +52,10 @@ class User(AbstractUser):
     image = models.ImageField(blank=True, upload_to='profile')
     bio = models.TextField(blank=True)
     born_date = models.DateField(blank=True, null=True)
-    country = models.ForeignKey(Country, blank=True, null=True, on_delete=models.CASCADE)
-    language = models.CharField(max_length=200, choices=USER_LANGUAGE)
-    website = models.CharField(max_length=200, blank=True)
+    country = models.ForeignKey(Country, related_name='users', blank=True, null=True, on_delete=models.PROTECT)
+    language = models.ForeignKey(Language, related_name='users', blank=True, null=True, on_delete=models.PROTECT)
+    # language = models.CharField(max_length=200, choices=USER_LANGUAGE)
+    website = models.URLField(blank=True)
 
     objects = UserManager()
 

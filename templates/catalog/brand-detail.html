@@ -153,24 +153,24 @@
                         {% for cassette in brand.cassettes.all %}
                             <tr>
                                 <td>
-                                    {% if cassette.image %}
+                                    {% if cassette.images.exists %}
                                         <a href="{% url 'catalog:cassette' id=cassette.id %}">
-                                            <img src="{{ cassette.image.url }}" alt="{{ cassette }}"
-                                                 class="product-img"></a>
+                                            <img src="{{ cassette.images.first.image.url }}" alt="{{ cassette }}"
+                                                 class="product-img" height=70></a>
                                     {% else %}
                                         <a href="{% url 'catalog:cassette' id=cassette.id %}">
-                                            <img src="{% static 'img/cassette-4.jpg' %}" alt="{{ cassette }}"
+                                            <img src="{% static 'img/photo-prev.jpg' %}" alt="{{ cassette }}"
                                                  class="product-img"></a>
                                     {% endif %}
                                 </td>
                                 <td class="table-cust__medium">{{ brand }}</td>
-                                <td>{{ cassette.model }}</td>
-                                <td>{{ cassette.type }}</td>
-                                <td>{{ cassette.series }}</td>
-                                <td>{{ cassette.tape_length }}</td>
-                                <td>{{ cassette.year_release }}</td>
-                                <td>{{ brand.country }}</td>
-                                <td>Locale</td>
+                                <td>{{ cassette.model.title }}</td>
+                                <td>{{ cassette.tape_type.title }}</td>
+                                <td>{{ cassette.serie.titles }}</td>
+                                <td>{{ cassette.tape_length.tape_length }}</td>
+                                <td>{% if cassette.year_release %}{{ cassette.year_release }}{% endif %}</td>
+                                <td>{{ cassette.country.title }}</td>
+                                <td>{% for market in cassette.markets.all %}<p>{{ market.title }}</p>{% endfor %}</td>
                                 <td>
                                     {% comment %}Translators: brand-detail / Требуется уточнение{% endcomment %}
                                     <p class="info correct">{% translate "Clarification required" %}</p>

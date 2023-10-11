@@ -7,7 +7,7 @@ class CategoryTranslationOptions(TranslationOptions):
     fields = ('title', )
 
 
-@register(CassetteCategory)
+@register(Category)
 class CategoryTranslationOptions(TranslationOptions):
     fields = ('description',)
 
@@ -19,6 +19,11 @@ class BrandTranslationOptions(TranslationOptions):
 
 @register(CassetteModel)
 class ModelTranslationOptions(TranslationOptions):
+    pass
+
+
+@register(CassetteSort)
+class SortTranslationOptions(TranslationOptions):
     pass
 
 

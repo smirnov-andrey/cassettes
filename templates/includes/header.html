@@ -86,11 +86,13 @@
             <div class="header-brands">
                 <ul class="header-brands__audio-cassette">
                     {% for category in category_list %}
-                        <li class="header-brands__item">
-                            <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="header-brands__link">
-                                <img src="{{ category.logo.url }}" alt="{{ category }}">
-                            </a>
-                        </li>
+                        {% if category.logo %}
+                            <li class="header-brands__item">
+                                <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="header-brands__link">
+                                    <img src="{{ category.logo.url }}" alt="{{ category }}">
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>

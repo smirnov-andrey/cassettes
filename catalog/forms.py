@@ -2,7 +2,7 @@ from django import forms
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
-from catalog.models import (Cassette, CassettesImage, CassettePrice,
+from catalog.models import (Cassette, Image, CassettePrice,
                             CassetteComment)
 
 
@@ -16,7 +16,7 @@ class CassetteCreateForm(forms.ModelForm):
             'model',
             'series',
             'tape_length',
-            'type',
+            'tape_type',
             'year_release',
             'coil',
             'slim_case',
@@ -28,7 +28,7 @@ class CassetteCreateForm(forms.ModelForm):
             'model': _('Model'),
             'series': _('Series'),
             'tape_length': _('Tape length'),
-            'type': _('Type'),
+            'tape_type': _('Type'),
             'year_release': _('Year release'),
             'coil': _('Coil'),
             'slim_case': _('Slim case'),
@@ -40,7 +40,7 @@ class CassetteCreateForm(forms.ModelForm):
             'model': forms.Select(attrs={'class': 'input-cust'}),
             'series': forms.Select(attrs={'class': 'input-cust'}),
             'tape_length': forms.Select(attrs={'class': 'input-cust'}),
-            'type': forms.Select(attrs={'class': 'input-cust'}),
+            'tape_type': forms.Select(attrs={'class': 'input-cust'}),
             'year_release': forms.NumberInput(attrs={'class': 'input-cust'}),
             'coil': forms.CheckboxInput(attrs={
                 'class': 'checkbox-cust__input',
@@ -60,38 +60,68 @@ class CassetteCreateForm(forms.ModelForm):
         }
 
 
-class CassetteImageForm(forms.ModelForm):
+# class CassetteImageForm(forms.ModelForm):
+#     """Форма добавления изображений"""
+#     class Meta:
+#         model = CassettesImage
+#         fields = [
+#             'package_front_side',
+#             'package_back_side',
+#             'package_end_side',
+#             'box_front_side',
+#             'box_back_side',
+#             'description_one',
+#             'description_two',
+#             'item_side_a',
+#             'item_side_b',
+#             'box_general_view',
+#             'item_general_view',
+#             'general_view',
+#         ]
+#         labels = {
+#             'package_front_side': _('Front side of the package'),
+#             'package_back_side': _('Back side of the package'),
+#             'package_end_side': _('End side'),
+#             'box_front_side': _('Front side of the box'),
+#             'box_back_side': _('Back side of the box'),
+#             'description_one': _('Description 1'),
+#             'description_two': _('Description 2'),
+#             'item_side_a': _('Item (Side A)'),
+#             'item_side_b': _('Item (Side B)'),
+#             'box_general_view': _('General view (Box)'),
+#             'item_general_view': _('General view (Item)'),
+#             'general_view': _('General view'),
+#         }
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         for field_name, field in self.fields.items():
+#             field.widget.attrs['class'] = 'invisible add-photo__inputChange'
+#
+#
+# class CassetteImageAddonsForm(forms.ModelForm):
+#     """Форма добавления изображений"""
+#     class Meta:
+#         model = CassettesImage
+#         fields = [
+#             'frequency_response',
+#             'barcode'
+#         ]
+#         labels = {
+#             'frequency_response': _('Frequency Response'),
+#             'barcode': _('Barcode'), #'Добавить штрихкод'
+#         }
+#
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         for field_name, field in self.fields.items():
+#             field.widget.attrs['class'] = 'fileInput invisible'
+
+class ImageForm(forms.ModelForm):
     """Форма добавления изображений"""
     class Meta:
-        model = CassettesImage
-        fields = [
-            'package_front_side',
-            'package_back_side',
-            'package_end_side',
-            'box_front_side',
-            'box_back_side',
-            'description_one',
-            'description_two',
-            'item_side_a',
-            'item_side_b',
-            'box_general_view',
-            'item_general_view',
-            'general_view',
-        ]
-        labels = {
-            'package_front_side': _('Front side of the package'),
-            'package_back_side': _('Back side of the package'),
-            'package_end_side': _('End side'),
-            'box_front_side': _('Front side of the box'),
-            'box_back_side': _('Back side of the box'),
-            'description_one': _('Description 1'),
-            'description_two': _('Description 2'),
-            'item_side_a': _('Item (Side A)'),
-            'item_side_b': _('Item (Side B)'),
-            'box_general_view': _('General view (Box)'),
-            'item_general_view': _('General view (Item)'),
-            'general_view': _('General view'),
-        }
+        model = Image
+        fields = '__all__'#('image', )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -99,23 +129,10 @@ class CassetteImageForm(forms.ModelForm):
             field.widget.attrs['class'] = 'invisible add-photo__inputChange'
 
 
-class CassetteImageAddonsForm(forms.ModelForm):
-    """Форма добавления изображений"""
-    class Meta:
-        model = CassettesImage
-        fields = [
-            'frequency_response',
-            'barcode'
-        ]
-        labels = {
-            'frequency_response': _('Frequency Response'),
-            'barcode': _('Barcode'), #'Добавить штрихкод'
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'fileInput invisible'
+ImageFormSet = forms.models.inlineformset_factory(
+    Cassette, Image, form=ImageForm, max_num=12, validate_max=True,
+    extra=12, can_delete=True, can_delete_extra=True, can_order=True,
+)
 
 
 class CassettePriceForm(forms.ModelForm):

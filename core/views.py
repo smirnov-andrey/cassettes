@@ -1,18 +1,26 @@
-from django.db.models import F
+from django.db.models import F, Count
 from django.shortcuts import render
 
-from catalog.models import CassetteCategory, Cassette, CassetteComment
+from catalog.models import Category, Cassette, CassetteComment
 from users.models import User
 
 
 def homepage(request):
-    queryset = CassetteCategory.objects.filter(is_published=True, is_published_to_home=True)
-
+    queryset = Category.objects.annotate(
+        cassette_count=Count('cassettes'),
+    ).filter(
+        is_published=True,
+        is_published_to_home=True
+    )
     context = {
         'collector_list': User.objects.order_by(F('rating').desc(nulls_last=True))[:5],
-        'cassette_list': Cassette.objects.all()[:7],
-        'category_audio': queryset.filter(type=CassetteCategory.AUDIO),
-        'category_video': queryset.filter(type=CassetteCategory.VIDEO),
+        'cassette_list': Cassette.objects.select_related(
+            'brand', 'series', 'category'
+        ).prefetch_related(
+            'images'
+        ).all()[:7],
+        'category_audio': queryset.filter(type=Category.AUDIO),
+        'category_video': queryset.filter(type=Category.VIDEO),
         'comment_list': CassetteComment.objects.filter(is_published=True)[:10],
     }
     return render(request, 'core/index.html', context)

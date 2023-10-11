@@ -12,6 +12,16 @@ def addclass(field, css):
     return field.as_widget(attrs={'class': css})
 
 
+@register.filter
+def image_cover(queryset):
+    if queryset.exists():
+        if queryset.filter(is_cover=True).exists():
+            return queryset.filter(is_cover=True).first()
+        else:
+            return queryset.order_by('view').first()
+    return None
+
+
 @register.simple_tag
 def cassettes_count(category, brand):
     return Cassette.objects.filter(category_id=category, brand=brand).count()

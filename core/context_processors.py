@@ -1,5 +1,5 @@
-from catalog.models import CassetteCategory
+from catalog.models import Category
 
 
 def categories(request):
-    return {'category_list': CassetteCategory.objects.all()}
+    return {'category_list': Category.objects.all()}

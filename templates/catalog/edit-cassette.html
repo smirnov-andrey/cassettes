@@ -204,23 +204,47 @@
             {% comment %}Translators: edit-cassete / Загрузить фото{% endcomment %}
               <p class="settings__title-block">{% translate "Upload a photo" %}</p>
               <div class="add-photo__wrapper">
-                {{ cassette_image_form.non_form_errors }}
-                {% for field in cassette_image_form %}
-                  <div class="add-photo">
-                    <p class="add-photo__text">{{ field.label }}</p>
-                    {% if not field.value %}{{ field }}{% endif %}
-                    {{ field.errors }}
-                    <img src="" alt="img" class="add-photo-image">
-                    {% if field.value %}
-                      <label class="add-photo__input" for="{{ field.id_for_label }}" style="background: url({{ field.value.url }}) no-repeat center center / contain;"></label>
-                    {% else%}
-                      <label class="add-photo__input add-photo__input_plus" for="{{ field.id_for_label }}" style="background: url({% static 'img/photo-prev.jpg' %}) no-repeat center center / contain;"></label>
-                    {% endif %}
-                    <span class="add-photo-delete">
+              {{ imageformset.management_form }}
+                  {% for form in imageformset %}
+
+                      <div class="add-photo">
+                          <p class="add-photo__text">{{ field.label }}</p>
+                          {% if not form.image.value %}{{ form.image }}{% endif %}
+                          {{ field.errors }}
+
+                          <img src="" alt="img" class="add-photo-image">
+                          {% if form.image.value %}
+                              <label class="add-photo__input" for="{{ form.image.id_for_label }}" style="background: url({{ form.image.value.url }}) no-repeat center center / contain;"></label>
+                          {% else%}
+                              <label class="add-photo__input add-photo__input_plus" for="{{ form.image.id_for_label }}" style="background: url({% static 'img/photo-prev.jpg' %}) no-repeat center center / contain;"></label>
+                          {% endif %}
+                          <span class="add-photo-delete">
                       <img src="{% static 'img/delete-photo.svg' %}" alt="">
                     </span>
-                  </div>
-                {% endfor %}
+                      </div>
+{#                      {{ form }}#}
+                  {% endfor %}
+
+
+{#                {{ cassette_image_form.non_form_errors }}#}
+{#                {% for field in cassette_image_form %}#}
+{#                  <div class="add-photo">#}
+{#                    <p class="add-photo__text">{{ field.label }}</p>#}
+{#                    {% if not field.value %}{{ field }}{% endif %}#}
+{#                    {{ field.errors }}#}
+{#                    <img src="" alt="img" class="add-photo-image">#}
+{#                    {% if field.value %}#}
+{#                      <label class="add-photo__input" for="{{ field.id_for_label }}" style="background: url({{ field.value.url }}) no-repeat center center / contain;"></label>#}
+{#                    {% else%}#}
+{#                      <label class="add-photo__input add-photo__input_plus" for="{{ field.id_for_label }}" style="background: url({% static 'img/photo-prev.jpg' %}) no-repeat center center / contain;"></label>#}
+{#                    {% endif %}#}
+{#                    <span class="add-photo-delete">#}
+{#                      <img src="{% static 'img/delete-photo.svg' %}" alt="">#}
+{#                    </span>#}
+{#                  </div>#}
+{#                {% endfor %}#}
+
+
               </div>
               <div class="settings__block">
               {% comment %}Translators: edit-cassete / Дополнительные данные<{% endcomment %}

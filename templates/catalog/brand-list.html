@@ -148,16 +148,17 @@
                                         <td class="table-cust__medium"><a
                                                 href="{% url 'catalog:brand-detail' slug=brand.slug %}">{{ brand }}</a>
                                         </td>
-                                        <td>{{ brand.cassettes.count }}</td>
+                                        <td>{{ brand.cassette_count }}</td>
                                         <td>
-                                            {% if brand.cassette_year.min and brand.cassette_year.min %}
-                                                {{ brand.cassette_year.min }} - {{ brand.cassette_year.max }}
+                                            {% if brand.year_min and brand.year_max %}
+                                                {{ brand.year_min }} - {{ brand.year_max }}
                                             {% else %}
 
                                             {% endif %}
                                         </td>
+
                                         <td>0</td>
-                                        <td>{{ brand.country }}</td>
+                                        <td>{% if brand.country %}{{ brand.country }}{% endif %}</td>
                                     </tr>
                                 {% endfor %}
                             </table>

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
     'collection_management.apps.CollectionManagementConfig',
 
+    # 'debug_toolbar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'kassets.urls'
@@ -170,6 +172,10 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# INTERNAL_IPS = [
+#     '127.0.0.1',
+# ]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -212,3 +218,11 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+if os.getenv('SENTRY_MONITORING', default='False') == 'True':
+    import sentry_sdk
+    sentry_sdk.init(
+        dsn="https://22ed15acbce936cf0ccec7aa7e7eeedd@o4504544276840448.ingest.sentry.io/4506033574313984",
+        traces_sample_rate=1.0,
+        profiles_sample_rate=1.0,
+    )

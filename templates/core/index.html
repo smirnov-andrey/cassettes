@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load user_filters %}
 {% block content %}
 
     <section class="catalog" id="catalog">
@@ -52,11 +53,13 @@
                     {% for category in category_audio %}
                         <li class="categories__item">
                             <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
-                                <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                                {% if category.image %}
+                                    <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                                {% endif %}
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
                                     {% comment %}Translators: index / Объявлений{% endcomment %}
-                                    <p class="categories__ads-count">{{ category.cassettes.count }} {% translate "offers" %}</p>
+                                    <p class="categories__ads-count">{{ category.cassette_count }} {% translate "offers" %}</p>
                                 </div>
                             </a>
                         </li>
@@ -71,7 +74,7 @@
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
                                     {% comment %}Translators: index / Объявлений{% endcomment %}
-                                    <p class="categories__ads-count">{{ category.cassettes.count }} {% translate "offers" %}</p>
+                                    <p class="categories__ads-count">{{ category.cassette_count}} {% translate "offers" %}</p>
                                 </div>
                             </a>
                         </li>
@@ -89,11 +92,20 @@
                 {% for cassette in cassette_list %}
                     <li class="product">
                         <a href="{% url 'catalog:cassette' id=cassette.id %}" class="product__link">
-                            {% if cassette.cassettesimage_set.first.package_front_side %}
-                            <img src="{{ cassette.cassettesimage_set.first.package_front_side.url }}" alt="{{ cassette }}" class="product__img">
+                            {% if cassette.images.exists %}
+                                {% with cover=cassette.images|image_cover %}
+                                    <img src="{{ cover.image.url }}" alt="{{ cassette }}" class="product__img">
+                                {% endwith %}
                             {% endif %}
                             <p class="product__categories">{{ cassette.category }}</p>
-                            <p class="product__name">{{ cassette.brand }} - {{ cassette.series }}, {{ cassette.brand.country }} ({{ cassette.year_release }}) </p>
+                            <p class="product__name">
+                                {{ cassette.brand.title }}
+                                {% if cassette.model %} {{ cassette.model.title }}{% endif %}
+                                {% if cassette.series %} {{ cassette.series.title }}{% endif %}
+                                {% if cassette.tape_type %} {{ cassette.tape_type.title }}{% endif %}
+                                {% if cassette.tape_length %} {{ cassette.tape_length.tape_length }}{% endif %}
+                                {% if cassette.country %} {{ cassette.country.title }}{% endif %}
+                                {% if cassette.year_release %} ({{ cassette.year_release }}){% endif %} </p>
                         </a>
                     </li>
                 {% endfor %}

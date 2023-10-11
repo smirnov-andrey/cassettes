@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import Coalesce
+from django.db.models import F, Count, Subquery, OuterRef, Min, Max
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import gettext
@@ -8,38 +10,49 @@ from django.views.generic import (DetailView, ListView, CreateView,
                                   TemplateView, UpdateView, )
 from django.views.generic.edit import FormMixin
 
-from catalog.forms import (CassetteCreateForm, CassetteImageForm,
-                           CassetteImageAddonsForm, CassettePriceForm,
+from catalog.forms import (CassetteCreateForm, ImageForm, ImageFormSet,
+                           CassettePriceForm,
                            CassetteCommentForm)
-from catalog.models import (CassetteCategory, CassetteBrand,
-                            Cassette, CassetteTechnology, CassettesImage,
+from catalog.models import (Category, CassetteBrand,
+                            Cassette, CassetteTechnology, Image,
                             CassettePrice, CassetteComment, Condition)
 from collection_management.models import Collection, Wishlist, Exchange, Sale
 
 
-class CassetteCategoryListView(TemplateView):
+class CategoryListView(TemplateView):
     """Список категорий в каталоге"""
     template_name = 'catalog/category-list.html'
 
     def get_context_data(self, **kwargs):
-        queryset = CassetteCategory.published_objects.all()
+        queryset = Category.published_objects.all()
         context = super().get_context_data(**kwargs)
-        context['category_audio'] = queryset.filter(type=CassetteCategory.AUDIO)
-        context['category_video'] = queryset.filter(type=CassetteCategory.VIDEO)
+        context['category_audio'] = queryset.filter(type=Category.AUDIO)
+        context['category_video'] = queryset.filter(type=Category.VIDEO)
         return context
 
 
-class CassetteCategoryDetailView(DetailView):
+class CategoryDetailView(DetailView):
     """Страница категории в каталоге"""
-    model = CassetteCategory
+    model = Category
     template_name = 'catalog/category-detail.html'
+    # queryset = Category.objects.prefetch_related(
+    #     'brands'
+    # ).filter(is_published=True)
 
     def get_object(self, queryset=None):
-        return CassetteCategory.published_objects.get(slug=self.kwargs['slug'])
+        return Category.published_objects.get(slug=self.kwargs['slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['brand_list'] = CassetteBrand.published_objects.filter(cassettes__category=self.get_object()).distinct()
+        context['brand_list'] = CassetteBrand.published_objects.select_related(
+            'country',
+        ).filter(
+            cassettes__category=self.get_object()
+        ).annotate(
+            cassette_count=Count('cassettes'),
+            year_min=Min('cassettes__year_release'),
+            year_max=Max('cassettes__year_release'),
+        ).distinct()
         return context
 
 
@@ -50,20 +63,34 @@ class CassetteCatalogBrandDetailView(ListView):
     context_object_name = 'cassette_list'
 
     def get_queryset(self):
-        return Cassette.objects.filter(category__slug=self.kwargs['slug'], brand__slug=self.kwargs['brand_slug'])
+        return Cassette.objects.prefetch_related(
+            'images', 'markets'
+        ).select_related(
+            'category', 'brand', 'tape_type', 'model', 'technology',
+            'manufacturer', 'series', 'sort', 'tape_length', 'country'
+        ).filter(
+            category__slug=self.kwargs['slug'],
+            brand__slug=self.kwargs['brand_slug']
+        )
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CassetteCatalogBrandDetailView, self).get_context_data(**kwargs)
         context['brand'] = CassetteBrand.published_objects.get(slug=self.kwargs['brand_slug'])
-        context['category'] = CassetteCategory.published_objects.get(slug=self.kwargs['slug'])
+        context['category'] = Category.published_objects.get(slug=self.kwargs['slug'])
         return context
 
 
 class CassetteBrandListView(ListView):
     """Список всех брендов в каталоге"""
-    model = CassetteBrand
+    # model = CassetteBrand
     template_name = 'catalog/brand-list.html'
     context_object_name = 'brand_list'
+    queryset = CassetteBrand.objects.annotate(
+        cassette_count=Count('cassettes'),
+        year_min=Min('cassettes__year_release'),
+        year_max=Max('cassettes__year_release'),
+    ).filter(is_published=True)
+
 
 
 class CassetteBrandDetail(DetailView):
@@ -93,10 +120,25 @@ class CassetteDetailView(FormMixin, DetailView):
         return reverse('catalog:cassette', kwargs={'id': self.object.id})
 
     def get_object(self, queryset=None):
-        return Cassette.objects.get(id=self.kwargs['id'])
+        return Cassette.objects.prefetch_related(
+            'images', 'markets'
+        ).select_related(
+            'category', 'brand', 'tape_type', 'model', 'technology',
+            'manufacturer', 'series', 'sort', 'tape_length', 'country'
+        ).get(id=self.kwargs['id'])
 
     def get_context_data(self, **kwargs):
         context = super(CassetteDetailView, self).get_context_data(**kwargs)
+        context['price'] = CassettePrice.objects.get_or_create(
+            cassette=self.object
+        )
+        context['images'] = self.object.images.exclude(
+            view=Image.View.BARCODE).exclude(
+            view=Image.View.FREQUENCY_RESPONSE).order_by('view')
+        context['barcode'] = self.object.images.filter(
+            view=Image.View.BARCODE).first()
+        context['frequency_response'] = self.object.images.filter(
+            view=Image.View.FREQUENCY_RESPONSE).first()
         if self.request.user.is_authenticated:
             collection_queryset = self.request.user.collections.filter(
                 cassette=self.object
@@ -206,12 +248,14 @@ class CassetteCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # Translators: Catalog view title for page ('Добавить предмет')
         context['page_title'] = gettext('Add item')
         if self.request.POST:
-            context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES)
-            context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES)
+            context['imageformset'] = ImageFormSet(self.request.POST)
+            # context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES)
+            # context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES)
             context['cassette_price_form'] = CassettePriceForm(self.request.POST)
         else:
-            context['cassette_image_form'] = CassetteImageForm()
-            context['cassette_image_addons_form'] = CassetteImageAddonsForm()
+            context['imageformset'] = ImageFormSet()
+            # context['cassette_image_form'] = CassetteImageForm()
+            # context['cassette_image_addons_form'] = CassetteImageAddonsForm()
             context['cassette_price_form'] = CassettePriceForm()
         return context
 
@@ -250,19 +294,24 @@ class CassetteUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return reverse('catalog:cassette', kwargs={'id': self.object.pk})
 
     def get_context_data(self, **kwargs):
-        image_instance, _ = CassettesImage.objects.get_or_create(cassette=self.object)
+        for view in Image.View:
+            print(view)
+        # image_instance, _ = Image.objects.get_or_create(cassette=self.object)
         price_instance, _ = CassettePrice.objects.get_or_create(cassette=self.object)
         context = super(CassetteUpdateView, self).get_context_data(**kwargs)
         # Translators: Catalog view title for page ('Редактировать предмет')
         context['page_title'] = gettext('Edit Item')
         if self.request.POST:
-            context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES, instance=image_instance)
-            context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES, instance=image_instance)
+            # context['imageformset'] = ImageFormSet(self.request.POST,
+            #                                        instance=self.object.images.all())
+            # context['cassette_image_form'] = CassetteImageForm(self.request.POST, self.request.FILES, instance=image_instance)
+            # context['cassette_image_addons_form'] = CassetteImageAddonsForm(self.request.POST, self.request.FILES, instance=image_instance)
             context['cassette_price_form'] = CassettePriceForm(self.request.POST, instance=price_instance)
 
         else:
-            context['cassette_image_form'] = CassetteImageForm(instance=image_instance)
-            context['cassette_image_addons_form'] = CassetteImageAddonsForm(instance=image_instance)
+            context['imageformset'] = ImageFormSet(instance=self.object)
+            # context['cassette_image_form'] = CassetteImageForm(instance=image_instance)
+            # context['cassette_image_addons_form'] = CassetteImageAddonsForm(instance=image_instance)
             context['cassette_price_form'] = CassettePriceForm(instance=price_instance)
         return context
 

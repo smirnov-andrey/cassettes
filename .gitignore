@@ -148,3 +148,5 @@ dmypy.json
 /db.sqlite3
 /notes.txt
 /media/
+upload_data/
+tools/

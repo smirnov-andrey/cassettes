@@ -1,10 +1,24 @@
+import random
+import string
+import uuid
 from django.db import models
-from django.db.models import Min, Max
+from django.db.models import F, Min, Max
 from django.urls import reverse
+from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from users.models import Country, User
 from pytils.translit import slugify
+
+from core.models import Country
+from users.models import Country, User
+
+
+def title_slugify(model, title):
+    slug = slugify(title)
+    if model.objects.filter(slug=slug).exists():
+        letters = string.ascii_lowercase
+        slug = slug + '-' + ''.join(random.choice(letters) for _ in range(3))
+    return slug[:50]
 
 
 class PublishModelManager(models.Manager):
@@ -14,9 +28,9 @@ class PublishModelManager(models.Manager):
 
 class BaseModel(models.Model):
     """Базовая модель"""
-    title = models.CharField(max_length=255, verbose_name=_('Title'))
+    title = models.CharField(max_length=255, unique=True, verbose_name=_('title'))
     slug = models.SlugField(unique=True, blank=True, verbose_name=_('Url/Slug'))
-    is_published = models.BooleanField(default=False, verbose_name=_('Publish'))
+    is_published = models.BooleanField(default=True, verbose_name=_('Publish'))
     created = models.DateTimeField(auto_now=False, auto_now_add=True,
                                    verbose_name=_('Date of created'))
     updated = models.DateTimeField(auto_now=True, auto_now_add=False,
@@ -25,15 +39,20 @@ class BaseModel(models.Model):
     objects = models.Manager()
     published_objects = PublishModelManager()
 
+    class Meta:
+        abstract = True
+        ordering = ('title', )
+
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        # self.slug = slugify(self.title)
+        self.slug = title_slugify(self.__class__, self.title)
         super().save(*args, **kwargs)
 
 
-class CassetteCategory(BaseModel):
+class Category(BaseModel):
     """Модель категории"""
     AUDIO = 'audio'
     VIDEO = 'video'
@@ -57,7 +76,7 @@ class CassetteCategory(BaseModel):
 class CassetteBrand(BaseModel):
     """Модель бренда"""
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('country'))
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, verbose_name=_('description'))
     image = models.ImageField(upload_to='brands', blank=True, verbose_name=_('image'))
 
     def cassette_year(self):
@@ -65,16 +84,39 @@ class CassetteBrand(BaseModel):
         year_period = Cassette.objects.filter(brand=self).aggregate(min=Min('year_release'), max=Max('year_release'))
         return year_period
 
+    def admin_preview(self):
+        return mark_safe(
+            f'<img src = "{self.image.url}" width = "200"/>')
+    admin_preview.short_description = _('image preview')
+
+    def admin_list_preview(self):
+        if self.image:
+            return mark_safe(
+                f'<img src = "{self.image.url}" width = "50"/>')
+
+    admin_list_preview.short_description = _('image')
+
     class Meta:
         verbose_name = _('brand')
         verbose_name_plural = _('brands')
+        ordering = ('title',)
+
+
 
 
 class CassetteModel(BaseModel):
     """Модель модели кассеты"""
+    title = models.CharField(max_length=255, unique=False, verbose_name=_('title'))
+    brand = models.ForeignKey(CassetteBrand, on_delete=models.PROTECT, verbose_name=_('brand'))
+    description = models.TextField(blank=True, verbose_name=_('description'))
+
     class Meta:
         verbose_name = _('Model')
         verbose_name_plural = _('Models')
+        ordering = ('title',)
+
+    def __str__(self):
+        return f'{self.title} ({self.brand})'
 
 
 class CassetteType(BaseModel):
@@ -82,6 +124,8 @@ class CassetteType(BaseModel):
     class Meta:
         verbose_name = _('Type')
         verbose_name_plural = _('Types')
+        ordering = ('title',)
+
 
 
 class CassetteTechnology(BaseModel):
@@ -89,6 +133,7 @@ class CassetteTechnology(BaseModel):
     class Meta:
         verbose_name = _('Technology')
         verbose_name_plural = _('Technologies')
+        ordering = ('title',)
 
 
 class CassetteManufacturer(BaseModel):
@@ -96,6 +141,7 @@ class CassetteManufacturer(BaseModel):
     class Meta:
         verbose_name = _('Manufacturer')
         verbose_name_plural = _('Manufacturers')
+        ordering = ('title',)
 
 
 class CassetteSeries(BaseModel):
@@ -103,6 +149,15 @@ class CassetteSeries(BaseModel):
     class Meta:
         verbose_name = _('Series')
         verbose_name_plural = _('Series')
+        ordering = ('title',)
+
+
+class CassetteSort(BaseModel):
+    """Модель серии кассеты"""
+    class Meta:
+        verbose_name = _('sort')
+        verbose_name_plural = _('sorts')
+        ordering = ('title',)
 
 
 class CassetteCollection(BaseModel):
@@ -110,18 +165,21 @@ class CassetteCollection(BaseModel):
     class Meta:
         verbose_name = _('Collection')
         verbose_name_plural = _('Collections')
+        ordering = ('title',)
 
 
 class CassetteTapeLength(models.Model):
     """Модель длины ленты"""
-    tape_length = models.IntegerField(verbose_name=_('Tape length'))
+    tape_length = models.CharField(max_length=32,
+                                   verbose_name=_('tape length'))
 
     class Meta:
-        verbose_name = _('Tape length')
-        verbose_name_plural = _('Tape lengtes')
+        verbose_name = _('tape length')
+        verbose_name_plural = _('tape lengtes')
+        ordering = ('tape_length',)
 
     def __str__(self):
-        return f'{self.tape_length}'
+        return self.tape_length
 
 
 class CassettePrice(models.Model):
@@ -132,7 +190,9 @@ class CassettePrice(models.Model):
     excellent = models.IntegerField(null=True, blank=True, verbose_name=_('Excellent price'))
     near_mint = models.IntegerField(null=True, blank=True, verbose_name=_('Near mint price'))
     mint = models.IntegerField(null=True, blank=True, verbose_name=_('Mint price'))
-    cassette = models.ForeignKey('Cassette', on_delete=models.CASCADE, related_name='prices', verbose_name=_('cassette'))
+    cassette = models.OneToOneField('Cassette', on_delete=models.CASCADE,
+                                    related_name='prices',
+                                    verbose_name=_('cassette'))
 
     class Meta:
         verbose_name = _('Price')
@@ -144,58 +204,123 @@ class CassettePrice(models.Model):
 
 class Cassette(models.Model):
     """Модель кассеты"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('User'))
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, verbose_name=_('uuid'))
+    # user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_('User'))
     coil = models.BooleanField(verbose_name=_('Coil'), null=True, blank=True)
     slim_case = models.BooleanField(verbose_name=_('Slim case'), null=True, blank=True)
     comment = models.TextField(verbose_name=_('Comments'), null=True, blank=True,)
-    category = models.ForeignKey(CassetteCategory, default=1, related_name='cassettes', on_delete=models.CASCADE, verbose_name=_('Category'))
-    brand = models.ForeignKey(CassetteBrand, on_delete=models.CASCADE, related_name='cassettes', verbose_name=_('Brand'))
-    type = models.ForeignKey(CassetteType, on_delete=models.CASCADE, verbose_name=_('Type'))
-    model = models.ForeignKey(CassetteModel, null=True, blank=True,on_delete=models.CASCADE, verbose_name=_('Model'))
-    technology = models.ForeignKey(CassetteTechnology, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Technology'))
-    manufacturer = models.ForeignKey(CassetteManufacturer, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Manufacturer'))
-    series = models.ForeignKey(CassetteSeries, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Series'))
-    collection = models.ForeignKey(CassetteCollection, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Collection'))
-    tape_length = models.ForeignKey(CassetteTapeLength, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('Tape Length'))
-    year_release = models.IntegerField(null=True, blank=True, verbose_name=_('Year Release'))
-    created = models.DateTimeField(auto_now=False, auto_now_add=True,
-                                   verbose_name=_('Date of comment created'))
-    updated = models.DateTimeField(auto_now=True, auto_now_add=False,
-                                   verbose_name=_('Date of comment updated'))
+    category = models.ForeignKey(Category, default=1, related_name='cassettes', on_delete=models.PROTECT, verbose_name=_('Category'))
+    brand = models.ForeignKey(CassetteBrand, on_delete=models.PROTECT, related_name='cassettes', verbose_name=_('Brand'))
+    tape_type = models.ForeignKey(CassetteType, null=True, blank=True, on_delete=models.PROTECT, verbose_name=_('tape type'))
+    model = models.ForeignKey(CassetteModel, null=True, blank=True,on_delete=models.PROTECT, verbose_name=_('Model'))
+    technology = models.ForeignKey(CassetteTechnology, null=True, blank=True, on_delete=models.PROTECT, verbose_name=_('technology'))
+    manufacturer = models.ForeignKey(CassetteManufacturer, null=True, blank=True, on_delete=models.PROTECT, verbose_name=_('manufacturer'))
+    series = models.ForeignKey(CassetteSeries, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('series'))
+    sort = models.ForeignKey(CassetteSort, null=True, blank=True, on_delete=models.CASCADE, verbose_name=_('sort'))
+    # collection = models.ForeignKey(CassetteCollection, null=True, blank=True, on_delete=models.PROTECT, verbose_name=_('Collection'))
+    tape_length = models.ForeignKey(CassetteTapeLength, null=True, blank=True, on_delete=models.PROTECT, verbose_name=_('tape Length'))
+    year_release = models.IntegerField(null=True, blank=True, verbose_name=_('year Release'))
+    country = models.ForeignKey(Country, related_name='country_cassettes', blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('country'))
+    markets = models.ManyToManyField(Country,
+                                     blank=True,
+                                     related_name='markets_cassettes',
+                                     verbose_name=_('markets'))
+    created = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name=_('date of comment created'))
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name=_('date of comment updated'))
+    upload_row = models.IntegerField(null=True, blank=True) # temp field to match data at upload process
 
     class Meta:
-        verbose_name = _('Cassette')
-        verbose_name_plural = _('Cassettes')
+        default_related_name = 'cassettes'
+        verbose_name = _('cassette')
+        verbose_name_plural = _('cassettes')
 
 
     def get_absolute_url(self):
         return reverse('catalog:cassette', kwargs={'id': self.pk})
 
     def __str__(self):
-        return f'{self.model} - {self.user}'
+        if self.brand:
+            brand = f' {self.brand.title}'
+        else:
+            brand = ''
+        if self.model:
+            model = f' {self.model.title}'
+        else:
+            model = ''
+        if self.tape_type:
+            tape_type = f' {self.tape_type.title}'
+        else:
+            tape_type = ''
+        if self.tape_length:
+            tape_length = f' {self.tape_length.tape_length}'
+        else:
+            tape_length = ''
+        return f'{brand}{model}{tape_type}{tape_length}'
 
 
-class CassettesImage(models.Model):
+class Image(models.Model):
     """Модель изображений кассеты"""
-    package_front_side = models.ImageField(upload_to='cassettes', verbose_name=_('Front side of the package'), null=True, blank=True)
-    package_back_side = models.ImageField(upload_to='cassettes', verbose_name=_('Back side of the package'), null=True, blank=True)
-    package_end_side = models.ImageField(upload_to='cassettes', verbose_name=_('End side'), null=True, blank=True)
-    box_front_side = models.ImageField(upload_to='cassettes', verbose_name=_('Front side of the box'), null=True, blank=True)
-    box_back_side = models.ImageField(upload_to='cassettes', verbose_name=_('Back side of the box'), null=True, blank=True)
-    description_one = models.ImageField(upload_to='cassettes', verbose_name=_('Description 1'), null=True, blank=True)
-    description_two = models.ImageField(upload_to='cassettes', verbose_name=_('Description 2'), null=True, blank=True)
-    item_side_a = models.ImageField(upload_to='cassettes', verbose_name=_('Item (Side A)'), null=True, blank=True)
-    item_side_b = models.ImageField(upload_to='cassettes', verbose_name=_('Item (Side B)'), null=True, blank=True)
-    box_general_view = models.ImageField(upload_to='cassettes', verbose_name=_('General view (Box)'), null=True, blank=True)
-    item_general_view = models.ImageField(upload_to='cassettes', verbose_name=_('General view (Item)'), null=True, blank=True)
-    general_view = models.ImageField(upload_to='cassettes', verbose_name=_('General view'), null=True, blank=True)
-    barcode = models.ImageField(upload_to='cassettes', verbose_name=_('General view'), null=True, blank=True)
-    frequency_response = models.ImageField(upload_to='cassettes', verbose_name=_('General view'), null=True, blank=True)
-    cassette = models.ForeignKey(Cassette, on_delete=models.CASCADE, verbose_name=_('Cassette'), null=True, blank=True)
+    class View(models.IntegerChoices):
+        PACKAGE_FRONT_SIDE = '1', _('Front side of the package'),
+        PACKAGE_BACK_SIDE = '2', _('Back side of the package'),
+        PACKAGE_END_SIDE = '3', _('End side'),
+        BOX_FRONT_SIDE = '4', _('Front side of the box'),
+        BOX_BACK_SIDE = '5', _('Back side of the box'),
+        DESCRIPTION_ONE = '6', _('Description 1'),
+        DESCRIPTION_TWO = '7', _('Description 2'),
+        ITEM_SIDE_A = '8', _('Item (Side A)'),
+        ITEM_SIDE_B = '9', _('Item (Side B)'),
+        BOX_GENERAL_VIEW = '10', _('General view (Box)'),
+        ITEM_GENERAL_VIEW = '11', _('General view (Item)'),
+        GENERAL_VIEW = '12', _('General view'),
+        BARCODE = '13', _('Barcode'),
+        FREQUENCY_RESPONSE = '14', _('Frequency response'),
+
+
+    def image_path(self, filename):
+        return f'cassettes/{self.cassette.uuid}/{filename}'
+
+    cassette = models.ForeignKey(Cassette,
+                                 on_delete=models.CASCADE,
+                                 related_name='images',
+                                 verbose_name=_('cassette'))
+    image = models.ImageField(upload_to=image_path,
+                              verbose_name=_('image file'))
+    view = models.PositiveSmallIntegerField(choices=View.choices, blank=True,
+                                            null=True, verbose_name=_('view'))
+    is_cover = models.BooleanField(default=False, verbose_name=_('cover'))
+    is_publish = models.BooleanField(default=True, verbose_name=_('publish'))
 
     class Meta:
-        verbose_name = _('Image')
-        verbose_name_plural = _('Images')
+        verbose_name = _('image')
+        verbose_name_plural = _('images')
+        ordering = ('cassette', 'view')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['cassette', 'view'],
+                condition=models.Q(is_publish=True),
+                name='unique_cassette_view',
+                violation_error_message=_('Only one unique view per '
+                                          'cassette can be published')
+            ),
+            models.UniqueConstraint(
+                fields=['cassette'],
+                condition=models.Q(is_cover=True),
+                name='unique_cassette_cover',
+                violation_error_message=_('Only one view per cassette per '
+                                          'cassette can be set as cover'),
+            ),
+        ]
+
+    def admin_preview(self):
+        return mark_safe(
+            f'<img src = "{self.image.url}" width = "200"/>')
+    admin_preview.short_description = _('image preview')
+
+    def admin_list_preview(self):
+        return mark_safe(
+            f'<img src = "{self.image.url}" width = "100"/>')
+    admin_list_preview.short_description = _('image')
 
 
 class CassetteSeller(models.Model):
