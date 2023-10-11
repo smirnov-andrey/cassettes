@@ -15,9 +15,12 @@ def homepage(request):
     context = {
         'collector_list': User.objects.order_by(F('rating').desc(nulls_last=True))[:5],
         'cassette_list': Cassette.objects.select_related(
-            'brand', 'series', 'category'
+            'category', 'brand', 'tape_type', 'model', 'technology',
+            'manufacturer', 'series', 'sort', 'tape_length', 'country'
         ).prefetch_related(
             'images'
+        ).order_by(
+            '-updated',
         ).all()[:7],
         'category_audio': queryset.filter(type=Category.AUDIO),
         'category_video': queryset.filter(type=Category.VIDEO),
