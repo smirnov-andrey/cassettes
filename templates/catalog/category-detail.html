@@ -144,7 +144,8 @@
                                 {% for brand in brand_list %}
                                     <tr>
                                         {% if brand.image %}
-                                            <td>{% thumbnail brand.image "100x100" crop="center" as im %}
+{#                                            <td>{% thumbnail brand.image "100x100" crop="center" as im %}#}
+                                            <td>{% thumbnail brand.image "100x100" as im %}
                                                 <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                             {% endthumbnail %}
                                             </td>
