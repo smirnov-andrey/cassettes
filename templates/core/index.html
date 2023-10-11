@@ -70,7 +70,9 @@
                     {% for category in category_video %}
                         <li class="categories__item">
                             <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="categories__link">
-                                <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                                {% if category.image %}
+                                    <img src="{{ category.image.url }}" alt="{{ category.title }}" class="categories__img">
+                                {% endif %}
                                 <div class="categories__wrapper">
                                     <h1 class="categories__title">{{ category }}</h1>
                                     {% comment %}Translators: index / Объявлений{% endcomment %}
