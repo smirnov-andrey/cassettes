@@ -221,8 +221,15 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 if os.getenv('SENTRY_MONITORING', default='False') == 'True':
     import sentry_sdk
-    sentry_sdk.init(
-        dsn="https://22ed15acbce936cf0ccec7aa7e7eeedd@o4504544276840448.ingest.sentry.io/4506033574313984",
-        traces_sample_rate=1.0,
-        profiles_sample_rate=1.0,
-    )
+    if os.getenv('SENTRY_DEPLOY') == 'Dev':
+        sentry_sdk.init(
+            dsn="https://22ed15acbce936cf0ccec7aa7e7eeedd@o4504544276840448.ingest.sentry.io/4506033574313984",
+            traces_sample_rate=1.0,
+            profiles_sample_rate=1.0,
+        )
+    if os.getenv('SENTRY_DEPLOY') == 'Stage':
+        sentry_sdk.init(
+            dsn="https://6e0ae46d67367c9a9b99914aa74281a4@o4504544276840448.ingest.sentry.io/4506039394107392",
+            traces_sample_rate=1.0,
+            profiles_sample_rate=1.0,
+        )
