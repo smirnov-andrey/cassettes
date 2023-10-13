@@ -71,6 +71,8 @@ class Category(BaseModel):
     class Meta:
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
+        ordering = ('type', 'title')
+
 
 
 class CassetteBrand(BaseModel):
