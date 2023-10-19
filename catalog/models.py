@@ -63,6 +63,7 @@ class Category(BaseModel):
     description = models.TextField(blank=True)
     brands = models.ManyToManyField('CassetteBrand', related_name='categories', blank=True, verbose_name=_('Brands'))
     is_published_to_home = models.BooleanField(default=False, verbose_name=_('Publish to home page'))
+    display_order = models.IntegerField(blank=True, null=True, verbose_name=_('display order'))
 
     def cassettes_count(self):
         """Считаем количество кассет в категории"""
@@ -71,7 +72,7 @@ class Category(BaseModel):
     class Meta:
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
-        ordering = ('type', 'title')
+        ordering = ('display_order', 'type', 'title')
 
 
 

@@ -111,16 +111,17 @@ class CassetteCommentAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(TabbedTranslationAdmin):
-    list_display = ('id', 'title', 'slug', 'type', 'is_published', 'is_published_to_home', )
+    list_display = ('id', 'title', 'slug', 'type',
+                    'display_order', 'is_published', 'is_published_to_home', )
     list_display_links = ('id', 'title', 'slug', 'type', )
-    list_editable = ('is_published', 'is_published_to_home',)
+    list_editable = ('display_order', 'is_published', 'is_published_to_home',)
     list_filter = ('type', 'is_published', 'is_published_to_home', 'created', 'updated',)
     readonly_fields = ('id', 'created', 'updated',)
     actions_selection_counter = True
     show_full_result_count = True
     search_fields = ('id', 'title', 'title_en', 'title_ru', 'slug', 'type', 'description', 'description_en', 'description_ru', 'brands__title', 'brands__description', 'brands__title_en', 'brands__description_en', 'brands__title_ru', 'brands__description_ru')
     search_help_text = _('Search for category by id, title, slug, description or brands')
-    fields = ('id', 'type', 'title', 'slug', 'logo', 'image', 'description', 'is_published', 'is_published_to_home', 'brands', 'created', 'updated', )
+    fields = ('id', 'type', 'title', 'slug', 'logo', 'image', 'description', 'display_order', 'is_published', 'is_published_to_home', 'brands', 'created', 'updated', )
     filter_horizontal = ('brands', )
 
     def get_prepopulated_fields(self, request, obj=None):
