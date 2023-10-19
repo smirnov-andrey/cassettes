@@ -15,6 +15,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.socialaccount.urls')),
     path('auth/', include('users.urls')),
     # Если какой-то URL не обнаружится в приложении users —
     # Django пойдёт искать его в django.contrib.auth

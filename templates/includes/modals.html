@@ -1,4 +1,5 @@
 {% load static socialaccount %}
+{% load socialaccount %}
 {% load i18n %}
 <!-- Modal -->
 <div class="modal" id="loginModal">
@@ -7,7 +8,8 @@
         {% comment %}Translators: Modal / Войти или создать профиль {% endcomment %}
         <h1 class="modal__title">{% translate "Log in or create account" %}</h1>
         {% comment %}Translators: Modal / Войти с помощью Google{% endcomment %}
-        <a href="/accounts/google/login/" class="authorization-google">{% translate "Log in with Google" %}</a>
+{#        <a href="/accounts/google/login/" class="authorization-google">{% translate "Log in with Google" %}</a>#}
+        <a href="{% provider_login_url 'google' %}?next={{ request.get_full_path }}" class="authorization-google">{% translate "Log in with Google" %}</a>
         {% comment %}Translators: Modal / или{% endcomment %}
         <p class="modal__replace">{% translate "or" %}</p>
         <form action="{% url 'users:login' %}" class="modal__form" method="post">

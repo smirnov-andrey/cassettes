@@ -76,7 +76,10 @@ ROOT_URLCONF = 'kassets.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth'),
+        ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -186,14 +189,14 @@ AUTH_USER_MODEL = 'users.User'
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:profile'
-# LOGOUT_REDIRECT_URL = 'posts:index'
+LOGOUT_REDIRECT_URL = 'posts:index'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-
+SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -205,10 +208,7 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
-
-
 SITE_ID = 2
-
 # Additional configuration settings
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_QUERY_EMAIL = True
