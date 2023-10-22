@@ -73,6 +73,16 @@ class CassettePriceInline(admin.TabularInline):
     extra = 0
 
 
+class CassetteInline(admin.TabularInline):
+    model = Cassette
+    fields = ('id', 'brand', 'tape_type', 'manufacturer', 'series',
+              'tape_length', 'year_release', 'country')
+    # autocomplete_fields = ('brand', 'tape_type', 'manufacturer', 'series', 'tape_length', 'country')
+    autocomplete_fields = ('brand', 'tape_type', 'manufacturer', 'series', 'country')
+    extra = 0
+
+
+
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('admin_list_preview', 'id', 'cassette', 'view',
                     'is_cover', 'is_publish',)
@@ -155,7 +165,10 @@ class CassetteModelAdmin(BasedAdmin):
     list_display = ('id', 'brand', 'title', 'slug', 'is_published', )
     fields = ('id', 'brand', 'title', 'slug', 'is_published', 'created',
               'updated',)
+    search_fields = ('id', 'brand', 'title', 'slug', 'is_published', 'created',
+                     'updated',)
     autocomplete_fields = ('brand', )
+    inlines = [CassetteInline]
 
 
 class CassetteTypeAdmin(BasedAdmin):
