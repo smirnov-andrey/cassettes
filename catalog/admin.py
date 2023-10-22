@@ -165,8 +165,8 @@ class CassetteModelAdmin(BasedAdmin):
     list_display = ('id', 'brand', 'title', 'slug', 'is_published', )
     fields = ('id', 'brand', 'title', 'slug', 'is_published', 'created',
               'updated',)
-    search_fields = ('id', 'brand', 'title', 'slug', 'is_published', 'created',
-                     'updated',)
+    search_fields = ('id', 'title', 'slug', 'is_published',
+                     'created', 'updated',)
     autocomplete_fields = ('brand', )
     inlines = [CassetteInline]
 
