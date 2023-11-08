@@ -38,7 +38,7 @@
                     {#                                            <input type="submit" value="Go">#}
                     {#                                        </form>#}
                     <img src="{% static 'img/lang-icon.svg' %}">
-                    <form action="{% url 'set_language' %}" method="post">
+                    <!-- <form action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
                         <input name="next" type="hidden" value="{{ redirect_to }}">
                         <div class="header-top__change-lang dropdown">
@@ -47,7 +47,8 @@
                                 {% get_available_languages as LANGUAGES %}
                                 {% get_language_info_list for LANGUAGES as languages %}
                                 {% for language in languages %}
-                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected
+                    {% endif %}>
                                         {{ language.name_local }}
                                     </option>
                                 {% endfor %}
@@ -55,15 +56,15 @@
                         </div>
                     </form>
 
-
+-->
                     <div class="header-top__profile">
                         {% if request.user.is_authenticated %}
                             <a href="{% url 'users:profile' %}">
                                 {% if request.user.first_name or request.user.last_name %}
                                     {{ request.user.first_name }} {{ request.user.last_name }}
-                                    {% else %}
-                                {{ request.user.username }}
-                                    {% endif %}
+                                {% else %}
+                                    {{ request.user.username }}
+                                {% endif %}
                             </a> |
                             {% comment %}Translators: header / Logout{% endcomment %}
                             <a href="{% url 'users:logout' %}">{% translate "Logout" %}</a>
@@ -73,7 +74,8 @@
                                     data-modal="loginModal">{% translate "Log in" %}
                             </button>
                             {% comment %}Translators: header / Регистрация{% endcomment %}
-                            <a class="btn btn_fill header-top__btn-registration btn-modal" href="{% url 'users:signup' %}">{% translate "Signup" %}</a>
+                            <a class="btn btn_fill header-top__btn-registration btn-modal"
+                               href="{% url 'users:signup' %}">{% translate "Signup" %}</a>
 
                         {% endif %}
                     </div>
@@ -88,7 +90,8 @@
                     {% for category in category_list %}
                         {% if category.logo %}
                             <li class="header-brands__item">
-                                <a href="{% url 'catalog:catalog-detail' slug=category.slug %}" class="header-brands__link">
+                                <a href="{% url 'catalog:catalog-detail' slug=category.slug %}"
+                                   class="header-brands__link">
                                     <img src="{{ category.logo.url }}" alt="{{ category }}">
                                 </a>
                             </li>
