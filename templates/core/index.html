@@ -26,7 +26,7 @@
                         <ul class="catalog-users__list">
                             {% for collector in collector_list %}
                                 <li class="catalog-users__item">
-                                    <a href="#">{{ collector.first_name }} {{ collector.last_name }}<span>[{{ collector.username }}]</span></a>
+                                    <a href="{% url 'users:collector' id=collector.id %}">{{ collector.first_name }} {{ collector.last_name }}<span>[{{ collector.username }}]</span></a>
                                 </li>
                             {% endfor %}
                         </ul>

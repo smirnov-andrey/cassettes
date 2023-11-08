@@ -19,7 +19,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SECRET_KEY = str(os.getenv('DJ_SECRET_KEY'))
 DEBUG = str(os.getenv('DJ_DEBUG')) == 'True'
 
 ALLOWED_HOSTS = str(os.getenv('DJ_ALLOWED_HOSTS')).split(',')
-
 
 # Application definition
 
@@ -96,29 +94,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kassets.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'nginx.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
-        'NAME': os.getenv('DB_NAME', default='postgres'),
-        'USER': os.getenv('DB_USER', default='postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', default='postgres'),
-        'HOST': os.getenv('DB_HOST', default='db'),
-        'PORT': os.getenv('DB_PORT', default='5432'),
-        'TEST': {
-                'NAME': 'mytestdatabase',
-            },
-    }
-}
+try:
+    from kassets.local_settings import DATABASES
+except ImportError as e:
+    pass
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -137,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -212,7 +190,7 @@ SITE_ID = 2
 # Additional configuration settings
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 
@@ -221,6 +199,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 if os.getenv('SENTRY_MONITORING', default='False') == 'True':
     import sentry_sdk
+
     if os.getenv('SENTRY_DEPLOY') == 'Dev':
         sentry_sdk.init(
             dsn="https://22ed15acbce936cf0ccec7aa7e7eeedd@o4504544276840448.ingest.sentry.io/4506033574313984",
