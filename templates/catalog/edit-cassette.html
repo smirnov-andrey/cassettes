@@ -246,36 +246,36 @@
 
 
               </div>
-              <div class="settings__block">
-              {% comment %}Translators: edit-cassete / Дополнительные данные<{% endcomment %}
-                <p class="settings__title-block">{% translate "Extra information" %}</p>
-                {{ cassette_image_addons_form.non_form_errors }}
-                {% for field in cassette_image_addons_form %}
-                  <div class="settings__dropanddrop">
-                    <p class="settings__text-bold settings__collection-title">{{ field.label }}</p>
-                    <div id="dropContainer_Frequency" class="dropContainer">
-                      <div class="dropContainer__wrapper">
-                          {% comment %}Translators: edit-cassete / Выберите фото{% endcomment %}
-                        <label for="{{ field.id_for_label }}" class="btn btn_ghost dropContainer__btn">{% translate "Chose a photo" %}</label>
-                          {% comment %}Translators: edit-cassete / Или перетащите сюда{% endcomment %}
-                        <span>{% translate "Or drag and drop here" %}</span>
-                      </div>
-                      {% if field.value %}
-                        <div>
-                          <img src="{{ field.value.url }}" width=200 alt="">
-                        </div>
-                      {% else %}
-                        <div class="dropContainer__image-wrapper">
-                          <img class="preview" src="" alt="">
-                          <span class="img-delete"><img src="{% static 'img/delete-photo.svg' %}" alt=""></span>
-                        </div>
-                      {% endif %}
-                      {% if not field.value %}{{ field }}{% endif %}
-                      {{ field.errors }}
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
+<!--              <div class="settings__block">-->
+<!--              {% comment %}Translators: edit-cassete / Дополнительные данные<{% endcomment %}-->
+<!--                <p class="settings__title-block">{% translate "Extra information" %}</p>-->
+<!--                {{ cassette_image_addons_form.non_form_errors }}-->
+<!--                {% for field in cassette_image_addons_form %}-->
+<!--                  <div class="settings__dropanddrop">-->
+<!--                    <p class="settings__text-bold settings__collection-title">{{ field.label }}</p>-->
+<!--                    <div id="dropContainer_Frequency" class="dropContainer">-->
+<!--                      <div class="dropContainer__wrapper">-->
+<!--                          {% comment %}Translators: edit-cassete / Выберите фото{% endcomment %}-->
+<!--                        <label for="{{ field.id_for_label }}" class="btn btn_ghost dropContainer__btn">{% translate "Chose a photo" %}</label>-->
+<!--                          {% comment %}Translators: edit-cassete / Или перетащите сюда{% endcomment %}-->
+<!--                        <span>{% translate "Or drag and drop here" %}</span>-->
+<!--                      </div>-->
+<!--                      {% if field.value %}-->
+<!--                        <div>-->
+<!--                          <img src="{{ field.value.url }}" width=200 alt="">-->
+<!--                        </div>-->
+<!--                      {% else %}-->
+<!--                        <div class="dropContainer__image-wrapper">-->
+<!--                          <img class="preview" src="" alt="">-->
+<!--                          <span class="img-delete"><img src="{% static 'img/delete-photo.svg' %}" alt=""></span>-->
+<!--                        </div>-->
+<!--                      {% endif %}-->
+<!--                      {% if not field.value %}{{ field }}{% endif %}-->
+<!--                      {{ field.errors }}-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                {% endfor %}-->
+<!--              </div>-->
             </div>
           </div>
         </div>

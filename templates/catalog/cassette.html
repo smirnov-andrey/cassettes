@@ -31,7 +31,9 @@
             </div>
             <ul class="gallery-product">
                 {% for image in images %}
-                    <li class="gallery-product__item"><img src="{{ image.image.url }}"></li>
+                    {% if image.image %}
+                        <li class="gallery-product__item"><img src="{{ image.image.url }}"></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
             {#            <form action="" class="product__form">#}

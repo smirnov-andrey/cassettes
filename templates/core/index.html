@@ -94,7 +94,9 @@
                         <a href="{% url 'catalog:cassette' id=cassette.id %}" class="product__link">
                             {% if cassette.images.exists %}
                                 {% with cover=cassette.images|image_cover %}
-                                    <img src="{{ cover.image.url }}" alt="{{ cassette }}" class="product__img">
+                                    {% if cover.image %}
+                                        <img src="{{ cover.image.url }}" alt="{{ cassette }}" class="product__img">
+                                    {% endif %}
                                 {% endwith %}
                             {% endif %}
                             <p class="product__categories">{{ cassette.category }}</p>
